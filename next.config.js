@@ -2,16 +2,6 @@ require("dotenv").config()
 const path = require("path")
 const Dotenv = require('dotenv-webpack');
 
-console.log(process.env)
-console.log("===============")
-console.log("===============")
-console.log("===============")
-console.log(process.env.BACKEND_URL)
-console.log("===============")
-console.log("===============")
-console.log("===============")
-
-
 const nextConfig = {
   webpack(config) {
     // Root alias for webpack
@@ -23,7 +13,7 @@ const nextConfig = {
     return config
   },
   env: {
-    BACKEND_URL: process.env.BACKEND_URL
+    NEXT_PUBLIC_BACKEND_URL: process.env.BACKEND_URL
   }
 }
 
