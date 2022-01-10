@@ -30,6 +30,7 @@ const ExampleComponent = () => {
   const [testMessage, setTestMessage] = useState("")
 
   useEffect(async () => {
+    console.log(process.env.BACKEND_URL)
     try {
       const res = await axios.get(`${process.env.BACKEND_URL}/test`)
       setTestMessage(res.data.message)
