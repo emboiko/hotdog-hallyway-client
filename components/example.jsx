@@ -28,10 +28,10 @@ const SubHeader = styled.h2`
 
 const ExampleComponent = () => {
   const [testMessage, setTestMessage] = useState("")
-  console.log(process.env.BACKEND_URL)
   useEffect(async () => {
     try {
-      const res = await axios.get(`${process.env.BACKEND_URL}/test`)
+      console.log("Backend URL:", process.env.BACKEND_URL)
+      const res = await axios.get("/test", {baseURL: process.env.BACKEND_URL})
       setTestMessage(res.data.message)
     } catch (error) {
       console.log(error)
