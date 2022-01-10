@@ -20,10 +20,12 @@ const TestMessageWrapper = styled.div`
 
 const MainHeader = styled.h1`
   text-align: center;
+  margin-bottom: 10px;
 `
 
 const SubHeader = styled.h2`
   text-align: center;
+  margin-bottom: 10px;
 `
 
 const ExampleComponent = () => {
