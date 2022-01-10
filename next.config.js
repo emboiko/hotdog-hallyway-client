@@ -1,20 +1,14 @@
-// if (process.env.NODE_ENV === "development") {
-//   const webpack = require('webpack')
-//   module.exports = {
-//     webpack(config) {
-//           const { parsed: env } = require('dotenv').config()
-//           config.plugins.push(new webpack.EnvironmentPlugin(env))
-//           return config
-//       }
-//   }
-// } else {
-  // require("dotenv").config()
-  const Dotenv = require("dotenv-webpack")
-  // const path = require("path")
-  module.exports = {
-    webpack(config) {
-      config.plugins.push(new Dotenv({ systemvars: true }))
-      return config
-    }
+require("dotenv").config()
+
+const nextConfig = {
+  // webpack(config) {
+  //   // Root alias for webpack
+  //   config.resolve.alias["~"] = path.join(__dirname, "/")
+  //   return config
+  // }
+  env: {
+    BACKEND_URL: process.env.BACKEND_URL
   }
-// }
+}
+
+module.exports = nextConfig

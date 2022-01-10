@@ -32,7 +32,7 @@ const ExampleComponent = () => {
   useEffect(async () => {
     console.log(process.env)
     try {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/test`)
+      const res = await axios.get(`${process.env.BACKEND_URL}/test`)
       setTestMessage(res.data.message)
     } catch (error) {
       console.log(error)
