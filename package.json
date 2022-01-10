@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development next dev",
     "build": "next build",
-    "start": "cross-env NODE_ENV=production next start",
+    "start": "next start",
     "lint": "next lint"
   },
   "author": "emboiko",
