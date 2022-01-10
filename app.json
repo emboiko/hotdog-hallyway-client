@@ -1,0 +1,7 @@
+{
+  "env": {
+    "BACKEND_URL": {
+      "required": true
+    }
+  }
+}

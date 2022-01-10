@@ -1,4 +1,3 @@
-
 if (process.env.NODE_ENV === "development") {
   const webpack = require('webpack')
   module.exports = {
