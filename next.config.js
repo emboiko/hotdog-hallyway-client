@@ -1,9 +1,11 @@
 const webpack = require('webpack')
-const { parsed: myEnv } = require('dotenv').config()
 
-module.exports = {
+if (process.env.NODE_ENV === "development") {
+  module.exports = {
     webpack(config) {
-        config.plugins.push(new webpack.EnvironmentPlugin(myEnv))
-        return config
-    }
+          const { parsed: myEnv } = require('dotenv').config()
+          config.plugins.push(new webpack.EnvironmentPlugin(myEnv))
+          return config
+      }
+  }
 }
