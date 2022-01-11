@@ -1,13 +1,13 @@
 import React from "react"
-import Example from "~/components/example"
+import MainLanding from "~/components/Landing"
 import StandardPage from "~/components/StandardPage"
 
-const Landing = () => {
+const LandingPage = () => {
   return (
     <StandardPage>
-      <Example />
+      <MainLanding />
     </StandardPage>
   )
 }
 
-export default Landing
+export default LandingPage
