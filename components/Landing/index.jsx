@@ -14,6 +14,7 @@ const GuildNameBox = styled.div`
 `
 
 const GuildName = styled.h1`
+
 `
 
 const GuildRealm = styled.h2`
@@ -27,8 +28,8 @@ const BackgroundImage = styled(Image)`
 
 const MainLanding = () => {
   return (
-    <>
-      <BackgroundImage src={Illidan} layout="fill" objectFit="cover" quality={90}/>
+    <div className="font-oswald">
+      <BackgroundImage src={Illidan} alt="Illidan" layout="fill" objectFit="cover" quality={90}/>
       <GuildNameBox>
         <GuildName>
         {"< Hotdog Hallway >"}
@@ -37,7 +38,7 @@ const MainLanding = () => {
           Mankrik Horde TBC | Progression Raiding
         </GuildRealm>
       </GuildNameBox>
-    </>
+    </div>
   )
 }
 
