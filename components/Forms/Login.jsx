@@ -5,14 +5,6 @@ import SimpleInput from "~/components/Inputs/SimpleInput"
 import { observer } from "mobx-react"
 
 const FormWrapper = styled.form`
-  border-radius: 5px;
-  box-shadow: 5px 5px 5px 1px #000000;
-  background: #181A1B;
-  position: absolute;
-  right: calc(50% - 200px);
-  top: 50%;
-  z-index: 10;
-  width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,6 +23,12 @@ const LoginHeader = styled.span`
   font-size: 25px;
   align-self: flex-start;
   margin-left: 20px;
+  color: #FFFFFF;
+`
+
+const ErrorContainer = styled.div`
+  color: red;
+  min-height: 20px;
 `
 
 const mapStore = store => ({
@@ -38,11 +36,12 @@ const mapStore = store => ({
   setCharacterName: store.auth.setCharacterName,
   password: store.auth.password,
   setPassword: store.auth.setPassword,
-  login: store.auth.login
+  login: store.auth.login,
+  loginError: store.auth.loginError
 })
 
-const LoginForm = observer(() => {
-  const { characterName, setCharacterName, password, setPassword, login } = useInject(mapStore)
+const LoginForm = observer(({successCB, failureCB}) => {
+  const { characterName, setCharacterName, password, setPassword, login, loginError } = useInject(mapStore)
 
   const onChangeCharacterName = (event) => {
     setCharacterName(event.target.value)
@@ -52,9 +51,14 @@ const LoginForm = observer(() => {
     setPassword(event.target.value)
   }
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault()
-    login({characterName, password})
+    const user = await login({characterName, password})
+    if (user) {
+      successCB()
+    } else {
+      failureCB()
+    }
   }
 
   return (
@@ -66,6 +70,7 @@ const LoginForm = observer(() => {
       <InputWrapper>
         <SimpleInput name="Password" type="password" placeHolder="Password" value={password} onChange={onChangePassword} />
       </InputWrapper>
+      <ErrorContainer>{loginError}</ErrorContainer>
       <InputWrapper>
         <SimpleInput type="submit" />
       </InputWrapper>

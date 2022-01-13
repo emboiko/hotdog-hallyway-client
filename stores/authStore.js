@@ -1,43 +1,52 @@
 import axios from "axios"
+import { setCookie, destroyCookie, parseCookies } from 'nookies'
 import { types } from "mobx-state-tree"
 
 const User = types
   .model("User", {
     characterName: types.optional(types.string, ""),
     discordUsername: types.optional(types.string, ""),
-  })
-  .actions(self => {
-    return {
-      setCharacterName(characterName) {
-        self.characterName = characterName
-      },
-      setDiscordUsername(discordUsername) {
-        self.discordUsername = discordUsername
-      },
-    }
+    id: types.optional(types.string, ""),
   })
 
 const AuthStore = types
   .model('AuthStore', {
     user: types.optional(User, {}),
     characterName: types.optional(types.string, ""),
-    discordUsername: types.optional(types.string, "")
+    discordUsername: types.optional(types.string, ""),
+    loginError: types.optional(types.string, ""),
+    signupError: types.optional(types.string, "")
   })
   .actions(self => {
     return {
+      async autoLogin(token) {
+        let result
+        try {
+          result = await axios.get(`${process.env.BACKEND_URL}/users/me`, {}, {headers: {Authorization: `Bearer ${token}`}})
+          if (result.data) {
+            self.setUser(result.data, token)
+          }
+        } catch (error) {
+          self.unsetUser()
+        }
+      },
       async login(payload) {
+        self.setLoginError("")
         let result
         try {
           result = await axios.post(`${process.env.BACKEND_URL}/users/login`, payload)
         } catch (err) {
           console.error(err)
         }
-
-        if (result.data && result.data.token) {
-          self.setUser(result.data.user)
+        if (result && result.data && result.data.token) {
+          self.setUser(result.data.user, result.data.token)
+          return true
         }
+        self.setLoginError("Unable to login")
+        return false
       },
       async signup(payload) {
+        self.setSignupError("")
         let result
         try {
           result = await axios.post(`${process.env.BACKEND_URL}/users`, payload)
@@ -45,20 +54,35 @@ const AuthStore = types
           console.error(err)
         }
 
-        if (result.data && result.data.token) {
-          self.setUser(result.data.user)
+        if (result && result.data && result.data.token) {
+          self.setUser(result.data.user, result.data.token)
+          return true
         }
+        self.setSignupError("Unable to sign up.")
+        return false
       },
-      logout() {
-        // Todo
+      async logout() {
+        let result
+        const token = parseCookies(null).token
+        try {
+          result = await axios.post(`${process.env.BACKEND_URL}/users/logout`, {}, {headers: {Authorization: `Bearer ${token}`}})
+        } catch (err) {
+          console.error(err)
+        }
+        console.log(result)
+        if (result?.status === 200) {
+          self.unsetUser()
+          return true
+        }
+        return false
       },
-      setUser(user) {
-        self.user = {characterName: user.characterName, discordUsername: user.discordUsername}
-        self.user.setCharacterName(user.characterName)
-        console.log(self.user)
+      setUser(user, token) {
+        self.user = {characterName: user.characterName, discordUsername: user.discordUsername, id:user._id}
+        setCookie(null, 'token', token, {maxAge: 30 * 24 * 60 * 60, path: '/'})
       },
       unsetUser() {
         self.user = {}
+        destroyCookie(null, 'token', {path: '/'})
       },
       setCharacterName(value) {
         self.characterName = value
@@ -68,12 +92,18 @@ const AuthStore = types
       },
       setPassword(value) {
         self.password = value
+      },
+      setLoginError(value) {
+        self.loginError = value
+      },
+      setSignupError(value) {
+        self.signupError = value
       }
     }
   })
   .views(self => ({
-    get isUserLoggedIn() {
-        // Todo
+    get isLoggedIn() {
+      return !!(self.user && self.user.id && self.user.id.length)
     }
   }))
 

@@ -5,14 +5,6 @@ import SimpleInput from "~/components/Inputs/SimpleInput"
 import {observer} from "mobx-react"
 
 const FormWrapper = styled.form`
-  border-radius: 5px;
-  box-shadow: 5px 5px 5px 1px #000000;
-  background: #181A1B;
-  position: absolute;
-  right: calc(50% - 200px);
-  top: 50%;
-  z-index: 10;
-  width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,10 +19,16 @@ const InputWrapper = styled.div`
   align-items: center;
 `
 
-const LoginHeader = styled.span`
+const SignupHeader = styled.span`
   font-size: 25px;
   align-self: flex-start;
   margin-left: 20px;
+  color: #FFFFFF;
+`
+
+const ErrorContainer = styled.div`
+  color: red;
+  min-height: 20px;
 `
 
 const mapStore = store => ({
@@ -40,11 +38,12 @@ const mapStore = store => ({
   setDiscordUsername: store.auth.setDiscordUsername,
   password: store.auth.password,
   setPassword: store.auth.setPassword,
-  signup: store.auth.signup
+  signup: store.auth.signup,
+  signupError: store.auth.signupError
 })
 
-const SignupForm = observer(() => {
-  const { characterName, setCharacterName, password, setPassword, discordUsername, setDiscordUsername, signup } = useInject(mapStore)
+const SignupForm = observer(({successCB, failureCB}) => {
+  const { characterName, setCharacterName, password, setPassword, discordUsername, setDiscordUsername, signup, signupError } = useInject(mapStore)
 
   const onChangeCharacterName = (event) => {
     setCharacterName(event.target.value)
@@ -58,14 +57,19 @@ const SignupForm = observer(() => {
     setDiscordUsername(event.target.value)
   }
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault()
-    signup({characterName, discordUsername, password})
+    const user = await signup({characterName, discordUsername, password})
+    if (user) {
+      successCB()
+    } else {
+      failureCB()
+    }
   }
 
   return (
     <FormWrapper onSubmit={onSubmit}>
-      <LoginHeader>Signup</LoginHeader>
+      <SignupHeader>Sign up</SignupHeader>
       <InputWrapper>
         <SimpleInput name="Character-Name" type="text" placeHolder="Character Name" value={characterName} onChange={onChangeCharacterName} />
       </InputWrapper>
@@ -75,6 +79,7 @@ const SignupForm = observer(() => {
       <InputWrapper>
         <SimpleInput name="Password" type="password" placeHolder="Password" value={password} onChange={onChangePassword} />
       </InputWrapper>
+      <ErrorContainer>{signupError}</ErrorContainer>
       <InputWrapper>
         <SimpleInput type="submit" />
       </InputWrapper>

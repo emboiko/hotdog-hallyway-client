@@ -1,8 +1,5 @@
 import React from "react"
 import styled from "styled-components"
-import Modal from "~/components/Modal"
-import SignupForm from "~/components/Forms/Signup"
-import LoginForm from "~/components/Forms/Login"
 import useInject from "~/hooks/useInject"
 import { observer } from "mobx-react"
 
@@ -15,7 +12,8 @@ const Header = styled.div`
 
 const mapStore = store => ({
   user: store.auth.user,
-  isUserLoggedIn: store.auth.isUserLoggedIn,
+  isLoggedIn: store.auth.isLoggedIn,
+  logout: store.auth.logout,
   loginModalShowing: store.ui.loginModalShowing,
   setLoginModalShowing: store.ui.setLoginModalShowing,
   signupModalShowing: store.ui.signupModalShowing,
@@ -26,19 +24,18 @@ const mapStore = store => ({
 const MainHeader = observer(() => {
   const { 
     user,
-    isUserLoggedIn,
+    isLoggedIn,
     logout,
     loginModalShowing, setLoginModalShowing,
     signupModalShowing, setSignupModalShowing
   } = useInject(mapStore)
+
   return (
     <Header className="font-oswald">
-      {/* Todo */}
       <div>
-        {user.characterName ? user.characterName : "Guest"}
+        {isLoggedIn ? user.characterName : "Guest"}
       </div>
-      {/* Todo */}
-      {isUserLoggedIn ? (
+      {isLoggedIn ? (
         <>
           <button onClick={() => {
             logout()
@@ -52,14 +49,6 @@ const MainHeader = observer(() => {
           <button onClick={() => {
             setSignupModalShowing(!signupModalShowing)
           }}>Sign up</button>
-          <>
-            <Modal open={loginModalShowing}>
-              <LoginForm />
-            </Modal>
-            <Modal open={signupModalShowing}>
-              <SignupForm />
-            </Modal>
-          </>
         </>
       )}
     </Header>

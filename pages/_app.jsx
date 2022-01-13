@@ -2,10 +2,18 @@ import Head from "next/head"
 import store from "~/stores/AppStore"
 import { Provider } from "mobx-react"
 import { observer } from "mobx-react"
+import { useEffect } from "react"
+import { parseCookies } from "nookies"
 
 require("~/style/globalStyle.css")
 
-const MyApp = observer(({ Component, pageProps }) => {
+const App = observer(({ Component, pageProps }) => {
+  useEffect(async () => {
+    const token = parseCookies(null).token
+    if (token) {
+      await store.auth.autoLogin(token)
+    }
+  })
   return (
     <>
       <Head>
@@ -18,4 +26,4 @@ const MyApp = observer(({ Component, pageProps }) => {
   )
 })
 
-export default MyApp
+export default App
