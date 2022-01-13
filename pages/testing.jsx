@@ -9,7 +9,7 @@ const LandingPage = () => {
         <title>Hotdog Hallway Testing</title>
       </Head>
       <StandardPage>
-        Testing.
+        (Testing Page)
       </StandardPage>
     </>
   )
