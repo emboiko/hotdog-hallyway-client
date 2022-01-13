@@ -1,6 +1,6 @@
 import { types } from 'mobx-state-tree'
 
-export const UIStore = types
+const UIStore = types
   .model('UIStore', {
     loginModalShowing: false,
     signupModalShowing: false,
@@ -8,9 +8,11 @@ export const UIStore = types
   .actions(self => {
     return {
       setLoginModalShowing(loginModalShowing) {
+        if (self.signupModalShowing) self.setSignupModalShowing(false)
         self.loginModalShowing = loginModalShowing
       },
       setSignupModalShowing(signupModalShowing) {
+        if (self.loginModalShowing) self.setLoginModalShowing(false)
         self.signupModalShowing = signupModalShowing
       }
     }
@@ -20,3 +22,5 @@ export const UIStore = types
     //   return someComputedStuff
     // }
   }))
+
+export default UIStore

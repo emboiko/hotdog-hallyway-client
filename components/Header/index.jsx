@@ -14,6 +14,8 @@ const Header = styled.div`
 `
 
 const mapStore = store => ({
+  user: store.auth.user,
+  isUserLoggedIn: store.auth.isUserLoggedIn,
   loginModalShowing: store.ui.loginModalShowing,
   setLoginModalShowing: store.ui.setLoginModalShowing,
   signupModalShowing: store.ui.signupModalShowing,
@@ -23,32 +25,43 @@ const mapStore = store => ({
 // Todo
 const MainHeader = observer(() => {
   const { 
+    user,
+    isUserLoggedIn,
+    logout,
     loginModalShowing, setLoginModalShowing,
     signupModalShowing, setSignupModalShowing
   } = useInject(mapStore)
   return (
     <Header className="font-oswald">
-      <>
-        <div>
-          Guest
-        </div>
-      </>
-      <>
-        <button onClick={() => {
-          setLoginModalShowing(!loginModalShowing)
-        }}>Login</button>
-        <button onClick={() => {
-          setSignupModalShowing(!signupModalShowing)
-        }}>Sign up</button>
-      </>
-      <>
-        <Modal open={loginModalShowing}>
-          <LoginForm />
-        </Modal>
-        <Modal open={signupModalShowing}>
-          <SignupForm />
-        </Modal>
-      </>
+      {/* Todo */}
+      <div>
+        {user.characterName ? user.characterName : "Guest"}
+      </div>
+      {/* Todo */}
+      {isUserLoggedIn ? (
+        <>
+          <button onClick={() => {
+            logout()
+          }}>Logout</button>
+        </>
+      ) : (
+        <>
+          <button onClick={() => {
+            setLoginModalShowing(!loginModalShowing)
+          }}>Login</button>
+          <button onClick={() => {
+            setSignupModalShowing(!signupModalShowing)
+          }}>Sign up</button>
+          <>
+            <Modal open={loginModalShowing}>
+              <LoginForm />
+            </Modal>
+            <Modal open={signupModalShowing}>
+              <SignupForm />
+            </Modal>
+          </>
+        </>
+      )}
     </Header>
   )
 })
