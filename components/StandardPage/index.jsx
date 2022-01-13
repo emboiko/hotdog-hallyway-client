@@ -29,14 +29,9 @@ const StandardPage = observer(({children}) => {
   const loginSuccess = () => {
     setLoginModalShowing(false)
   }
-  const loginFailure = () => {
 
-  }
   const signupSuccess = () => {
     setSignupModalShowing(false)
-  }
-  const signupFailure = () => {
-
   }
 
   return (
@@ -48,10 +43,10 @@ const StandardPage = observer(({children}) => {
       <Footer />
       <>
         <Modal open={loginModalShowing}>
-          <LoginForm successCB={loginSuccess} failureCB={loginFailure} />
+          <LoginForm successCB={loginSuccess} />
         </Modal>
         <Modal open={signupModalShowing}>
-          <SignupForm successCB={signupSuccess} failureCB={signupFailure} />
+          <SignupForm successCB={signupSuccess} />
         </Modal>
       </>
     </>

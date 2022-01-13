@@ -40,7 +40,7 @@ const mapStore = store => ({
   loginError: store.auth.loginError
 })
 
-const LoginForm = observer(({successCB, failureCB}) => {
+const LoginForm = observer(({successCB}) => {
   const { characterName, setCharacterName, password, setPassword, login, loginError } = useInject(mapStore)
 
   const onChangeCharacterName = (event) => {
@@ -56,8 +56,6 @@ const LoginForm = observer(({successCB, failureCB}) => {
     const user = await login({characterName, password})
     if (user) {
       successCB()
-    } else {
-      failureCB()
     }
   }
 

@@ -42,7 +42,7 @@ const mapStore = store => ({
   signupError: store.auth.signupError
 })
 
-const SignupForm = observer(({successCB, failureCB}) => {
+const SignupForm = observer(({successCB}) => {
   const { characterName, setCharacterName, password, setPassword, discordUsername, setDiscordUsername, signup, signupError } = useInject(mapStore)
 
   const onChangeCharacterName = (event) => {
@@ -62,8 +62,6 @@ const SignupForm = observer(({successCB, failureCB}) => {
     const user = await signup({characterName, discordUsername, password})
     if (user) {
       successCB()
-    } else {
-      failureCB()
     }
   }
 
