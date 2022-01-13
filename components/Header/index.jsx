@@ -4,12 +4,15 @@ import styled from "styled-components"
 const Header = styled.div`
   background: #181A1B;
   color: #FFFFFF;
+  height: 30px;
 `
 
 // Todo
-const MainHeader = () => {
+const MainHeader = ({user}) => {
   return (
-    <Header>
+    <Header className="font-oswald">
+      {"Logged in as: "}
+      {user?.characterName || "Guest"}
     </Header>
   )
 }

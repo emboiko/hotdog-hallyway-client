@@ -4,9 +4,10 @@ import Header from "~/components/Header"
 import Footer from "~/components/Footer"
 
 const PageContent = styled.div`
-  min-height: 100vh;
   background: #181A1B;
   color: #FFFFFF;
+  height: calc(100vh - 30px);
+  position: relative;
 `
 
 const StandardPage = ({children}) => {

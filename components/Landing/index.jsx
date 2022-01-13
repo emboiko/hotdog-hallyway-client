@@ -24,14 +24,10 @@ const GuildRealm = styled.h2`
   font-size: 18px;
 `
 
-const BackgroundImage = styled(Image)`
-  position: relative;
-  z-index: 1;
-`
 const Landing = () => {
   return (
-    <div className="font-oswald">
-      <BackgroundImage src={Illidan} alt="Illidan" layout="fill" objectFit="cover" quality={90}/>
+    <div className="font-oswald" style={{background:"red"}}>
+      <Image src={Illidan} alt="Illidan" layout="fill" objectFit="cover" quality={90}/>
       <GuildNameBox>
         <h1>
         {"< Hotdog Hallway >"}
