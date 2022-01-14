@@ -1,4 +1,4 @@
-import { useStore } from "~/hooks/StoreProvider";
+import { useStore } from "/hooks/StoreProvider";
 
 const useInject = (mapStore) => {
   const all = useStore();
