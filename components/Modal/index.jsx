@@ -2,23 +2,35 @@ import React, {useState} from "react"
 import styled, { keyframes } from "styled-components"
 import Image from "next/image"
 import CloseButtonImage from "~/public/static/img/png/close.png"
+import { COLORS } from "~/utilities/constants.js"
+
+const fadeIn = keyframes`
+  from {
+      opacity: 0;
+  }
+
+  to {
+      opacity: 1;
+  }
+`
 
 const ModalWrapper = styled.div`
   display: ${props => props.open ? "block" : "none"};
   border-radius: 5px;
   box-shadow: 5px 5px 10px 2px #000000;
-  background: #181A1B;
+  background: ${COLORS.darkGrey};
   position: absolute;
   right: calc(50% - 200px);
   top: calc(50% - 100px);
   z-index: 10;
   width: ${props => props.width || "400px"};
   height: ${props => props.height || "200px"};
+  animation: ${fadeIn} 0.25s;
 `
 
 const BackgroundLayer = styled.div`
   opacity: 0.5;
-  background: #181A1B;
+  background: ${COLORS.darkGrey};
   display: ${props => props.open ? "block" : "none"};
   width: 100%;
   height: 100%;

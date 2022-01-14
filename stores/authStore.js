@@ -23,7 +23,7 @@ const AuthStore = types
         let result
         try {
           result = await axios.get(`${process.env.BACKEND_URL}/users/me`, {headers: {Authorization: `Bearer ${token}`}})
-          if (result.status === 200) {
+          if (result?.status === 200) {
             self.setUser(result.data, token)
           }
         } catch (error) {
@@ -41,7 +41,7 @@ const AuthStore = types
           console.error(errorMessage)
           self.setLoginError(errorMessage)
         }
-        if (result.status === 200) {
+        if (result?.status === 200) {
           self.setUser(result.data.user, result.data.token)
           return true
         }
@@ -58,7 +58,7 @@ const AuthStore = types
           self.setSignupError(errorMessage)
         }
 
-        if (result && result.data && result.data.token) {
+        if (result?.status === 200) {
           self.setUser(result.data.user, result.data.token)
           return true
         }

@@ -2,12 +2,17 @@ import React from "react"
 import styled from "styled-components"
 import useInject from "~/hooks/useInject"
 import { observer } from "mobx-react"
+import { COLORS } from "~/utilities/constants.js"
+import SimpleButton from "~/components/Inputs/SimpleButton"
 
 const Header = styled.div`
-  background: #181A1B;
+  background: ${COLORS.darkGrey};
   color: #FFFFFF;
-  height: 30px;
+  height: 29px;
   display: flex;
+  border-bottom: 1px solid aqua;
+  justify-content: flex-end;
+  align-items: center;
 `
 
 const mapStore = store => ({
@@ -20,7 +25,6 @@ const mapStore = store => ({
   setSignupModalShowing: store.ui.setSignupModalShowing,
 })
 
-// Todo
 const MainHeader = observer(() => {
   const { 
     user,
@@ -32,23 +36,35 @@ const MainHeader = observer(() => {
 
   return (
     <Header className="font-oswald">
-      <div>
+      <>
         {isLoggedIn ? user.characterName : "Guest"}
-      </div>
+      </>
       {isLoggedIn ? (
         <>
-          <button onClick={() => {
-            logout()
-          }}>Logout</button>
+          <SimpleButton 
+            onClick={() => {logout()}}
+            width="85px"
+            margin="0px 10px"
+          >
+          Logout
+          </SimpleButton>
         </>
       ) : (
         <>
-          <button onClick={() => {
-            setLoginModalShowing(!loginModalShowing)
-          }}>Login</button>
-          <button onClick={() => {
-            setSignupModalShowing(!signupModalShowing)
-          }}>Sign up</button>
+          <SimpleButton 
+            onClick={() => {setLoginModalShowing(!loginModalShowing)}} 
+            width="85px"
+            margin="0px 10px"
+          >
+          Login
+          </SimpleButton>
+          <SimpleButton 
+            onClick={() => {setSignupModalShowing(!signupModalShowing)}} 
+            width="85px"
+            margin="0px 10px 0px 0px"
+          >
+          Sign Up
+          </SimpleButton>
         </>
       )}
     </Header>

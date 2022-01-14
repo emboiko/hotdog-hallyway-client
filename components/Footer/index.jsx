@@ -1,8 +1,9 @@
 import React from "react"
 import styled from "styled-components"
+import { COLORS } from "~/utilities/constants.js"
 
 const Footer = styled.div`
-  background: #181A1B;
+  background: ${COLORS.darkGrey};
   color: #FFFFFF;
 `
 

@@ -7,9 +7,10 @@ import SignupForm from "~/components/Forms/Signup"
 import LoginForm from "~/components/Forms/Login"
 import useInject from "~/hooks/useInject"
 import {observer} from "mobx-react"
+import { COLORS } from "~/utilities/constants.js"
 
 const PageContent = styled.div`
-  background: #181A1B;
+  background: ${COLORS.darkGrey};
   color: #FFFFFF;
   height: calc(100vh - 30px);
   position: relative;

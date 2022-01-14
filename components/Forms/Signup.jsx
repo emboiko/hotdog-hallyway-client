@@ -1,7 +1,8 @@
 import React from "react"
 import styled from "styled-components"
 import useInject from "~/hooks/useInject"
-import SimpleInput from "~/components/Inputs/SimpleInput"
+import TextInput from "~/components/Inputs/TextInput"
+import ButtonInput from "~/components/Inputs/ButtonInput"
 import {observer} from "mobx-react"
 
 const FormWrapper = styled.form`
@@ -99,17 +100,17 @@ const SignupForm = observer(({successCB}) => {
       <SignupHeader>Sign up</SignupHeader>
       <SignupSubheader>Have an account already? <MockLink onClick={swapModals}>Sign in.</MockLink></SignupSubheader>
       <InputWrapper>
-        <SimpleInput name="Character-Name" type="text" placeHolder="Character Name" value={characterName} onChange={onChangeCharacterName} />
+        <TextInput name="Character-Name" type="text" placeHolder="Character Name" value={characterName} onChange={onChangeCharacterName} />
       </InputWrapper>
       <InputWrapper>
-        <SimpleInput name="Discord-Username" type="text" placeHolder="Discord #Username" value={discordUsername} onChange={onChangeDiscordUsername} />
+        <TextInput name="Discord-Username" type="text" placeHolder="Discord #Username" value={discordUsername} onChange={onChangeDiscordUsername} />
       </InputWrapper>
       <InputWrapper>
-        <SimpleInput name="Password" type="password" placeHolder="Password" value={password} onChange={onChangePassword} />
+        <TextInput name="Password" type="password" placeHolder="Password" value={password} onChange={onChangePassword} />
       </InputWrapper>
       <ErrorContainer>{signupError}</ErrorContainer>
       <InputWrapper>
-        <SimpleInput type="submit" />
+        <ButtonInput value="Submit" width="85px" />
       </InputWrapper>
     </FormWrapper>
   )

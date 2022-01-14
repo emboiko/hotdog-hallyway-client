@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import Illidan from "/public/static/img/jpg/illidan.jpg"
+import HotDogStand from "/public/static/img/jpg/hotdogstand1.jpg"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -27,7 +27,7 @@ const GuildRealm = styled.h2`
 const Landing = () => {
   return (
     <div className="font-oswald" style={{background:"red"}}>
-      <Image src={Illidan} alt="Illidan" layout="fill" objectFit="cover" quality={90}/>
+      <Image src={HotDogStand} alt="Illidan" layout="fill" objectFit="cover" quality={90}/>
       <GuildNameBox>
         <h1>
         {"< Hotdog Hallway >"}

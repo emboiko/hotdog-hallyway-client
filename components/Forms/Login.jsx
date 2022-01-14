@@ -1,7 +1,8 @@
 import React from "react"
 import styled from "styled-components"
 import useInject from "~/hooks/useInject"
-import SimpleInput from "~/components/Inputs/SimpleInput"
+import TextInput from "~/components/Inputs/TextInput"
+import ButtonInput from "~/components/Inputs/ButtonInput"
 import { observer } from "mobx-react"
 
 const FormWrapper = styled.form`
@@ -92,14 +93,14 @@ const LoginForm = observer(({successCB}) => {
       <LoginHeader>Login</LoginHeader>
       <LoginSubheader>Need an account? <MockLink onClick={swapModals}>Click here.</MockLink></LoginSubheader>
       <InputWrapper>
-        <SimpleInput name="Character-Name" type="text" placeHolder="Character Name" value={characterName} onChange={onChangeCharacterName} />
+        <TextInput name="Character-Name" type="text" placeHolder="Character Name" value={characterName} onChange={onChangeCharacterName} />
       </InputWrapper>
       <InputWrapper>
-        <SimpleInput name="Password" type="password" placeHolder="Password" value={password} onChange={onChangePassword} />
+        <TextInput name="Password" type="password" placeHolder="Password" value={password} onChange={onChangePassword} />
       </InputWrapper>
       <ErrorContainer>{loginError}</ErrorContainer>
       <InputWrapper>
-        <SimpleInput type="submit" />
+        <ButtonInput value="Submit" width="85px" />
       </InputWrapper>
     </FormWrapper>
   )
