@@ -18,20 +18,24 @@ const PageContent = styled.div`
 const mapStore = store => ({
   loginModalShowing: store.ui.loginModalShowing,
   setLoginModalShowing: store.ui.setLoginModalShowing,
+  setLoginError: store.auth.setLoginError,
   signupModalShowing: store.ui.signupModalShowing,
   setSignupModalShowing: store.ui.setSignupModalShowing,
+  setSignupError: store.auth.setSignupError,
 })
 
 const StandardPage = observer(({children}) => {
 
-  const {loginModalShowing, setLoginModalShowing, signupModalShowing, setSignupModalShowing} = useInject(mapStore)
+  const {loginModalShowing, setLoginModalShowing, setLoginError, signupModalShowing, setSignupModalShowing, setSignupError} = useInject(mapStore)
 
-  const loginSuccess = () => {
+  const closeLoginModal = () => {
     setLoginModalShowing(false)
+    setLoginError("")
   }
 
-  const signupSuccess = () => {
+  const closeSignupModal = () => {
     setSignupModalShowing(false)
+    setSignupError("")
   }
 
   return (
@@ -42,11 +46,11 @@ const StandardPage = observer(({children}) => {
       </PageContent>
       <Footer />
       <>
-        <Modal open={loginModalShowing}>
-          <LoginForm successCB={loginSuccess} />
+        <Modal open={loginModalShowing} closer={closeLoginModal}>
+          <LoginForm successCB={closeLoginModal} />
         </Modal>
-        <Modal open={signupModalShowing}>
-          <SignupForm successCB={signupSuccess} />
+        <Modal open={signupModalShowing} closer={closeSignupModal} height="240px">
+          <SignupForm successCB={closeSignupModal} />
         </Modal>
       </>
     </>

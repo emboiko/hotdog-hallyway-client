@@ -22,11 +22,12 @@ const AuthStore = types
       async autoLogin(token) {
         let result
         try {
-          result = await axios.get(`${process.env.BACKEND_URL}/users/me`, {}, {headers: {Authorization: `Bearer ${token}`}})
-          if (result.data) {
+          result = await axios.get(`${process.env.BACKEND_URL}/users/me`, {headers: {Authorization: `Bearer ${token}`}})
+          if (result.status === 200) {
             self.setUser(result.data, token)
           }
         } catch (error) {
+          console.error(error)
           self.unsetUser()
         }
       },
@@ -36,13 +37,14 @@ const AuthStore = types
         try {
           result = await axios.post(`${process.env.BACKEND_URL}/users/login`, payload)
         } catch (err) {
-          console.error(err)
+          const errorMessage = "Unable to login"
+          console.error(errorMessage)
+          self.setLoginError(errorMessage)
         }
-        if (result && result.data && result.data.token) {
+        if (result.status === 200) {
           self.setUser(result.data.user, result.data.token)
           return true
         }
-        self.setLoginError("Unable to login")
         return false
       },
       async signup(payload) {
@@ -51,14 +53,15 @@ const AuthStore = types
         try {
           result = await axios.post(`${process.env.BACKEND_URL}/users`, payload)
         } catch (err) {
-          console.error(err)
+          const errorMessage = "Unable to sign up."
+          console.error(errorMessage)
+          self.setSignupError(errorMessage)
         }
 
         if (result && result.data && result.data.token) {
           self.setUser(result.data.user, result.data.token)
           return true
         }
-        self.setSignupError("Unable to sign up.")
         return false
       },
       async logout() {
@@ -69,7 +72,6 @@ const AuthStore = types
         } catch (err) {
           console.error(err)
         }
-        console.log(result)
         if (result?.status === 200) {
           self.unsetUser()
           return true

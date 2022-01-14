@@ -19,8 +19,15 @@ const InputWrapper = styled.div`
   align-items: center;
 `
 
-const LoginHeader = styled.span`
+const LoginHeader = styled.div`
   font-size: 25px;
+  align-self: flex-start;
+  margin-left: 20px;
+  color: #FFFFFF;
+`
+
+const LoginSubheader = styled.div`
+  font-size: 16px;
   align-self: flex-start;
   margin-left: 20px;
   color: #FFFFFF;
@@ -28,7 +35,14 @@ const LoginHeader = styled.span`
 
 const ErrorContainer = styled.div`
   color: red;
-  min-height: 20px;
+  min-height: 30px;
+`
+
+const MockLink = styled.span`
+  color: aqua;
+  &:hover {
+    cursor: pointer;
+  }
 `
 
 const mapStore = store => ({
@@ -37,11 +51,19 @@ const mapStore = store => ({
   password: store.auth.password,
   setPassword: store.auth.setPassword,
   login: store.auth.login,
-  loginError: store.auth.loginError
+  loginError: store.auth.loginError,
+  setLoginError: store.auth.setLoginError,
+  setLoginModalShowing: store.ui.setLoginModalShowing,
+  setSignupModalShowing: store.ui.setSignupModalShowing,
 })
 
 const LoginForm = observer(({successCB}) => {
-  const { characterName, setCharacterName, password, setPassword, login, loginError } = useInject(mapStore)
+  const { 
+    characterName, setCharacterName, 
+    password, setPassword, 
+    login, loginError, setLoginError,
+    setLoginModalShowing, setSignupModalShowing 
+  } = useInject(mapStore)
 
   const onChangeCharacterName = (event) => {
     setCharacterName(event.target.value)
@@ -59,9 +81,16 @@ const LoginForm = observer(({successCB}) => {
     }
   }
 
+  const swapModals = () => {
+    setLoginModalShowing(false)
+    setLoginError("")
+    setSignupModalShowing(true)
+  }
+
   return (
     <FormWrapper onSubmit={onSubmit}>
       <LoginHeader>Login</LoginHeader>
+      <LoginSubheader>Need an account? <MockLink onClick={swapModals}>Click here.</MockLink></LoginSubheader>
       <InputWrapper>
         <SimpleInput name="Character-Name" type="text" placeHolder="Character Name" value={characterName} onChange={onChangeCharacterName} />
       </InputWrapper>

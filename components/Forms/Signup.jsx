@@ -26,9 +26,23 @@ const SignupHeader = styled.span`
   color: #FFFFFF;
 `
 
+const SignupSubheader = styled.div`
+  font-size: 16px;
+  align-self: flex-start;
+  margin-left: 20px;
+  color: #FFFFFF;
+`
+
 const ErrorContainer = styled.div`
   color: red;
-  min-height: 20px;
+  min-height: 30px;
+`
+
+const MockLink = styled.span`
+  color: aqua;
+  &:hover {
+    cursor: pointer;
+  }
 `
 
 const mapStore = store => ({
@@ -39,11 +53,20 @@ const mapStore = store => ({
   password: store.auth.password,
   setPassword: store.auth.setPassword,
   signup: store.auth.signup,
-  signupError: store.auth.signupError
+  signupError: store.auth.signupError,
+  setSignupError: store.auth.setSignupError,
+  setLoginModalShowing: store.ui.setLoginModalShowing,
+  setSignupModalShowing: store.ui.setSignupModalShowing,
 })
 
 const SignupForm = observer(({successCB}) => {
-  const { characterName, setCharacterName, password, setPassword, discordUsername, setDiscordUsername, signup, signupError } = useInject(mapStore)
+  const { 
+    characterName, setCharacterName, 
+    password, setPassword, 
+    discordUsername, setDiscordUsername, 
+    signup, signupError, setSignupError,
+    setLoginModalShowing, setSignupModalShowing
+  } = useInject(mapStore)
 
   const onChangeCharacterName = (event) => {
     setCharacterName(event.target.value)
@@ -65,9 +88,16 @@ const SignupForm = observer(({successCB}) => {
     }
   }
 
+  const swapModals = () => {
+    setSignupModalShowing(false)
+    setSignupError("")
+    setLoginModalShowing(true)
+  }
+
   return (
     <FormWrapper onSubmit={onSubmit}>
       <SignupHeader>Sign up</SignupHeader>
+      <SignupSubheader>Have an account already? <MockLink onClick={swapModals}>Sign in.</MockLink></SignupSubheader>
       <InputWrapper>
         <SimpleInput name="Character-Name" type="text" placeHolder="Character Name" value={characterName} onChange={onChangeCharacterName} />
       </InputWrapper>
