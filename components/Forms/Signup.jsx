@@ -86,8 +86,14 @@ const SignupForm = observer(({successCB}) => {
     setDiscordUsername(event.target.value)
   }
 
+  const usernameError = validateUsername(username)
+  const passwordError = validatePassword(password)
+  const discordUsernameError = validateDiscordUsername(discordUsername)
+  const error = usernameError || passwordError || discordUsernameError || signupError
+
   const onSubmit = async (event) => {
     event.preventDefault()
+    if (error) return
     const user = await signup({username, discordUsername, password})
     if (user) {
       successCB()
@@ -99,11 +105,6 @@ const SignupForm = observer(({successCB}) => {
     setSignupError("")
     setLoginModalShowing(true)
   }
-
-  const usernameError = validateUsername(username)
-  const passwordError = validatePassword(password)
-  const discordUsernameError = validateDiscordUsername(discordUsername)
-  const error = usernameError || passwordError || discordUsernameError || signupError
 
   return (
     <FormWrapper onSubmit={onSubmit}>

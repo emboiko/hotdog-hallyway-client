@@ -77,8 +77,13 @@ const LoginForm = observer(({successCB}) => {
     setPassword(event.target.value)
   }
 
+  const usernameError = validateUsername(username)
+  const passwordError = validatePassword(password)
+  const error = usernameError || passwordError || loginError
+
   const onSubmit = async (event) => {
     event.preventDefault()
+    if (error) return
     const user = await login({username, password})
     if (user) {
       successCB()
@@ -90,10 +95,6 @@ const LoginForm = observer(({successCB}) => {
     setLoginError("")
     setSignupModalShowing(true)
   }
-
-  const usernameError = validateUsername(username)
-  const passwordError = validatePassword(password)
-  const error = usernameError || passwordError || loginError
 
   return (
     <FormWrapper onSubmit={onSubmit}>
