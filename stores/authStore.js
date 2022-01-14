@@ -58,7 +58,7 @@ const AuthStore = types
           self.setSignupError(errorMessage)
         }
 
-        if (result?.status === 200) {
+        if (result?.status === 201) {
           self.setUser(result.data.user, result.data.token)
           return true
         }
