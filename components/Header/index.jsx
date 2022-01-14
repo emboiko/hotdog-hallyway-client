@@ -37,7 +37,7 @@ const MainHeader = observer(() => {
   return (
     <Header className="font-oswald">
       <>
-        {isLoggedIn ? user.characterName : "Guest"}
+        {isLoggedIn ? user.username : "Guest"}
       </>
       {isLoggedIn ? (
         <>

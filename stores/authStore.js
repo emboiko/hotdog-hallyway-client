@@ -4,7 +4,7 @@ import { types } from "mobx-state-tree"
 
 const User = types
   .model("User", {
-    characterName: types.optional(types.string, ""),
+    username: types.optional(types.string, ""),
     discordUsername: types.optional(types.string, ""),
     id: types.optional(types.string, ""),
   })
@@ -12,7 +12,7 @@ const User = types
 const AuthStore = types
   .model('AuthStore', {
     user: types.optional(User, {}),
-    characterName: types.optional(types.string, ""),
+    username: types.optional(types.string, ""),
     discordUsername: types.optional(types.string, ""),
     loginError: types.optional(types.string, ""),
     signupError: types.optional(types.string, "")
@@ -79,15 +79,15 @@ const AuthStore = types
         return false
       },
       setUser(user, token) {
-        self.user = {characterName: user.characterName, discordUsername: user.discordUsername, id:user._id}
+        self.user = {username: user.username, discordUsername: user.discordUsername, id:user._id}
         setCookie(null, 'token', token, {maxAge: 30 * 24 * 60 * 60, path: '/'})
       },
       unsetUser() {
         self.user = {}
         destroyCookie(null, 'token', {path: '/'})
       },
-      setCharacterName(value) {
-        self.characterName = value
+      setUsername(value) {
+        self.username = value
       },
       setDiscordUsername(value) {
         self.discordUsername = value

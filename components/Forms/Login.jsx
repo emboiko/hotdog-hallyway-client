@@ -47,8 +47,8 @@ const MockLink = styled.span`
 `
 
 const mapStore = store => ({
-  characterName: store.auth.characterName,
-  setCharacterName: store.auth.setCharacterName,
+  username: store.auth.username,
+  setUsername: store.auth.setUsername,
   password: store.auth.password,
   setPassword: store.auth.setPassword,
   login: store.auth.login,
@@ -60,14 +60,14 @@ const mapStore = store => ({
 
 const LoginForm = observer(({successCB}) => {
   const { 
-    characterName, setCharacterName, 
+    username, setUsername, 
     password, setPassword, 
     login, loginError, setLoginError,
     setLoginModalShowing, setSignupModalShowing 
   } = useInject(mapStore)
 
-  const onChangeCharacterName = (event) => {
-    setCharacterName(event.target.value)
+  const onChangeUsername = (event) => {
+    setUsername(event.target.value)
   }
 
   const onChangePassword = (event) => {
@@ -76,7 +76,7 @@ const LoginForm = observer(({successCB}) => {
 
   const onSubmit = async (event) => {
     event.preventDefault()
-    const user = await login({characterName, password})
+    const user = await login({username, password})
     if (user) {
       successCB()
     }
@@ -93,7 +93,7 @@ const LoginForm = observer(({successCB}) => {
       <LoginHeader>Login</LoginHeader>
       <LoginSubheader>Need an account? <MockLink onClick={swapModals}>Click here.</MockLink></LoginSubheader>
       <InputWrapper>
-        <TextInput name="Character-Name" type="text" placeHolder="Character Name" value={characterName} onChange={onChangeCharacterName} />
+        <TextInput name="Username" type="text" placeHolder="Username" value={username} onChange={onChangeUsername} />
       </InputWrapper>
       <InputWrapper>
         <TextInput name="Password" type="password" placeHolder="Password" value={password} onChange={onChangePassword} />

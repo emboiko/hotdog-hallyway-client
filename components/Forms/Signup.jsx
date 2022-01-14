@@ -47,8 +47,8 @@ const MockLink = styled.span`
 `
 
 const mapStore = store => ({
-  characterName: store.auth.characterName,
-  setCharacterName: store.auth.setCharacterName,
+  username: store.auth.username,
+  setUsername: store.auth.setUsername,
   discordUsername: store.auth.discordUsername,
   setDiscordUsername: store.auth.setDiscordUsername,
   password: store.auth.password,
@@ -62,15 +62,15 @@ const mapStore = store => ({
 
 const SignupForm = observer(({successCB}) => {
   const { 
-    characterName, setCharacterName, 
+    username, setUsername, 
     password, setPassword, 
     discordUsername, setDiscordUsername, 
     signup, signupError, setSignupError,
     setLoginModalShowing, setSignupModalShowing
   } = useInject(mapStore)
 
-  const onChangeCharacterName = (event) => {
-    setCharacterName(event.target.value)
+  const onChangeUsername = (event) => {
+    setUsername(event.target.value)
   }
 
   const onChangePassword = (event) => {
@@ -83,7 +83,7 @@ const SignupForm = observer(({successCB}) => {
 
   const onSubmit = async (event) => {
     event.preventDefault()
-    const user = await signup({characterName, discordUsername, password})
+    const user = await signup({username, discordUsername, password})
     if (user) {
       successCB()
     }
@@ -100,7 +100,7 @@ const SignupForm = observer(({successCB}) => {
       <SignupHeader>Sign up</SignupHeader>
       <SignupSubheader>Have an account already? <MockLink onClick={swapModals}>Sign in.</MockLink></SignupSubheader>
       <InputWrapper>
-        <TextInput name="Character-Name" type="text" placeHolder="Character Name" value={characterName} onChange={onChangeCharacterName} />
+        <TextInput name="Username" type="text" placeHolder="Character Name" value={username} onChange={onChangeUsername} />
       </InputWrapper>
       <InputWrapper>
         <TextInput name="Discord-Username" type="text" placeHolder="Discord #Username" value={discordUsername} onChange={onChangeDiscordUsername} />
