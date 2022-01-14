@@ -3,7 +3,9 @@ import styled from "styled-components"
 import useInject from "~/hooks/useInject"
 import TextInput from "~/components/Inputs/TextInput"
 import ButtonInput from "~/components/Inputs/ButtonInput"
-import {observer} from "mobx-react"
+import { observer} from "mobx-react"
+import { validateUsername, validatePassword, validateDiscordUsername } from "~/utilities/userValidations"
+
 
 const FormWrapper = styled.form`
   display: flex;
@@ -70,14 +72,17 @@ const SignupForm = observer(({successCB}) => {
   } = useInject(mapStore)
 
   const onChangeUsername = (event) => {
+    setSignupError("")
     setUsername(event.target.value)
   }
 
   const onChangePassword = (event) => {
+    setSignupError("")
     setPassword(event.target.value)
   }
 
   const onChangeDiscordUsername = (event) => {
+    setSignupError("")
     setDiscordUsername(event.target.value)
   }
 
@@ -95,6 +100,11 @@ const SignupForm = observer(({successCB}) => {
     setLoginModalShowing(true)
   }
 
+  const usernameError = validateUsername(username)
+  const passwordError = validatePassword(password)
+  const discordUsernameError = validateDiscordUsername(discordUsername)
+  const error = usernameError || passwordError || discordUsernameError || signupError
+
   return (
     <FormWrapper onSubmit={onSubmit}>
       <SignupHeader>Sign up</SignupHeader>
@@ -108,7 +118,7 @@ const SignupForm = observer(({successCB}) => {
       <InputWrapper>
         <TextInput name="Password" type="password" placeHolder="Password" value={password} onChange={onChangePassword} />
       </InputWrapper>
-      <ErrorContainer>{signupError}</ErrorContainer>
+      <ErrorContainer>{error}</ErrorContainer>
       <InputWrapper>
         <ButtonInput value="Submit" width="85px" />
       </InputWrapper>

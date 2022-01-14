@@ -4,6 +4,7 @@ import useInject from "~/hooks/useInject"
 import TextInput from "~/components/Inputs/TextInput"
 import ButtonInput from "~/components/Inputs/ButtonInput"
 import { observer } from "mobx-react"
+import { validateUsername, validatePassword } from "~/utilities/userValidations"
 
 const FormWrapper = styled.form`
   display: flex;
@@ -67,10 +68,12 @@ const LoginForm = observer(({successCB}) => {
   } = useInject(mapStore)
 
   const onChangeUsername = (event) => {
+    setLoginError("")
     setUsername(event.target.value)
   }
 
   const onChangePassword = (event) => {
+    setLoginError("")
     setPassword(event.target.value)
   }
 
@@ -88,6 +91,10 @@ const LoginForm = observer(({successCB}) => {
     setSignupModalShowing(true)
   }
 
+  const usernameError = validateUsername(username)
+  const passwordError = validatePassword(password)
+  const error = usernameError || passwordError || loginError
+
   return (
     <FormWrapper onSubmit={onSubmit}>
       <LoginHeader>Login</LoginHeader>
@@ -98,7 +105,7 @@ const LoginForm = observer(({successCB}) => {
       <InputWrapper>
         <TextInput name="Password" type="password" placeHolder="Password" value={password} onChange={onChangePassword} />
       </InputWrapper>
-      <ErrorContainer>{loginError}</ErrorContainer>
+      <ErrorContainer>{error}</ErrorContainer>
       <InputWrapper>
         <ButtonInput value="Submit" width="85px" />
       </InputWrapper>

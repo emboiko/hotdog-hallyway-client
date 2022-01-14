@@ -13,6 +13,7 @@ const AuthStore = types
   .model('AuthStore', {
     user: types.optional(User, {}),
     username: types.optional(types.string, ""),
+    password: types.optional(types.string, ""),
     discordUsername: types.optional(types.string, ""),
     loginError: types.optional(types.string, ""),
     signupError: types.optional(types.string, "")
@@ -84,6 +85,9 @@ const AuthStore = types
       },
       unsetUser() {
         self.user = {}
+        self.setUsername("")
+        self.setPassword("")
+        self.setDiscordUsername("")
         destroyCookie(null, 'token', {path: '/'})
       },
       setUsername(value) {
