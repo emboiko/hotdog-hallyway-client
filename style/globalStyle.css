@@ -11,3 +11,7 @@
 .font-squadaone {
     font-family: 'Squada One', sans-serif;
 }
+
+a {
+    text-decoration: none;
+}

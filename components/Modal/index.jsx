@@ -22,7 +22,7 @@ const ModalWrapper = styled.div`
   position: absolute;
   right: calc(50% - 200px);
   top: calc(50% - 100px);
-  z-index: 10;
+  z-index: 2;
   width: ${props => props.width || "400px"};
   height: ${props => props.height || "200px"};
   animation: ${fadeIn} 0.25s;
@@ -38,7 +38,7 @@ const BackgroundLayer = styled.div`
   display: ${props => props.open ? "block" : "none"};
   width: 100%;
   height: 100%;
-  z-index: 9;
+  z-index: 2;
   position: absolute;
   top: 0px;
 `

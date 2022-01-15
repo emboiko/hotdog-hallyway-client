@@ -1,12 +1,7 @@
 import React from "react"
 import Head from "next/head"
 import StandardPage from "~/components/StandardPage"
-import styled from "styled-components"
-
-const UnderConstruction = styled.div`
-  font-size: 24px;
-  text-align: center;
-`
+import Application from "~/components/Application"
 
 const ApplicationPage = () => {
   return (
@@ -15,7 +10,7 @@ const ApplicationPage = () => {
         <title>Hotdog Hallway</title>
       </Head>
       <StandardPage>
-        <UnderConstruction>Under Construction</UnderConstruction>
+        <Application />
       </StandardPage>
     </>
   )

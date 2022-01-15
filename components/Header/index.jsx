@@ -13,7 +13,7 @@ const Header = styled.div`
   color: #FFFFFF;
   height: 40px;
   position: absolute;
-  z-index: 10;
+  z-index: 2;
   top: 0px;
   display: flex;
   justify-content: space-between;

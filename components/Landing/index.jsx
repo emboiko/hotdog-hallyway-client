@@ -13,7 +13,6 @@ const Wrapper = styled.div`
 `
 
 const Guildname = styled.div`
-  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -77,7 +76,7 @@ const Links = styled.div`
 const Landing = () => {
   return (
     <Wrapper>
-      <Image src={HotDogStand} alt="Hotdog Stand" layout="fill" objectFit="cover" quality={90}/>
+      <Image src={HotDogStand} alt="Hotdog Stand" layout="fill" objectFit="cover" quality={90} priority/>
       <CallToActionContainer className="font-squadaone">
         <Guildname className="font-oswald">
           <h1>
