@@ -32,10 +32,11 @@ const RightSide = styled.div`
   background: ${COLORS.darkGrey};
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
-  width: 245px;
+  justify-content: flex-end;
+  max-width: 245px;
   @media (max-width: ${UI_SIZES.medium}px) {
     width: 50%;
+    max-width: initial;
     border-left: initial;
     border-bottom-left-radius: initial;
   }
@@ -59,6 +60,10 @@ const Home = styled.div`
   margin-left: 5px;
   cursor: pointer;
   padding: 5px;
+`
+
+const Buttons = styled.div`
+  display: flex;
 `
 
 const mapStore = store => ({
@@ -97,32 +102,34 @@ const MainHeader = observer(() => {
             {isLoggedIn ? user.username : "Guest"}
           </Username>
         )}
-        {isLoggedIn ? (
-          <SimpleButton 
-            onClick={() => {logout()}}
-            width="85px"
-            margin="0px 10px"
-          >
-          Logout
-          </SimpleButton>
-        ) : (
-          <>
+        <Buttons>
+          {isLoggedIn ? (
             <SimpleButton 
-              onClick={() => {setLoginModalShowing(!loginModalShowing)}} 
+              onClick={() => {logout()}}
               width="85px"
               margin="0px 10px"
             >
-            Login
+            Logout
             </SimpleButton>
-            <SimpleButton 
-              onClick={() => {setSignupModalShowing(!signupModalShowing)}} 
-              width="85px"
-              margin="0px 10px 0px 0px"
-            >
-            Sign Up
-            </SimpleButton>
-          </>
-        )}
+          ) : (
+            <>
+              <SimpleButton 
+                onClick={() => {setLoginModalShowing(!loginModalShowing)}} 
+                width="85px"
+                margin="0px 10px"
+              >
+              Login
+              </SimpleButton>
+              <SimpleButton 
+                onClick={() => {setSignupModalShowing(!signupModalShowing)}} 
+                width="85px"
+                margin="0px 10px 0px 0px"
+              >
+              Sign Up
+              </SimpleButton>
+            </>
+          )}
+        </Buttons>
       </RightSide>
     </Header>
   )

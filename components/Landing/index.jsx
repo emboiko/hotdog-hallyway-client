@@ -12,14 +12,12 @@ const Wrapper = styled.div`
   height: 100%;
 `
 
-const GuildNameBox = styled.div`
-  position: absolute;
+const Guildname = styled.div`
   z-index: 2;
-  bottom: 10px;
-  left: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 10px;
   @media (max-width: ${UI_SIZES.tiny}px) {
     left: 0px;
     right: 0px;
@@ -31,6 +29,16 @@ const GuildRealm = styled.h2`
   font-size: 18px;
   @media (max-width: ${UI_SIZES.tiny}px) {
     font-size: 5vw;
+  }
+`
+
+const CallToActionContainer = styled.div`
+  position: relative;
+  margin-top: 15vh;
+  display: flex;
+  flex-direction: column;
+  @media (max-width: ${UI_SIZES.small}px) {
+    margin-top: 60px;
   }
 `
 
@@ -50,43 +58,53 @@ const CallToAction = styled.div`
     color: #000000;
     background: ${props => props.color};
   }
+  @media (max-width: ${UI_SIZES.small}px) {
+    margin: 10px 0px;
+    width: 50%;
+    text-align: center;
+    font-size: 32px;
+  }
 `
 
-const CallToActionContainer = styled.div`
-  position: relative;
-  margin-top: 100px;
+const Links = styled.div`
   display: flex;
+  @media (max-width: ${UI_SIZES.small}px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `
 
 const Landing = () => {
   return (
-    <Wrapper className="font-oswald">
+    <Wrapper>
       <Image src={HotDogStand} alt="Hotdog Stand" layout="fill" objectFit="cover" quality={90}/>
-      <CallToActionContainer>
-        <Link href="/about">
-          <CallToAction color={COLORS.red}>
-            About
-          </CallToAction>
-        </Link>
-        <Link href="/roster">
-          <CallToAction color={COLORS.yellow}>
-            Roster
-          </CallToAction>
-        </Link>
-        <Link href="/apply">
-          <CallToAction color={COLORS.lightGreen}>
-            Apply
-          </CallToAction>
-        </Link>
+      <CallToActionContainer className="font-squadaone">
+        <Guildname className="font-oswald">
+          <h1>
+          {"< Hotdog Hallway >"}
+          </h1>
+          <GuildRealm>
+            Mankrik Horde TBC | Progression Raiding
+          </GuildRealm>
+        </Guildname>
+        <Links>
+          <Link href="/about">
+            <CallToAction color={COLORS.red}>
+              About
+            </CallToAction>
+          </Link>
+          <Link href="/roster">
+            <CallToAction color={COLORS.yellow}>
+              Roster
+            </CallToAction>
+          </Link>
+          <Link href="/apply">
+            <CallToAction color={COLORS.lightGreen}>
+              Apply
+            </CallToAction>
+          </Link>
+        </Links>
       </CallToActionContainer>
-      <GuildNameBox>
-        <h1>
-        {"< Hotdog Hallway >"}
-        </h1>
-        <GuildRealm>
-          Mankrik Horde TBC | Progression Raiding
-        </GuildRealm>
-      </GuildNameBox>
     </Wrapper>
   )
 }

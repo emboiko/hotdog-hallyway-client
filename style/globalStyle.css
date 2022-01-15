@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Oswald&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald&family=Squada+One&display=swap");
 
 * {
     margin: 0;
@@ -7,4 +7,7 @@
 
 .font-oswald {
     font-family: 'Oswald', sans-serif;
+}
+.font-squadaone {
+    font-family: 'Squada One', sans-serif;
 }
