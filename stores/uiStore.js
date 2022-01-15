@@ -6,6 +6,7 @@ const UIStore = types
     signupModalShowing: false,
     isTiny: false,
     isSmall: false,
+    isMedium: false,
     innerWidth: 0,
     innerHeight: 0
   })
@@ -24,6 +25,9 @@ const UIStore = types
       },
       setIsSmall(bool) {
         self.isSmall = bool
+      },
+      setIsMedium(bool) {
+        self.isMedium = bool
       },
       setInnerWidth(num) {
         self.innerWidth = num

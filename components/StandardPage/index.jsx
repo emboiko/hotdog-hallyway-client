@@ -12,8 +12,13 @@ import { COLORS } from "~/utilities/constants.js"
 const PageContent = styled.div`
   background: ${COLORS.darkGrey};
   color: #FFFFFF;
-  height: calc(100vh - 30px);
+  height: 100vh;
   position: relative;
+`
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
 `
 
 const mapStore = store => ({
@@ -40,7 +45,7 @@ const StandardPage = observer(({children}) => {
   }
 
   return (
-    <>
+    <Wrapper>
       <Header />
       <PageContent>
         {children}
@@ -54,7 +59,7 @@ const StandardPage = observer(({children}) => {
           <SignupForm successCB={closeSignupModal} />
         </Modal>
       </>
-    </>
+    </Wrapper>
   )
 })
 

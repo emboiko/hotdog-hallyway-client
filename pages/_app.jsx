@@ -27,10 +27,16 @@ const App = observer(({ Component, pageProps }) => {
         store.ui.setIsTiny(false)
       }
       
-      if (e.target.innerWidth <= UI_SIZES.mobile) {
+      if (e.target.innerWidth <= UI_SIZES.small) {
         store.ui.setIsSmall(true)
       } else {
         store.ui.setIsSmall(false)
+      }
+
+      if (e.target.innerWidth <= UI_SIZES.medium) {
+        store.ui.setIsMedium(true)
+      } else {
+        store.ui.setIsMedium(false)
       }
     })
   })
