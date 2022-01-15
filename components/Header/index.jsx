@@ -87,7 +87,7 @@ const MainHeader = observer(() => {
       <LeftSide>
         <Link href="/">
           <Home>
-            <Image src={HomeIcon} width={25} height={25} />
+            <Image src={HomeIcon} alt="home" width={25} height={25} />
           </Home>
         </Link>
       </LeftSide>
