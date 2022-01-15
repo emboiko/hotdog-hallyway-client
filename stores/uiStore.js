@@ -4,6 +4,10 @@ const UIStore = types
   .model('UIStore', {
     loginModalShowing: false,
     signupModalShowing: false,
+    isTiny: false,
+    isSmall: false,
+    innerWidth: 0,
+    innerHeight: 0
   })
   .actions(self => {
     return {
@@ -14,6 +18,18 @@ const UIStore = types
       setSignupModalShowing(signupModalShowing) {
         if (self.loginModalShowing) self.setLoginModalShowing(false)
         self.signupModalShowing = signupModalShowing
+      },
+      setIsTiny(bool) {
+        self.isTiny = bool
+      },
+      setIsSmall(bool) {
+        self.isSmall = bool
+      },
+      setInnerWidth(num) {
+        self.innerWidth = num
+      },
+      setInnerHeight(num) {
+        self.innerHeight = num
       }
     }
   })

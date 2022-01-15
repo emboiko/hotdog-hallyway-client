@@ -10,9 +10,14 @@ const Header = styled.div`
   color: #FFFFFF;
   height: 29px;
   display: flex;
-  border-bottom: 1px solid aqua;
+  border-bottom: 1px solid ${COLORS.accentBlue};
   justify-content: flex-end;
   align-items: center;
+`
+
+const Username = styled.div`
+  margin-left: 10px;
+  margin-bottom: 2px;
 `
 
 const mapStore = store => ({
@@ -23,6 +28,7 @@ const mapStore = store => ({
   setLoginModalShowing: store.ui.setLoginModalShowing,
   signupModalShowing: store.ui.signupModalShowing,
   setSignupModalShowing: store.ui.setSignupModalShowing,
+  isTiny: store.ui.isTiny
 })
 
 const MainHeader = observer(() => {
@@ -31,14 +37,17 @@ const MainHeader = observer(() => {
     isLoggedIn,
     logout,
     loginModalShowing, setLoginModalShowing,
-    signupModalShowing, setSignupModalShowing
+    signupModalShowing, setSignupModalShowing,
+    isTiny
   } = useInject(mapStore)
 
   return (
     <Header className="font-oswald">
-      <>
-        {isLoggedIn ? user.username : "Guest"}
-      </>
+      {!isLoggedIn && isTiny ? null : (
+        <Username>
+          {isLoggedIn ? user.username : "Guest"}
+        </Username>
+      )}
       {isLoggedIn ? (
         <>
           <SimpleButton 

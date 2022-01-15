@@ -4,6 +4,7 @@ import useInject from "~/hooks/useInject"
 import TextInput from "~/components/Inputs/TextInput"
 import ButtonInput from "~/components/Inputs/ButtonInput"
 import { observer} from "mobx-react"
+import { COLORS } from "~/utilities/constants.js"
 import { validateUsername, validatePassword, validateDiscordUsername } from "~/utilities/userValidations"
 
 
@@ -24,28 +25,27 @@ const InputWrapper = styled.div`
 
 const SignupHeader = styled.span`
   font-size: 25px;
-  align-self: flex-start;
-  margin-left: 20px;
   color: #FFFFFF;
+  width: 90%;
 `
 
 const SignupSubheader = styled.div`
   font-size: 16px;
-  align-self: flex-start;
-  margin-left: 20px;
   color: #FFFFFF;
+  width: 90%;
 `
 
 const ErrorContainer = styled.div`
   color: red;
   min-height: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `
 
 const MockLink = styled.span`
-  color: aqua;
-  &:hover {
-    cursor: pointer;
-  }
+  color: ${COLORS.accentBlue};
+  cursor: pointer;
 `
 
 const mapStore = store => ({
@@ -60,6 +60,7 @@ const mapStore = store => ({
   setSignupError: store.auth.setSignupError,
   setLoginModalShowing: store.ui.setLoginModalShowing,
   setSignupModalShowing: store.ui.setSignupModalShowing,
+  innerWidth: store.ui.innerWidth
 })
 
 const SignupForm = observer(({successCB}) => {
@@ -68,7 +69,8 @@ const SignupForm = observer(({successCB}) => {
     password, setPassword, 
     discordUsername, setDiscordUsername, 
     signup, signupError, setSignupError,
-    setLoginModalShowing, setSignupModalShowing
+    setLoginModalShowing, setSignupModalShowing,
+    innerWidth
   } = useInject(mapStore)
 
   const onChangeUsername = (event) => {
@@ -108,8 +110,16 @@ const SignupForm = observer(({successCB}) => {
 
   return (
     <FormWrapper onSubmit={onSubmit}>
-      <SignupHeader>Sign up</SignupHeader>
-      <SignupSubheader>Have an account already? <MockLink onClick={swapModals}>Sign in.</MockLink></SignupSubheader>
+    <SignupHeader>Sign up</SignupHeader>
+    <SignupSubheader>
+      {
+        innerWidth < 270 ? <>
+          Or <MockLink onClick={swapModals}>Log In.</MockLink>
+        </> : <>
+          Already have an account? <MockLink onClick={swapModals}>Click here.</MockLink>
+        </>
+      }
+    </SignupSubheader>
       <InputWrapper>
         <TextInput name="Username" type="text" placeHolder="Character Name" value={username} onChange={onChangeUsername} />
       </InputWrapper>

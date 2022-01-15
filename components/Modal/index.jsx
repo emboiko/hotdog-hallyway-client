@@ -2,7 +2,7 @@ import React, {useState} from "react"
 import styled, { keyframes } from "styled-components"
 import Image from "next/image"
 import CloseButtonImage from "~/public/static/img/png/close.png"
-import { COLORS } from "~/utilities/constants.js"
+import { COLORS, UI_SIZES } from "~/utilities/constants.js"
 
 const fadeIn = keyframes`
   from {
@@ -26,6 +26,10 @@ const ModalWrapper = styled.div`
   width: ${props => props.width || "400px"};
   height: ${props => props.height || "200px"};
   animation: ${fadeIn} 0.25s;
+  @media (max-width: ${UI_SIZES.small}px) {
+    width: 90%;
+    right: 5%;
+  }
 `
 
 const BackgroundLayer = styled.div`

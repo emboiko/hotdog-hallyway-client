@@ -1,5 +1,6 @@
 import React from "react"
 import styled from "styled-components"
+import { COLORS } from "~/utilities/constants.js"
 
 const Button = styled.button`
   width: ${props => props.width || "90%"};
@@ -8,7 +9,7 @@ const Button = styled.button`
   background: transparent;
   color: #FFFFFF;
   cursor: pointer;
-  border: 1px solid aqua;
+  border: 1px solid ${COLORS.accentBlue};
   border-radius: 5px;
 `
 
