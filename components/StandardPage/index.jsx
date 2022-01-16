@@ -12,7 +12,6 @@ import { COLORS } from "~/utilities/constants.js"
 const PageContent = styled.div`
   background: ${COLORS.darkGrey};
   color: #FFFFFF;
-  height: 100vh;
   position: relative;
 `
 

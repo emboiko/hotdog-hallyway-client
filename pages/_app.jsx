@@ -17,6 +17,9 @@ const App = observer(({ Component, pageProps }) => {
   })
 
   useEffect(() => {
+    store.ui.setInnerWidth(window.innerWidth)
+    store.ui.setInnerHeight(window.innerHeight)
+    
     window.addEventListener("resize", (e) => {
       store.ui.setInnerWidth(e.target.innerWidth)
       store.ui.setInnerHeight(e.target.innerHeight)
