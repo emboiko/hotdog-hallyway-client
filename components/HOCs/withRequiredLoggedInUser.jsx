@@ -2,7 +2,7 @@ import React from "react"
 import { observer } from "mobx-react"
 import { useRouter } from "next/router"
 import useInject from "~/hooks/useInject"
-import Landing from "~/components/Landing"
+import Landing from "~/components/Pages/Landing"
 import StandardPage from "~/components/StandardPage"
 
 const mapStore = store => ({
