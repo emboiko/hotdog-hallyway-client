@@ -30,6 +30,8 @@ const MainHeader = styled.div`
   box-shadow: 3px 2px 10px 0px pink;
   width: 500px;
   margin-bottom: 25px;
+  position: relative;
+  background: rgba(0,0,0,0.8);
 `
 
 const ApplicationBox = styled.div`
@@ -39,7 +41,7 @@ const ApplicationBox = styled.div`
   width: 70%;
   height: 70vh;
   background: ${COLORS.darkGrey};
-  opacity: 0.97;
+  opacity: 0.975;
   min-width: 500px;
   max-width: 2000px;
   overflow: auto;
@@ -61,11 +63,13 @@ const Spacer = styled.div`
 const Application = () => {
   return (
     <SectionWrapper className="font-squadaone">
-      <Image src={HotDogStand} alt="Hotdog Stand" layout="fill" objectFit="cover" quality={90} priority/>
+      <Image src={HotDogStand} alt="Hotdog Stand" layout="fill" objectFit="cover" quality={90} priority />
       <ApplicationWrapper>
-        <MainHeader>Guild Application</MainHeader>
+        <MainHeader>
+          Guild Application
+        </MainHeader>
         <ApplicationBox>
-          <Spacer></Spacer>
+          <Spacer />
         </ApplicationBox>
       </ApplicationWrapper>
     </SectionWrapper>

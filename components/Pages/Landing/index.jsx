@@ -46,6 +46,7 @@ const CallToActionContainer = styled.div`
 `
 
 const CallToAction = styled.div`
+  background: rgba(0,0,0,0.4);
   font-size: 42px;
   border: 2px solid ${props => props.color};
   border-radius: 5px;
