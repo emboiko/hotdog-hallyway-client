@@ -24,12 +24,11 @@ const AuthStore = types
         let result
         try {
           result = await axios.get(`${process.env.BACKEND_URL}/users/me`, {headers: {Authorization: `Bearer ${token}`}})
-          if (result?.status === 200) {
-            self.setUser(result.data, token)
-          }
         } catch (error) {
-          console.error(error)
           self.unsetUser()
+        }
+        if (result?.status === 200) {
+          self.setUser(result.data, token)
         }
       },
       async login(payload) {
@@ -37,8 +36,8 @@ const AuthStore = types
         let result
         try {
           result = await axios.post(`${process.env.BACKEND_URL}/users/login`, payload)
-        } catch (err) {
-          const errorMessage = "Unable to login"
+        } catch (error) {
+          const errorMessage = error.response.data.error || "Unable to login."
           console.error(errorMessage)
           self.setLoginError(errorMessage)
         }
@@ -53,8 +52,8 @@ const AuthStore = types
         let result
         try {
           result = await axios.post(`${process.env.BACKEND_URL}/users`, payload)
-        } catch (err) {
-          const errorMessage = "Unable to sign up."
+        } catch (error) {
+          const errorMessage = error.response.data.error || "Unable to login."
           console.error(errorMessage)
           self.setSignupError(errorMessage)
         }
@@ -70,8 +69,8 @@ const AuthStore = types
         const token = parseCookies(null).token
         try {
           result = await axios.post(`${process.env.BACKEND_URL}/users/logout`, {}, {headers: {Authorization: `Bearer ${token}`}})
-        } catch (err) {
-          console.error(err)
+        } catch (error) {
+          console.error(error)
         }
         if (result?.status === 200) {
           self.unsetUser()
