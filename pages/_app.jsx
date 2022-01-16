@@ -10,6 +10,7 @@ require("~/style/globalStyle.css")
 
 const App = observer(({ Component, pageProps }) => {
   store.auth.setLoaded(false)
+  store.utility.getDiscordLink()
 
   useEffect(async () => {
     const token = parseCookies(null).token

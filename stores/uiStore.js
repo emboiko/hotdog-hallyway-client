@@ -1,7 +1,7 @@
-import { types } from 'mobx-state-tree'
+import { types } from "mobx-state-tree"
 
 const UIStore = types
-  .model('UIStore', {
+  .model("UIStore", {
     loginModalShowing: false,
     signupModalShowing: false,
     isTiny: false,
