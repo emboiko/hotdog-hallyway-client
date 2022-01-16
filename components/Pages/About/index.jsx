@@ -1,13 +1,14 @@
 import React from "react"
 import styled from "styled-components"
 import Image from "next/image"
-import HotDogStand from "/public/static/img/jpg/hotdogstand4.jpg"
+import HotDogStand from "/public/static/img/jpg/hotdogstand2.jpg"
 
-const Wrapper = styled.div`
+const SectionWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100vh;
+  position: relative;
 `
 
 const UnderConstruction = styled.div`
@@ -16,13 +17,13 @@ const UnderConstruction = styled.div`
   position: relative;
 `
 
-const Roster = () => {
+const About = () => {
   return (
-    <Wrapper>
+    <SectionWrapper>
       <Image src={HotDogStand} alt="Hotdog Stand" layout="fill" objectFit="cover" quality={90} priority/>
       <UnderConstruction>Under Construction</UnderConstruction>
-    </Wrapper>
+    </SectionWrapper>
   )
 }
 
-export default Roster
+export default About

@@ -9,11 +9,14 @@ import { UI_SIZES } from "~/utilities/constants.js"
 require("~/style/globalStyle.css")
 
 const App = observer(({ Component, pageProps }) => {
+  store.auth.setLoaded(false)
+
   useEffect(async () => {
     const token = parseCookies(null).token
     if (token) {
       await store.auth.autoLogin(token)
     }
+    store.auth.setLoaded(true)
   })
 
   useEffect(() => {

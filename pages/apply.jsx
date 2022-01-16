@@ -1,7 +1,8 @@
 import React from "react"
 import Head from "next/head"
 import StandardPage from "~/components/StandardPage"
-import Application from "~/components/Application"
+import Application from "~/components/Pages/Application"
+import withRequiredLoggedInUser from "~/components/HOCs/withRequiredLoggedInUser"
 
 const ApplicationPage = () => {
   return (
@@ -16,4 +17,4 @@ const ApplicationPage = () => {
   )
 }
 
-export default ApplicationPage
+export default withRequiredLoggedInUser(ApplicationPage)

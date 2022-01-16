@@ -34,6 +34,7 @@ const RightSide = styled.div`
   align-items: center;
   justify-content: flex-end;
   max-width: 245px;
+  box-shadow: 3px 2px 10px 0px ${COLORS.accentBlue};
   @media (max-width: ${UI_SIZES.medium}px) {
     width: 50%;
     max-width: initial;
@@ -49,6 +50,7 @@ const LeftSide = styled.div`
   display: flex;
   align-items: center;
   min-width: 50px;
+  box-shadow: 1px 1px 10px 0px ${COLORS.accentBlue};
   @media (max-width: ${UI_SIZES.medium}px) {
     width: 50%;
     border-right: initial;

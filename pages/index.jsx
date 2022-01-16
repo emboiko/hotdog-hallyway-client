@@ -1,6 +1,6 @@
 import React from "react"
 import Head from "next/head"
-import Landing from "~/components/Landing"
+import Landing from "~/components/Pages/Landing"
 import StandardPage from "~/components/StandardPage"
 
 const LandingPage = () => {

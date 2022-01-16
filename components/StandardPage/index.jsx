@@ -27,20 +27,27 @@ const mapStore = store => ({
   signupModalShowing: store.ui.signupModalShowing,
   setSignupModalShowing: store.ui.setSignupModalShowing,
   setSignupError: store.auth.setSignupError,
+  setNavigationAttempt: store.auth.setNavigationAttempt
 })
 
 const StandardPage = observer(({children}) => {
 
-  const {loginModalShowing, setLoginModalShowing, setLoginError, signupModalShowing, setSignupModalShowing, setSignupError} = useInject(mapStore)
+  const {
+    loginModalShowing, setLoginModalShowing, setLoginError, 
+    signupModalShowing, setSignupModalShowing, setSignupError,
+    setNavigationAttempt
+  } = useInject(mapStore)
 
   const closeLoginModal = () => {
     setLoginModalShowing(false)
     setLoginError("")
+    setNavigationAttempt("")
   }
 
   const closeSignupModal = () => {
     setSignupModalShowing(false)
     setSignupError("")
+    setNavigationAttempt("")
   }
 
   return (

@@ -1,7 +1,7 @@
 import React from "react"
 import Head from "next/head"
 import StandardPage from "~/components/StandardPage"
-import Roster from "~/components/Roster"
+import Roster from "~/components/Pages/Roster"
 
 const RosterPage = () => {
   return (

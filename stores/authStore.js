@@ -1,6 +1,7 @@
 import axios from "axios"
 import { setCookie, destroyCookie, parseCookies } from 'nookies'
 import { types } from "mobx-state-tree"
+import Router from "next/router"
 
 const User = types
   .model("User", {
@@ -16,7 +17,9 @@ const AuthStore = types
     password: types.optional(types.string, ""),
     discordUsername: types.optional(types.string, ""),
     loginError: types.optional(types.string, ""),
-    signupError: types.optional(types.string, "")
+    signupError: types.optional(types.string, ""),
+    navigationAttempt: types.optional(types.string, ""),
+    loaded: types.optional(types.boolean, false),
   })
   .actions(self => {
     return {
@@ -28,7 +31,7 @@ const AuthStore = types
           self.unsetUser()
         }
         if (result?.status === 200) {
-          self.setUser(result.data, token)
+          self.setUser(result.data.user, token)
         }
       },
       async login(payload) {
@@ -43,6 +46,10 @@ const AuthStore = types
         }
         if (result?.status === 200) {
           self.setUser(result.data.user, result.data.token)
+          if (self.navigationAttempt) {
+            Router.push(self.navigationAttempt)
+            self.setNavigationAttempt("")
+          }
           return true
         }
         return false
@@ -60,6 +67,10 @@ const AuthStore = types
 
         if (result?.status === 201) {
           self.setUser(result.data.user, result.data.token)
+          if (self.navigationAttempt) {
+            Router.push(self.navigationAttempt)
+            self.setNavigationAttempt("")
+          }
           return true
         }
         return false
@@ -89,20 +100,26 @@ const AuthStore = types
         self.setDiscordUsername("")
         destroyCookie(null, 'token', {path: '/'})
       },
-      setUsername(value) {
-        self.username = value
+      setUsername(username) {
+        self.username = username
       },
-      setDiscordUsername(value) {
-        self.discordUsername = value
+      setDiscordUsername(discordUsername) {
+        self.discordUsername = discordUsername
       },
-      setPassword(value) {
-        self.password = value
+      setPassword(password) {
+        self.password = password
       },
-      setLoginError(value) {
-        self.loginError = value
+      setLoginError(error) {
+        self.loginError = error
       },
-      setSignupError(value) {
-        self.signupError = value
+      setSignupError(error) {
+        self.signupError = error
+      },
+      setNavigationAttempt(path) {
+        self.navigationAttempt = path
+      },
+      setLoaded(bool) {
+        self.loaded = bool
       }
     }
   })
