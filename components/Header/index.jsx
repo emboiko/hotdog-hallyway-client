@@ -94,7 +94,7 @@ const UnderGlow = styled.div`
   bottom: 0px;
   height: 3px;
   z-index: -1;
-  border: 1px solid ${COLORS.accentBlue};
+  border-bottom: 1px solid ${COLORS.accentBlue};
   display: ${props => props.isMedium ? "block" : "none"};
 `
 
