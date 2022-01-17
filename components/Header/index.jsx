@@ -2,12 +2,13 @@ import React from "react"
 import styled from "styled-components"
 import Link from "next/link"
 import Image from "next/image"
+import Router from "next/router"
 import { observer } from "mobx-react"
 import useInject from "~/hooks/useInject"
-import { COLORS, UI_SIZES } from "~/utilities/constants.js"
 import SimpleButton from "~/components/Inputs/SimpleButton"
 import HomeIcon from "~/public/static/img/png/home.png"
 import DiscordIcon from "~/public/static/img/png/discord.png"
+import { COLORS, UI_SIZES } from "~/utilities/constants.js"
 
 const Header = styled.div`
   background: transparent;
