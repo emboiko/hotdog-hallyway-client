@@ -80,18 +80,18 @@ const Actions = styled.div`
 
 const mapStore = store => ({
   isLoggedIn: store.auth.isLoggedIn,
-  setSignUpModalShowing: store.ui.setSignupModalShowing,
+  setSignupModalShowing: store.ui.setSignupModalShowing,
   setNavigationAttempt: store.auth.setNavigationAttempt
 })
 
 const Landing = observer(() => {
-  const { isLoggedIn, setSignUpModalShowing, setNavigationAttempt } = useInject(mapStore)
+  const { isLoggedIn, setSignupModalShowing, setNavigationAttempt } = useInject(mapStore)
 
   const isUserLoggedIn = () => {
     if (isLoggedIn) {
       Router.push("/apply")
     } else {
-      setSignUpModalShowing(true)
+      setSignupModalShowing(true)
       setNavigationAttempt("/apply")
     }
   }

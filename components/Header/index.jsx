@@ -22,8 +22,12 @@ const Header = styled.div`
 `
 
 const Username = styled.div`
+  cursor: pointer;
   margin-left: 20px;
   margin-bottom: 2px;
+  @media (max-width: ${UI_SIZES.small}px) {
+    margin-right: 10px;
+  }
 `
 
 const RightSide = styled.div`
@@ -34,17 +38,17 @@ const RightSide = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  max-width: 245px;
+  max-width: 255px;
   box-shadow: 3px 2px 10px 0px ${COLORS.accentBlue};
   @media (max-width: ${UI_SIZES.medium}px) {
-    box-shadow: 2px 2px 10px 0px ${COLORS.accentBlue};
-    clip-path: inset(0px 0px -10px 0px);
-    width: 50%;
+    box-shadow: none;
+    width: 75%;
     max-width: initial;
     border-left: initial;
     border-bottom-left-radius: initial;
   }
 `
+
 const LeftSide = styled.div`
   border-right: 1px solid ${COLORS.accentBlue};
   border-bottom: 1px solid ${COLORS.accentBlue};
@@ -52,13 +56,15 @@ const LeftSide = styled.div`
   background: ${COLORS.darkGrey};
   display: flex;
   align-items: center;
-  min-width: 50px;
   box-shadow: 1px 1px 10px 0px ${COLORS.accentBlue};
   @media (max-width: ${UI_SIZES.medium}px) {
-    box-shadow: 2px 2px 10px 0px ${COLORS.accentBlue};
-    width: 50%;
+    box-shadow: none;
+    width: 25%;
     border-right: initial;
     border-bottom-right-radius: initial;
+  }
+  @media (max-width: ${UI_SIZES.small}px) {
+    min-width: 100px;
   }
 `
 
@@ -72,10 +78,24 @@ const Discord = styled.div`
   margin: 0px 5px;
   cursor: pointer;
   padding: 5px;
+  @media (max-width: ${UI_SIZES.medium}px) {
+    margin-top: 2px;
+  }
 `
 
-const Buttons = styled.div`
+const ButtonContainer = styled.div`
   display: flex;
+`
+
+const UnderGlow = styled.div`
+  box-shadow: 3px 2px 10px 0px ${COLORS.accentBlue};
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
+  height: 3px;
+  z-index: -1;
+  border: 1px solid ${COLORS.accentBlue};
+  display: ${props => props.isMedium ? "block" : "none"};
 `
 
 const mapStore = store => ({
@@ -86,21 +106,78 @@ const mapStore = store => ({
   setLoginModalShowing: store.ui.setLoginModalShowing,
   signupModalShowing: store.ui.signupModalShowing,
   setSignupModalShowing: store.ui.setSignupModalShowing,
-  isTiny: store.ui.isTiny,
-  discordLink: store.utility.discordLink
+  isSmall: store.ui.isSmall,
+  isMedium: store.ui.isMedium,
+  discordLink: store.utility.discordLink,
+  setNavigationAttempt: store.auth.setNavigationAttempt
 })
 
 const MainHeader = observer(() => {
   const { 
-    isTiny,
+    isSmall,
+    isMedium,
     user,
     isLoggedIn,
     logout,
     loginModalShowing, setLoginModalShowing,
     signupModalShowing, setSignupModalShowing,
-    discordLink
+    discordLink,
+    setNavigationAttempt
   } = useInject(mapStore)
 
+  const LogoutButton = (
+    <SimpleButton 
+      onClick={() => {logout()}}
+      width="85px"
+      margin="0px 10px"
+    >
+    Logout
+    </SimpleButton>
+  )
+
+  const LoginButton = (
+    <SimpleButton 
+      onClick={() => {setLoginModalShowing(!loginModalShowing)}} 
+      width="85px"
+      margin="0px 10px"
+    >
+    Login
+    </SimpleButton>
+  )
+
+  const SignupButton = (
+    <SimpleButton 
+      onClick={() => {setSignupModalShowing(!signupModalShowing)}} 
+      width="85px"
+      margin="0px 10px"
+    >
+    Sign Up
+    </SimpleButton>
+  )
+
+  const Buttons = isSmall ? null : (
+    <ButtonContainer>
+      {isLoggedIn ? (
+        <>
+          {LogoutButton}
+        </>
+      ) : (
+        <>
+          {LoginButton}
+          {SignupButton}
+        </>
+      )}
+    </ButtonContainer>
+  )
+
+  const isUserLoggedIn = () => {
+    if (isLoggedIn) {
+      Router.push("/account")
+    } else {
+      setSignupModalShowing(true)
+      setNavigationAttempt("/account")
+    }
+  }
 
   return (
     <Header className="font-oswald">
@@ -117,40 +194,12 @@ const MainHeader = observer(() => {
         </a>
       </LeftSide>
       <RightSide>
-        {!isLoggedIn && isTiny ? null : (
-          <Username>
-            {isLoggedIn ? user.username : "Guest"}
-          </Username>
-        )}
-        <Buttons>
-          {isLoggedIn ? (
-            <SimpleButton 
-              onClick={() => {logout()}}
-              width="85px"
-              margin="0px 10px"
-            >
-            Logout
-            </SimpleButton>
-          ) : (
-            <>
-              <SimpleButton 
-                onClick={() => {setLoginModalShowing(!loginModalShowing)}} 
-                width="85px"
-                margin="0px 10px"
-              >
-              Login
-              </SimpleButton>
-              <SimpleButton 
-                onClick={() => {setSignupModalShowing(!signupModalShowing)}} 
-                width="85px"
-                margin="0px 10px 0px 0px"
-              >
-              Sign Up
-              </SimpleButton>
-            </>
-          )}
-        </Buttons>
+        <Username onClick={isUserLoggedIn}>
+          {isLoggedIn ? user.username : "Guest"}
+        </Username>
+        {Buttons}
       </RightSide>
+      <UnderGlow isMedium={isMedium}/>
     </Header>
   )
 })

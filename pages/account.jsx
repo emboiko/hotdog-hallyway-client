@@ -1,19 +1,19 @@
 import React from "react"
 import Head from "next/head"
 import StandardPage from "~/components/StandardPage"
-import Roster from "~/components/Pages/Roster"
+import Account from "~/components/Pages/Account"
 
-const RosterPage = () => {
+const AccountPage = () => {
   return (
     <>
       <Head>
-        <title>Hotdog Hallway | Roster</title>
+        <title>Hotdog Hallway | My Account</title>
       </Head>
       <StandardPage>
-        <Roster />
+        <Account />
       </StandardPage>
     </>
   )
 }
 
-export default RosterPage
+export default AccountPage

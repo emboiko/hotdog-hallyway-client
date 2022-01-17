@@ -24,6 +24,10 @@ const App = observer(({ Component, pageProps }) => {
     store.ui.setInnerWidth(window.innerWidth)
     store.ui.setInnerHeight(window.innerHeight)
     
+    store.ui.setIsTiny(window.innerWidth <= UI_SIZES.tiny)
+    store.ui.setIsSmall(window.innerWidth <= UI_SIZES.small)
+    store.ui.setIsMedium(window.innerWidth <= UI_SIZES.medium)
+    
     window.addEventListener("resize", (e) => {
       store.ui.setInnerWidth(e.target.innerWidth)
       store.ui.setInnerHeight(e.target.innerHeight)

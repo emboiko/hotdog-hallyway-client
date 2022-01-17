@@ -8,7 +8,7 @@ const ApplicationPage = () => {
   return (
     <>
       <Head>
-        <title>Hotdog Hallway</title>
+        <title>Hotdog Hallway | Apply</title>
       </Head>
       <StandardPage>
         <Application />

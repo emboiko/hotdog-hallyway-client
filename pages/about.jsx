@@ -7,7 +7,7 @@ const AboutPage = () => {
   return (
     <>
       <Head>
-        <title>Hotdog Hallway</title>
+        <title>Hotdog Hallway | About</title>
       </Head>
       <StandardPage>
         <About />
