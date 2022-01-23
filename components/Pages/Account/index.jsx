@@ -257,9 +257,6 @@ const Account = observer(() => {
     setLocalPasswordConfirmation(event.target.value)
   }
 
-  console.log("validationError", validationError)
-  console.log("submitButtonEnabled", submitButtonEnabled)
-
   return (
     <SectionWrapper className="font-squadaone">
       <Image src={HotDogStand} alt="Hotdog Stand" layout="fill" objectFit="cover" quality={90} priority />
