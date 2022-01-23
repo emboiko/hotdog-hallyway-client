@@ -1,9 +1,10 @@
-import React from "react"
+import React, { useRef, useState } from "react"
+import { observer} from "mobx-react"
+import ReCAPTCHA from "react-google-recaptcha"
 import styled from "styled-components"
 import useInject from "~/hooks/useInject"
 import TextInput from "~/components/Inputs/TextInput"
 import ButtonInput from "~/components/Inputs/ButtonInput"
-import { observer} from "mobx-react"
 import { COLORS } from "~/utilities/constants.js"
 import { validateUsername, validatePassword, validateDiscordUsername } from "~/utilities/userValidations"
 
@@ -73,33 +74,59 @@ const SignupForm = observer(({successCB}) => {
     innerWidth
   } = useInject(mapStore)
 
+  const recaptchaRef = useRef(null)
+
+  const [ submitButtonEnabled, setSubmitButtonEnabled ] = useState(false)
+
   const onChangeUsername = (event) => {
     setSignupError("")
     setUsername(event.target.value)
+    if (event.target.value && discordUsername && password) setSubmitButtonEnabled(true)
+    else {
+      setSubmitButtonEnabled(false)
+      if (!event.target.value) setSignupError("Username is required.")
+    }
   }
 
   const onChangePassword = (event) => {
     setSignupError("")
     setPassword(event.target.value)
+    if (username && discordUsername && event.target.value) setSubmitButtonEnabled(true)
+    else {
+      setSubmitButtonEnabled(false)
+      if (!event.target.value) setSignupError("Password is required.")
+    }
   }
 
   const onChangeDiscordUsername = (event) => {
     setSignupError("")
     setDiscordUsername(event.target.value)
+    if (username && event.target.value && password) setSubmitButtonEnabled(true)
+    else {
+      setSubmitButtonEnabled(false)
+      if (!event.target.value) setSignupError("Discord Username is required.")
+    }
   }
 
   const usernameError = validateUsername(username)
   const passwordError = validatePassword(password)
   const discordUsernameError = validateDiscordUsername(discordUsername)
-  const error = usernameError || passwordError || discordUsernameError || signupError
+  const validationError = usernameError || passwordError || discordUsernameError || signupError
 
   const onSubmit = async (event) => {
     event.preventDefault()
-    if (error) return
-    const user = await signup({username, discordUsername, password})
-    if (user) {
-      successCB()
+    if (validationError) return
+    if (!username || !discordUsername || !password) return
+    const captchaToken = await recaptchaRef.current.executeAsync()
+    recaptchaRef.current.reset()
+    if (captchaToken) {
+      console.log("Captcha Success")
+      const user = await signup({username, discordUsername, password})
+      if (user) {
+        successCB()
+      }
     }
+    console.log("Captcha Failure")
   }
 
   const swapModals = () => {
@@ -110,16 +137,16 @@ const SignupForm = observer(({successCB}) => {
 
   return (
     <FormWrapper onSubmit={onSubmit}>
-    <SignupHeader>Sign up</SignupHeader>
-    <SignupSubheader>
-      {
-        innerWidth < 270 ? <>
-          Or <MockLink onClick={swapModals}>Log In.</MockLink>
-        </> : <>
-          Already have an account? <MockLink onClick={swapModals}>Click here.</MockLink>
-        </>
-      }
-    </SignupSubheader>
+      <SignupHeader>Sign up</SignupHeader>
+      <SignupSubheader>
+        {
+          innerWidth < 270 ? <>
+            Or <MockLink onClick={swapModals}>Log In.</MockLink>
+          </> : <>
+            Already have an account? <MockLink onClick={swapModals}>Click here.</MockLink>
+          </>
+        }
+      </SignupSubheader>
       <InputWrapper>
         <TextInput name="Username" type="text" placeHolder="Character Name" value={username} onChange={onChangeUsername} />
       </InputWrapper>
@@ -129,9 +156,15 @@ const SignupForm = observer(({successCB}) => {
       <InputWrapper>
         <TextInput name="Password" type="password" placeHolder="Password" value={password} onChange={onChangePassword} />
       </InputWrapper>
-      <ErrorContainer>{error}</ErrorContainer>
+      <ErrorContainer>{validationError}</ErrorContainer>
+      <ReCAPTCHA
+        theme="dark"
+        ref={recaptchaRef}
+        size="invisible"
+        sitekey={process.env.RECAPTCHA_SITE_KEY}
+      />
       <InputWrapper>
-        <ButtonInput value="Submit" width="85px" />
+        <ButtonInput value="Submit" width="85px" disabled={validationError || !submitButtonEnabled} />
       </InputWrapper>
     </FormWrapper>
   )

@@ -9,7 +9,7 @@ const Button = styled.input`
   margin: ${props => props.margin || "none"};
   background: transparent;
   color: ${props => props.disabled ? "#333333" : (props.color || "#FFFFFF")};
-  cursor: pointer;
+  cursor: ${props => props.disabled ? "not-allowed" : "pointer"};
   border: ${props => props.disabled ? "1px solid #333333" : `1px solid ${COLORS.accentBlue}`};
   border-radius: 5px;
 `

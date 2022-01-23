@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import styled from "styled-components"
 import { observer } from "mobx-react"
 import useInject from "~/hooks/useInject"
@@ -69,23 +69,35 @@ const LoginForm = observer(({successCB}) => {
     innerWidth
   } = useInject(mapStore)
 
+  const [ submitButtonEnabled, setSubmitButtonEnabled ] = useState(false)
+
   const onChangeUsername = (event) => {
     setLoginError("")
     setUsername(event.target.value)
+    if (event.target.value && password) setSubmitButtonEnabled(true)
+    else {
+      setSubmitButtonEnabled(false)
+      if (!event.target.value) setLoginError("Username is required.")
+    }
   }
 
   const onChangePassword = (event) => {
     setLoginError("")
     setPassword(event.target.value)
+    if (event.target.value && username) setSubmitButtonEnabled(true)
+    else {
+      setSubmitButtonEnabled(false)
+      if (!event.target.value) setLoginError("Password is required.")
+    }
   }
 
   const usernameError = validateUsername(username)
   const passwordError = validatePassword(password)
-  const error = usernameError || passwordError || loginError
+  const validationError = usernameError || passwordError || loginError
 
   const onSubmit = async (event) => {
     event.preventDefault()
-    if (error) return
+    if (validationError) return
     const user = await login({username, password})
     if (user) {
       successCB()
@@ -116,9 +128,9 @@ const LoginForm = observer(({successCB}) => {
       <InputWrapper>
         <TextInput name="Password" type="password" placeHolder="Password" value={password} onChange={onChangePassword} />
       </InputWrapper>
-      <ErrorContainer>{error}</ErrorContainer>
+      <ErrorContainer>{validationError}</ErrorContainer>
       <InputWrapper>
-        <ButtonInput value="Submit" width="85px" />
+        <ButtonInput value="Submit" width="85px" disabled={validationError || !submitButtonEnabled}/>
       </InputWrapper>
     </FormWrapper>
   )

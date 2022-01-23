@@ -143,6 +143,7 @@ const EditButton = styled.div`
   border-radius: 5px;
   position: relative;
   cursor: pointer;
+  margin-bottom: 1px;
 `
 
 const FormButtonContainer = styled.div`
