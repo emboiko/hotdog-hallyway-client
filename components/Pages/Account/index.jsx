@@ -25,6 +25,9 @@ const ApplicationWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  @media (max-width: ${UI_SIZES.small}px) {
+    margin-top: 60px;
+  }
 `
 
 const MainHeader = styled.div`
@@ -38,6 +41,11 @@ const MainHeader = styled.div`
   margin-bottom: 25px;
   position: relative;
   background: rgba(0,0,0,0.8);
+  @media (max-width: ${UI_SIZES.small}px) {
+    font-size: 48px;
+    margin-bottom: 12px;
+    width: 200px;
+  }
 `
 
 const AccountBox = styled.div`
@@ -65,6 +73,9 @@ const AccountBox = styled.div`
   @media (max-width: ${UI_SIZES.medium}px) {
     flex-direction: column;
     align-items: center;
+    height: initial;
+    width: 90%;
+    min-width: initial;
   }
 `
 
@@ -80,6 +91,12 @@ const AvatarContainer = styled.div`
   @media (max-width: ${UI_SIZES.medium}px) {
     border-right: none;
     margin-bottom: 25px;
+  }
+`
+
+const UnderConstruction = styled.div`
+  @media (max-width: ${UI_SIZES.tiny}px) {
+    display: none;
   }
 `
 
@@ -100,6 +117,8 @@ const AccountForm = styled.form`
 
 const TextInputLabel = styled.div`
   width: 80%;
+  margin-bottom: 5px;
+  font-size: 20px;
 `
 
 const FormGroup = styled.div`
@@ -119,8 +138,8 @@ const InputGroup = styled.div`
 const EditButton = styled.div`
   background: ${props => props.editing ? COLORS.yellow : COLORS.lightGreen};
   border: 2px solid ${props => props.editing ? COLORS.yellow : COLORS.lightGreen};
-  width: 19px;
-  height: 19px;
+  width: 22px;
+  height: 22px;
   border-radius: 5px;
   position: relative;
   cursor: pointer;
@@ -250,9 +269,11 @@ const Account = observer(() => {
         </MainHeader>
         <AccountBox>
           <AvatarContainer>
-            User Avatars &amp; Image Uploads Coming Soon.
-            <br/><br/>
-            Under Construction
+            <UnderConstruction>
+              User Avatars &amp; Image Uploads Coming Soon.
+              <br/><br/>
+              Under Construction
+            </UnderConstruction>
           </AvatarContainer>
           <FormContainer>
             <AccountForm onSubmit={onSubmit}>
@@ -263,6 +284,7 @@ const Account = observer(() => {
                     width="80%" 
                     name="Username" 
                     type="text" 
+                    fontSize="20px"
                     value={localUsername || username} 
                     onChange={onChangeLocalUsername} 
                     disabled={!isEditingUsernames}
@@ -278,6 +300,7 @@ const Account = observer(() => {
                   <TextInputLabel>Discord Username</TextInputLabel>
                   <TextInput 
                     width="80%" 
+                    fontSize="20px"
                     name="Discord-Username" 
                     type="text" 
                     value={localDiscordUsername || discordUsername} 
@@ -292,6 +315,7 @@ const Account = observer(() => {
                   <TextInputLabel>Password</TextInputLabel>
                   <TextInput 
                     width="80%" 
+                    fontSize="20px"
                     name="Password" 
                     type="password" 
                     value={localPassword} 
@@ -309,6 +333,7 @@ const Account = observer(() => {
                   <TextInputLabel>Confirm Password</TextInputLabel>
                   <TextInput 
                     width="80%" 
+                    fontSize="20px"
                     name="Password-Confirm" 
                     type="password" 
                     value={localPasswordConfirmation} 
