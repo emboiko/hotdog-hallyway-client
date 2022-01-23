@@ -8,6 +8,39 @@ const User = types
     username: types.optional(types.string, ""),
     discordUsername: types.optional(types.string, ""),
     id: types.optional(types.string, ""),
+    accountUpdateError: types.optional(types.string, ""),
+  })
+  .actions(self => {
+    return {
+      setUsername(username) {
+        self.username = username
+      },
+      setDiscordUsername(discordUsername) {
+        self.discordUsername = discordUsername
+      },
+      setAccountUpdateError(error) {
+        self.accountUpdateError = error
+      },
+      async updateUser(payload) {
+        const token = parseCookies(null).token
+        let result
+        try {
+          result = await axios.patch(`${process.env.BACKEND_URL}/users/me`, payload, {headers: {Authorization: `Bearer ${token}`}})
+        } catch (error) {
+          let errorMessage = ""
+          if (error.response.status === 400 || error.response.status === 500) {
+            errorMessage = error.response.data.error
+          } else {
+            errorMessage = "Unable to update."
+          }
+          
+          self.setAccountUpdateError(errorMessage)
+          return false
+        }
+
+        if (result.status === 202) return true
+      }
+    }
   })
 
 const AuthStore = types

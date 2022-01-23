@@ -9,6 +9,10 @@ const validatePassword = (string) => {
   if (string.length < 7) return "Password must be at least 7 characters."
 }
 
+const validatePasswordConfirmation = (password, passwordConfirmation) => {
+  if (password !== passwordConfirmation) return "Password confirmation must match."
+}
+
 const validateDiscordUsername = (string) => {
   if (!string) return false
   if (string.length < 7 || string.length > 37) return "Discord username must be between 7-37 characters."
@@ -18,5 +22,6 @@ const validateDiscordUsername = (string) => {
 module.exports = {
   validateUsername,
   validatePassword,
-  validateDiscordUsername
+  validateDiscordUsername,
+  validatePasswordConfirmation
 }

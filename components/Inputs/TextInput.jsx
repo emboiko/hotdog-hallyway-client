@@ -5,9 +5,11 @@ const Input = styled.input`
   width: ${props => props.width || "90%"};
   font-size: ${props => props.fontSize || "16px"};
   margin: ${props => props.margin || "none"};
+  color: ${props => props.color || "initial"};
+  background: ${props => props.background || "#FFFFFF"};
 `
 
-const TextInput = ({type, placeHolder, onChange, width, fontSize, margin}) => (
+const TextInput = ({value, disabled, type, placeHolder, onChange, width, fontSize, margin, color, background}) => (
   <Input 
     type={type} 
     placeholder={placeHolder} 
@@ -15,6 +17,10 @@ const TextInput = ({type, placeHolder, onChange, width, fontSize, margin}) => (
     width={width}
     fontSize={fontSize}
     margin={margin}
+    value={value}
+    disabled={disabled}
+    color={color}
+    background={background}
   />
 )
 

@@ -2,6 +2,7 @@ import React from "react"
 import Head from "next/head"
 import StandardPage from "~/components/StandardPage"
 import Account from "~/components/Pages/Account"
+import withRequiredLoggedInUser from "~/components/HOCs/withRequiredLoggedInUser"
 
 const AccountPage = () => {
   return (
@@ -16,4 +17,4 @@ const AccountPage = () => {
   )
 }
 
-export default AccountPage
+export default withRequiredLoggedInUser(AccountPage)
