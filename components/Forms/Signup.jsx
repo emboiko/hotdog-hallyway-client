@@ -120,13 +120,11 @@ const SignupForm = observer(({successCB}) => {
     const captchaToken = await recaptchaRef.current.executeAsync()
     recaptchaRef.current.reset()
     if (captchaToken) {
-      console.log("Captcha Success")
       const user = await signup({username, discordUsername, password})
       if (user) {
         successCB()
       }
     }
-    console.log("Captcha Failure")
   }
 
   const swapModals = () => {
