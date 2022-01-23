@@ -14,7 +14,7 @@ const UIStore = types
         } catch (error) {
           console.error("Failed to fetch Discord invite code", error)
         }
-        if (response.status === 200) {
+        if (response?.status === 200) {
           self.setDiscordLink(response.data.code)
         }
       },

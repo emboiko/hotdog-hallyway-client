@@ -18,7 +18,7 @@ const SectionWrapper = styled.div`
   position: relative;
 `
 
-const ApplicationWrapper = styled.div`
+const AccountWrapper = styled.div`
   position: relative;
   margin-top: 75px;
   display: flex;
@@ -28,6 +28,8 @@ const ApplicationWrapper = styled.div`
   @media (max-width: ${UI_SIZES.small}px) {
     margin-top: 60px;
   }
+  overflow: hidden;
+  margin-bottom: 25px;
 `
 
 const MainHeader = styled.div`
@@ -53,11 +55,10 @@ const AccountBox = styled.div`
   border: 2px solid ${COLORS.accentBlue};
   box-shadow: 3px 2px 10px 0px ${COLORS.accentBlue};
   width: 70%;
-  height: 70vh;
   background: ${COLORS.darkGrey};
   opacity: 0.975;
   min-width: 500px;
-  max-width: 2000px;
+  max-width: 1800px;
   overflow: auto;
   &::-webkit-scrollbar {
     width: 20px;
@@ -81,7 +82,6 @@ const AccountBox = styled.div`
 
 const AvatarContainer = styled.div`
   width: 50%;
-  border-right: 2px solid ${COLORS.lightGreen};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -260,7 +260,7 @@ const Account = observer(() => {
   return (
     <SectionWrapper className="font-squadaone">
       <Image src={HotDogStand} alt="Hotdog Stand" layout="fill" objectFit="cover" quality={90} priority />
-      <ApplicationWrapper>
+      <AccountWrapper>
         <MainHeader>
           Account
         </MainHeader>
@@ -347,7 +347,7 @@ const Account = observer(() => {
             </AccountForm>
           </FormContainer>
         </AccountBox>
-      </ApplicationWrapper>
+      </AccountWrapper>
     </SectionWrapper>
   )
 })

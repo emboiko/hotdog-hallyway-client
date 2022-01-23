@@ -19,6 +19,8 @@ const ApplicationWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  overflow: hidden;
+  margin-bottom: 25px;
 `
 
 const MainHeader = styled.div`
@@ -39,11 +41,10 @@ const ApplicationBox = styled.div`
   border: 2px solid ${COLORS.accentBlue};
   box-shadow: 3px 2px 10px 0px ${COLORS.accentBlue};
   width: 70%;
-  height: 70vh;
   background: ${COLORS.darkGrey};
   opacity: 0.975;
   min-width: 500px;
-  max-width: 2000px;
+  max-width: 1800px;
   overflow: auto;
   &::-webkit-scrollbar {
     width: 20px;
