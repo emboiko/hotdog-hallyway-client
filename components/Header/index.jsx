@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import styled from "styled-components"
 import Link from "next/link"
 import Image from "next/image"
@@ -126,6 +126,12 @@ const MainHeader = observer(() => {
     setNavigationAttempt
   } = useInject(mapStore)
 
+  const [discordUrl, setDiscordUrl] = useState("")
+
+  useEffect(() => {
+    setDiscordUrl(discordLink)
+  })
+
   const LogoutButton = (
     <SimpleButton 
       onClick={() => {logout()}}
@@ -188,7 +194,7 @@ const MainHeader = observer(() => {
             <Image src={HomeIcon} alt="Home" width={25} height={25} />
           </Home>
         </Link>
-        <a target="_blank" href={discordLink}>
+        <a target="_blank" href={discordUrl}>
           <Discord>
             <Image src={DiscordIcon} alt="Discord" width={25} height={25} />
           </Discord>
