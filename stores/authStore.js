@@ -69,7 +69,6 @@ const User = types
         }
 
         if (result.status == 201) {
-          console.log(result.data)
           return result.data.applicationID
         }
       },
