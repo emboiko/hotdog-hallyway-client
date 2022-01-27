@@ -160,6 +160,11 @@ const AlreadySubmittedSubText = styled.div`
   font-size: 20px;
 `
 
+const LinkText = styled.span`
+  cursor: pointer;
+  color: ${COLORS.accentBlue};
+`
+
 const ApplicationStatusText = styled.div`
   display: inline-block;
   color: ${props => {
@@ -330,7 +335,11 @@ const GuildApplication = observer(() => {
       </FormSection>
       <FormSection>
         <QuestionText>
-          We operate a rotating loot council consisting of 3 Core Raiders and 2 Guild Council members. This rotates on a weekly basis. We reference thatsmybis.com to keep up with what gear our raiders need. Do you agree to follow this system if you intend on raiding with us?
+          We operate a rotating loot council consisting of 3 Core Raiders and 2 Guild Council members. This rotates on a weekly basis. We reference 
+          {" "}
+          <a href="https://thatsmybis.com/" target="_blank"><LinkText>ThatsMyBis</LinkText></a>
+          {" "}
+          to keep up with what gear our raiders need. Do you agree to follow this system if you intend on raiding with us?
         </QuestionText>
         <CheckboxWrapper>
           <ToggleInput width="25px" height="25px" value={playerAgreedToLootCouncil} checked={playerAgreedToLootCouncil} onChange={onChangePlayerAgreedToLootCouncil} />

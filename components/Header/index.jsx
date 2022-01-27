@@ -79,9 +79,7 @@ const Discord = styled.div`
   margin: 0px 5px;
   cursor: pointer;
   padding: 5px;
-  @media (max-width: ${UI_SIZES.medium}px) {
-    margin-top: 2px;
-  }
+  margin-top: 2px;
 `
 
 const ButtonContainer = styled.div`

@@ -109,7 +109,9 @@ const About = () => {
               {"We strive to help each of our raiders with anything they need. Core Raiders get all enchants/gems at no cost (while supplies last) whereas raiders and other guild members receive 50% off the AH price. With a collective game knowledge of over 50 years, our five Guild Council members have the experience and knowledge to lead a successful guild."}
             </AboutTextSection>
             <AboutTextSection>
-              {"<Hotdog Hallway> Utilizes a rotating loot council that consists of 2 Guild Council members and 3 Core Raiders. The rotation changes weekly. We reference ThatsMyBis.com to always have up-to-date knowledge on our raiders gearing needs. This system ensures fair loot distribution, and allows every single Core Raider to have a voice in loot disbursement."}
+              {"<Hotdog Hallway> Utilizes a rotating loot council that consists of 2 Guild Council members and 3 Core Raiders. The rotation changes weekly. We reference "}
+              <a href="https://thatsmybis.com/" target="_blank"><LinkText>ThatsMyBis</LinkText></a>
+              {" to always have up-to-date knowledge on our raiders gearing needs. This system ensures fair loot distribution, and allows every single Core Raider to have a voice in loot disbursement."}
             </AboutTextSection>
             <AboutTextSection>
               {"Think you have what it takes to throw your Hotdog down our Hallway? Raiders "}
