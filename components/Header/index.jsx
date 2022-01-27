@@ -155,6 +155,7 @@ const BossName = styled.div`
   background: ${COLORS.darkGrey};
   color: ${props => props.progressing ? "yellow" : "#FFFFFF"};
   text-align: center;
+  cursor: default;
 `
 
 const mapStore = store => ({
@@ -268,7 +269,7 @@ const MainHeader = observer(() => {
   }
 
   const BossKillDropdowns = (
-    <BossKills onMouseLeave={closeDropdown} onTouchEnd={closeDropdown}>
+    <BossKills>
       {BossKillDropdownOpeners}
       <BossKillDropdown showing={dropdownShowingPhase}>
         {Object.keys(bosses).map((boss) => {
@@ -280,7 +281,7 @@ const MainHeader = observer(() => {
 
   return (
     <Header className="font-oswald">
-      <LeftSide dropdownShowingPhase={dropdownShowingPhase}>
+      <LeftSide dropdownShowingPhase={dropdownShowingPhase} onMouseLeave={closeDropdown} onTouchEnd={closeDropdown}>
         <Link href="/">
           <Home>
             <Image src={HomeIcon} alt="Home" width={25} height={25} />
