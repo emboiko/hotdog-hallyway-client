@@ -4,6 +4,8 @@ import Image from "next/image"
 import Link from "next/link"
 import HotDogStand from "/public/static/img/jpg/hotdogstand2.jpg"
 import GroupVashj from "/public/static/img/jpg/GroupVashjCropped.jpg"
+import Neko from "/public/static/img/png/Neko.png"
+import Tina from "/public/static/img/png/Tina.png"
 import { COLORS, UI_SIZES } from "~/utilities/constants.js"
 
 const SectionWrapper = styled.div`
@@ -120,6 +122,12 @@ const About = () => {
           </AboutTextBox>
           <AboutImageBox>
             <Image src={GroupVashj} layout="responsive"/>
+          </AboutImageBox>
+          <AboutImageBox>
+            <Image src={Tina} layout="responsive"/>
+          </AboutImageBox>
+          <AboutImageBox>
+            <Image src={Neko} layout="responsive"/>
           </AboutImageBox>
         </AboutBox>
       </AboutWrapper>
