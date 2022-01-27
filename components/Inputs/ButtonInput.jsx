@@ -12,6 +12,7 @@ const Button = styled.input`
   cursor: ${props => props.disabled ? "not-allowed" : "pointer"};
   border: ${props => props.disabled ? "1px solid #333333" : `1px solid ${COLORS.accentBlue}`};
   border-radius: 5px;
+  background-image: none !important;
 `
 
 const ButtonInput = ({value, children, width, height, fontSize, margin, disabled}) => (

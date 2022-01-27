@@ -7,9 +7,10 @@ const Input = styled.select`
   margin: ${props => props.margin || "none"};
   color: ${props => props.color || "initial"};
   background: ${props => props.background || "#FFFFFF"};
+  font-family: ${props => props.fontFamily || "Arial"};
 `
 
-const SelectInput = ({value, disabled, placeHolder, onChange, width, fontSize, margin, color, background, options}) => {
+const SelectInput = ({value, disabled, placeHolder, onChange, width, fontSize, margin, color, background, options, fontFamily}) => {
   const optionsList = options.map((option) => {
     return <option key={option} value={option}>{option}</option>
   })
@@ -25,6 +26,7 @@ const SelectInput = ({value, disabled, placeHolder, onChange, width, fontSize, m
       disabled={disabled}
       color={color}
       background={background}
+      fontFamily={fontFamily}
     >
       {optionsList}
     </Input>

@@ -406,7 +406,7 @@ const GuildApplication = observer(() => {
         <QuestionText>
           In your opinion, what sort of utility do you bring to the raid?
         </QuestionText>
-        <TextAreaInput width="100%" value={playerRaidUtility} onChange={onChangePlayerRaidUtility} />
+        <TextAreaInput fontFamily="monospace" width="100%" value={playerRaidUtility} onChange={onChangePlayerRaidUtility} />
       </FormSection>
     </VerticalFormBlock>
   )
@@ -422,21 +422,21 @@ const GuildApplication = observer(() => {
       <HorizontalFormBlock>
         <FormSection>
           <QuestionText>Class:</QuestionText>
-          <SelectInput options={Object.keys(PLAYER_SPECIALIZATIONS)} value={playerClass} onChange={onChangePlayerClass} width="100%" />
+          <SelectInput fontFamily="monospace" options={Object.keys(PLAYER_SPECIALIZATIONS)} value={playerClass} onChange={onChangePlayerClass} width="100%" />
         </FormSection>
         <FormSection>
           <QuestionText>Specialization:</QuestionText>
-          <SelectInput options={PLAYER_SPECIALIZATIONS[playerClass].specializations} value={playerSpecialization} onChange={onChangePlayerSpecialization} width="100%" />
+          <SelectInput fontFamily="monospace" options={PLAYER_SPECIALIZATIONS[playerClass].specializations} value={playerSpecialization} onChange={onChangePlayerSpecialization} width="100%" />
         </FormSection>
         <FormSection>
           <QuestionText>Race:</QuestionText>
-          <SelectInput options={PLAYER_SPECIALIZATIONS[playerClass].races} value={playerRace} onChange={onChangePlayerRace} width="100%" />
+          <SelectInput fontFamily="monospace" options={PLAYER_SPECIALIZATIONS[playerClass].races} value={playerRace} onChange={onChangePlayerRace} width="100%" />
         </FormSection>
       </HorizontalFormBlock>
       <HorizontalFormBlock>
         <FormSection>
           <QuestionText>Character name:</QuestionText>
-          <TextInput value={playerCharacterName} onChange={onChangePlayerCharacterName} width="100%" height="20px" />
+          <TextInput fontFamily="monospace" value={playerCharacterName} onChange={onChangePlayerCharacterName} width="100%" height="20px" />
         </FormSection>
         <FormSection>
           <QuestionTextCentered>Interested in PvP:</QuestionTextCentered>
@@ -462,7 +462,7 @@ const GuildApplication = observer(() => {
       <VerticalFormBlock>
         <FormSection>
           <QuestionText>Is there any additional information you'd like to provide us with?</QuestionText>
-          <TextAreaInput width="100%" value={playerAdditionalInfo} onChange={onChangePlayerAdditionalInfo} />
+          <TextAreaInput fontFamily="monospace" width="100%" value={playerAdditionalInfo} onChange={onChangePlayerAdditionalInfo} />
         </FormSection>
         <FormSection>
           <Error>{error}</Error>

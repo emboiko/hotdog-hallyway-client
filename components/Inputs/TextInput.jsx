@@ -11,9 +11,12 @@ const Input = styled.input`
   border: none;
   box-sizing: border-box;
   padding-left: 5px;
+  font-family: ${props => props.fontFamily || "Arial"};
+  background-image: none !important;
+
 `
 
-const TextInput = ({value, disabled, type, placeHolder, onChange, width, height, fontSize, margin, color, background}) => (
+const TextInput = ({value, disabled, type, placeHolder, onChange, width, height, fontSize, margin, color, background, fontFamily}) => (
   <Input 
     type={type} 
     placeholder={placeHolder} 
@@ -26,6 +29,7 @@ const TextInput = ({value, disabled, type, placeHolder, onChange, width, height,
     disabled={disabled}
     color={color}
     background={background}
+    fontFamily={fontFamily}
   />
 )
 
