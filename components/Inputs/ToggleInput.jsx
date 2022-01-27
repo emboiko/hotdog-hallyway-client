@@ -7,11 +7,11 @@ const Input = styled.input`
   appearance: none;
   padding: 10px 25px;
   border-radius: 10px;
-  background: radial-gradient(circle ${props => props.size || "8px"}, ${props => props.sliderColor || "#FFFFFF"} 100%, transparent calc(100% + 1px)) #ccc -14px;
+  background: radial-gradient(circle ${props => props.size || "8px"}, #FFFFFF 100%, transparent calc(100% + 1px)) #ccc -14px !important;
   transition: 0.3s ease-in-out;
   &:checked {
-    background-color: ${COLORS.accentBlue};
-    background-position: 14px;
+    background-color: ${COLORS.accentBlue} !important;
+    background-position: 14px !important;
   }
 `
 
