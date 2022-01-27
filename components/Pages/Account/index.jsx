@@ -3,6 +3,7 @@ import styled from "styled-components"
 import Image from "next/image"
 import { observer } from "mobx-react"
 import useInject from "~/hooks/useInject"
+import SimpleButton from "~/components/Inputs/SimpleButton"
 import TextInput from "~/components/Inputs/TextInput"
 import ButtonInput from "~/components/Inputs/ButtonInput"
 import HotDogStand from "/public/static/img/jpg/hotdogstand5.jpg"
@@ -25,11 +26,11 @@ const AccountWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  overflow: hidden;
+  margin-bottom: 25px;
   @media (max-width: ${UI_SIZES.small}px) {
     margin-top: 60px;
   }
-  overflow: hidden;
-  margin-bottom: 25px;
 `
 
 const MainHeader = styled.div`
@@ -39,14 +40,14 @@ const MainHeader = styled.div`
   border-radius: 5px;
   border: 2px solid pink;
   box-shadow: 3px 2px 10px 0px pink;
-  width: 275px;
+  width: 500px;
   margin-bottom: 25px;
   position: relative;
   background: rgba(0,0,0,0.8);
   @media (max-width: ${UI_SIZES.small}px) {
     font-size: 48px;
     margin-bottom: 12px;
-    width: 200px;
+    width: 100%;
   }
 `
 
@@ -75,8 +76,7 @@ const AccountBox = styled.div`
     flex-direction: column;
     align-items: center;
     height: initial;
-    width: 90%;
-    min-width: initial;
+    min-width: 90%;
   }
 `
 
@@ -98,6 +98,7 @@ const UnderConstruction = styled.div`
   @media (max-width: ${UI_SIZES.tiny}px) {
     display: none;
   }
+  margin: 5px 10px;
 `
 
 const FormContainer = styled.div`
@@ -148,8 +149,8 @@ const EditButton = styled.div`
 
 const FormButtonContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: flex-end;
   height: 100%;
   width: 50%;
   margin-bottom: 15px;
@@ -170,7 +171,9 @@ const mapStore = store => ({
   discordUsername: store.auth.user.discordUsername,
   setDiscordUsername: store.auth.user.setDiscordUsername,
   updateUser: store.auth.user.updateUser,
-  accountUpdateError: store.auth.user.accountUpdateError
+  accountUpdateError: store.auth.user.accountUpdateError,
+  logout: store.auth.logout,
+  isSmall: store.ui.isSmall
 })
 
 
@@ -179,7 +182,9 @@ const Account = observer(() => {
     username, setUsername ,
     discordUsername, setDiscordUsername,
     updateUser,
-    accountUpdateError
+    accountUpdateError,
+    logout,
+    isSmall
   } = useInject(mapStore)
 
 
@@ -344,6 +349,14 @@ const Account = observer(() => {
               <MessageContainer isErrorMessage={!message.length}>{validationError || accountUpdateError || message}</MessageContainer>
               <FormButtonContainer>
                 <ButtonInput value="Update" disabled={validationError || !submitButtonEnabled} />
+                {isSmall ? (
+                  <SimpleButton 
+                    onClick={() => {logout()}}
+                    margin="10px 0px 0px 0px"
+                  >
+                  Logout
+                  </SimpleButton>
+                ) : null}
               </FormButtonContainer>
             </AccountForm>
           </FormContainer>

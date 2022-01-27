@@ -11,12 +11,7 @@ import TextAreaInput from "~/components/Inputs/TextAreaInput"
 import ButtonInput from "~/components/Inputs/ButtonInput"
 import HotDogStand from "/public/static/img/jpg/hotdogstand3.jpg"
 import { validateUsername } from "~/utilities/userValidations.js"
-import { 
-  COLORS, 
-  PLAYER_CLASSES, 
-  PLAYER_SPECIALIZATIONS, 
-  APPLICATION_STATUSES 
-} from "~/utilities/constants.js"
+import { UI_SIZES, COLORS, PLAYER_SPECIALIZATIONS, APPLICATION_STATUSES } from "~/utilities/constants.js"
 
 const SectionWrapper = styled.div`
   display: flex;
@@ -35,6 +30,9 @@ const ApplicationWrapper = styled.div`
   width: 100%;
   overflow: hidden;
   margin-bottom: 25px;
+  @media (max-width: ${UI_SIZES.small}px) {
+    margin-top: 60px;
+  }
 `
 
 const MainHeader = styled.div`
@@ -48,6 +46,15 @@ const MainHeader = styled.div`
   margin-bottom: 25px;
   position: relative;
   background: rgba(0,0,0,0.8);
+  @media (max-width: ${UI_SIZES.small}px) {
+    font-size: 48px;
+    margin-bottom: 12px;
+  }
+  @media (max-width: ${UI_SIZES.tiny}px) {
+    font-size: 32px;
+    margin-bottom: 12px;
+    width: 100%;
+  }
 `
 
 const ApplicationBox = styled.div`
@@ -68,6 +75,11 @@ const ApplicationBox = styled.div`
   }
   &::-webkit-scrollbar-track {
     display: none;
+  }
+  @media (max-width: ${UI_SIZES.small}px) {
+    margin-top: 5px;
+    min-width: initial;
+    width: 90%;
   }
 `
 
@@ -100,8 +112,11 @@ const QuestionTextCentered = styled.div`
 `
 
 const CheckboxWrapper = styled.div`
-  align-self: flex-start;
   width: 100%;
+  @media (max-width: ${UI_SIZES.small}px) {
+    display: flex;
+    justify-content: center;
+  }
 `
 
 const Centered = styled.div`
@@ -119,6 +134,9 @@ const Error = styled.div`
 const HorizontalFormBlock = styled.div`
   display: flex;
   width: 90%;
+  @media (max-width: ${UI_SIZES.small}px) {
+    flex-direction: column;
+  }
 `
 
 const VerticalFormBlock = styled.div`
@@ -165,6 +183,14 @@ const LinkText = styled.span`
   color: ${COLORS.accentBlue};
 `
 
+const Ruler = styled.div`
+  background: #FFFFFF;
+  height: 1px;
+  width: 100%;
+  position: relative;
+  margin-bottom: 10px;
+`
+
 const ApplicationStatusText = styled.div`
   display: inline-block;
   color: ${props => {
@@ -181,7 +207,8 @@ const mapStore = store => ({
   applicationSubmissionError: store.auth.user.applicationSubmissionError,
   applicationID: store.auth.user.applicationID,
   setApplicationID: store.auth.user.setApplicationID,
-  getApplicationStatus: store.auth.user.getApplicationStatus
+  getApplicationStatus: store.auth.user.getApplicationStatus,
+  isSmall: store.ui.isSmall
 })
 
 const GuildApplication = observer(() => {
@@ -192,7 +219,8 @@ const GuildApplication = observer(() => {
     applicationSubmissionError, 
     applicationID,
     setApplicationID,
-    getApplicationStatus
+    getApplicationStatus,
+    isSmall
   } = useInject(mapStore)
 
   const [playerCharacterName, setPlayerCharacterName] = useState(username)
@@ -333,6 +361,7 @@ const GuildApplication = observer(() => {
           <ToggleInput width="25px" height="25px" value={playerAgreedToRaidTimes} checked={playerAgreedToRaidTimes} onChange={onChangePlayerAgreedToRaidTimes} />
         </CheckboxWrapper>
       </FormSection>
+      <Ruler />
       <FormSection>
         <QuestionText>
           We operate a rotating loot council consisting of 3 Core Raiders and 2 Guild Council members. This rotates on a weekly basis. We reference 
@@ -345,6 +374,7 @@ const GuildApplication = observer(() => {
           <ToggleInput width="25px" height="25px" value={playerAgreedToLootCouncil} checked={playerAgreedToLootCouncil} onChange={onChangePlayerAgreedToLootCouncil} />
         </CheckboxWrapper>
       </FormSection>
+      <Ruler />
       <FormSection>
         <QuestionText>
           Core Raiders are expected to maintain an attendance of at least 75%. However, we realize that life can sometimes get in the way, we just ask that you let a Guild Council member know in advance. Do you agree to this?
@@ -353,6 +383,7 @@ const GuildApplication = observer(() => {
           <ToggleInput width="25px" height="25px" value={playerAgreedToAttendancePolicy} checked={playerAgreedToAttendancePolicy} onChange={onChangePlayerAgreedToAttendancePolicy} />
         </CheckboxWrapper>
       </FormSection>
+      <Ruler />
       <FormSection>
         <QuestionText>
           We provide all enchants and gems to our Core Raiders at no cost (If materials are available). Will you do your best to make sure your gear is enchanted/gemmed?
@@ -361,6 +392,7 @@ const GuildApplication = observer(() => {
           <ToggleInput width="25px" height="25px" value={playerAgreedToGemsAndEnchants} checked={playerAgreedToGemsAndEnchants} onChange={onChangePlayerAgreedToGemsAndEnchants} />
         </CheckboxWrapper>
       </FormSection>
+      <Ruler />
       <FormSection>
         <QuestionText>
           Do you have a working microphone and are you willing to speak if needed?
@@ -369,6 +401,7 @@ const GuildApplication = observer(() => {
           <ToggleInput width="25px" height="25px" value={playerAgreedToWorkingMicrophone} checked={playerAgreedToWorkingMicrophone} onChange={onChangePlayerAgreedToWorkingMicrophone} />
         </CheckboxWrapper>
       </FormSection>
+      <Ruler />
       <FormSection>
         <QuestionText>
           In your opinion, what sort of utility do you bring to the raid?
@@ -388,30 +421,8 @@ const GuildApplication = observer(() => {
     <ApplicationForm onSubmit={onFormSubmit}>
       <HorizontalFormBlock>
         <FormSection>
-          <QuestionText>Character name:</QuestionText>
-          <TextInput value={playerCharacterName} onChange={onChangePlayerCharacterName} width="100%" height="20px" />
-        </FormSection>
-        <FormSection>
-          <QuestionTextCentered>Interested in raiding:</QuestionTextCentered>
-          <Centered>
-            <CheckboxWrapper>
-              <ToggleInput width="25px" height="25px" value={playerInterestedInRaiding} checked={playerInterestedInRaiding} onChange={onChangePlayerInterestedInRaiding} />
-            </CheckboxWrapper>
-          </Centered>
-        </FormSection>
-        <FormSection>
-          <QuestionTextCentered>Interested in PvP:</QuestionTextCentered>
-          <Centered>
-            <CheckboxWrapper>
-              <ToggleInput width="25px" height="25px" value={playerInterestedInPvP} checked={playerInterestedInPvP} onChange={onChangePlayerInterestedInPvP} />
-            </CheckboxWrapper>
-          </Centered>
-        </FormSection>
-      </HorizontalFormBlock>
-      <HorizontalFormBlock>
-        <FormSection>
           <QuestionText>Class:</QuestionText>
-          <SelectInput options={PLAYER_CLASSES} value={playerClass} onChange={onChangePlayerClass} width="100%" />
+          <SelectInput options={Object.keys(PLAYER_SPECIALIZATIONS)} value={playerClass} onChange={onChangePlayerClass} width="100%" />
         </FormSection>
         <FormSection>
           <QuestionText>Specialization:</QuestionText>
@@ -421,6 +432,31 @@ const GuildApplication = observer(() => {
           <QuestionText>Race:</QuestionText>
           <SelectInput options={PLAYER_SPECIALIZATIONS[playerClass].races} value={playerRace} onChange={onChangePlayerRace} width="100%" />
         </FormSection>
+      </HorizontalFormBlock>
+      <HorizontalFormBlock>
+        <FormSection>
+          <QuestionText>Character name:</QuestionText>
+          <TextInput value={playerCharacterName} onChange={onChangePlayerCharacterName} width="100%" height="20px" />
+        </FormSection>
+        <FormSection>
+          <QuestionTextCentered>Interested in PvP:</QuestionTextCentered>
+          <Centered>
+            <CheckboxWrapper>
+              <ToggleInput width="25px" height="25px" value={playerInterestedInPvP} checked={playerInterestedInPvP} onChange={onChangePlayerInterestedInPvP} />
+            </CheckboxWrapper>
+          </Centered>
+        </FormSection>
+        {isSmall ? <Ruler/> : null}
+        <FormSection>
+          <QuestionTextCentered>Interested in raiding:</QuestionTextCentered>
+          <Centered>
+            <CheckboxWrapper>
+              <ToggleInput width="25px" height="25px" value={playerInterestedInRaiding} checked={playerInterestedInRaiding} onChange={onChangePlayerInterestedInRaiding} />
+            </CheckboxWrapper>
+          </Centered>
+        </FormSection>
+        {isSmall ? <Ruler/> : null}
+
       </HorizontalFormBlock>
       {OptionalRaidingSection}
       <VerticalFormBlock>
