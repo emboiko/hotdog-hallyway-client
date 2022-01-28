@@ -40,7 +40,7 @@ const MainHeader = styled.div`
   border-radius: 5px;
   border: 2px solid pink;
   box-shadow: 3px 2px 10px 0px pink;
-  width: 500px;
+  width: 350px;
   margin-bottom: 25px;
   position: relative;
   background: rgba(0,0,0,0.8);

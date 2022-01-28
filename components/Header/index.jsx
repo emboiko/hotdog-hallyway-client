@@ -105,8 +105,11 @@ const BossKills = styled.div`
   display: flex;
   justify-content: center;
   margin-right: 10px;
-  @media (max-width: ${UI_SIZES.small}px) {
+  @media (max-width: ${UI_SIZES.medium}px) {
     width: initial;
+  }
+  @media (max-width: ${UI_SIZES.small}px) {
+    display: none;
   }
 `
 
@@ -278,7 +281,7 @@ const MainHeader = observer(() => {
       </BossKillDropdown>
     </BossKills>
   )
-
+        console.log(isSmall)
   return (
     <Header className="font-oswald">
       <LeftSide dropdownShowingPhase={dropdownShowingPhase} onMouseLeave={closeDropdown} onTouchEnd={closeDropdown}>

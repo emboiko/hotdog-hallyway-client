@@ -106,6 +106,29 @@ const AuthStore = types
   })
   .actions(self => {
     return {
+      async getAllUsers() {
+        const token = parseCookies(null).token
+        let result
+        try {
+          result = await axios.get(`${process.env.BACKEND_URL}/users/all`, {headers: {Authorization: `Bearer ${token}`}})
+        } catch (error) {
+          return {error: "Server error"}
+        }
+
+        if (result.status === 200) {
+          const allGuildMembers = result.data.users
+          const guildCouncilMembers = []
+          const guildRegularMembers = []
+  
+          allGuildMembers.forEach((member) => {
+            if (member.isCouncilMember) guildCouncilMembers.push(member)
+            else guildRegularMembers.push(member)
+          })
+  
+          return {guildCouncilMembers, guildRegularMembers}
+        }
+
+      },
       async autoLogin(token) {
         let result
         try {
@@ -159,8 +182,8 @@ const AuthStore = types
         return false
       },
       async logout() {
-        let result
         const token = parseCookies(null).token
+        let result
         try {
           result = await axios.post(`${process.env.BACKEND_URL}/users/logout`, {}, {headers: {Authorization: `Bearer ${token}`}})
         } catch (error) {
