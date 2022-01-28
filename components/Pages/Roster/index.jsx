@@ -52,7 +52,7 @@ const RosterBox = styled.div`
   border-radius: 5px;
   border: 2px solid ${COLORS.accentBlue};
   box-shadow: 3px 2px 10px 0px ${COLORS.accentBlue};
-  width: 50%;
+  width: 60%;
   background: ${COLORS.darkGrey};
   opacity: 0.975;
   min-width: 450px;
@@ -115,7 +115,7 @@ const Roster = () => {
 
   useEffect(async () => {
     const { guildCouncilMembers, guildRegularMembers, error } = await getAllUsers()
-    if (error) return console.log(error)
+    if (error) return console.error(error)
     setCouncilMembers(guildCouncilMembers)
     setGuildMembers(guildRegularMembers)
   }, [])

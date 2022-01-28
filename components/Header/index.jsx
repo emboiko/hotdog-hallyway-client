@@ -25,7 +25,6 @@ const Header = styled.div`
 const Username = styled.div`
   cursor: pointer;
   margin-left: 20px;
-  margin-bottom: 2px;
   @media (max-width: ${UI_SIZES.small}px) {
     margin-right: 10px;
     font-size: 18px;
@@ -87,6 +86,7 @@ const Discord = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
+  ${'' /* margin-top: 2px; */}
 `
 
 const UnderGlow = styled.div`
@@ -150,7 +150,6 @@ const BossKillDropdown = styled.div`
   display: ${props => props.showing ? "block" : "none"};
   box-shadow: 1px 1px 10px 0px ${COLORS.accentBlue};
   animation: ${fadeIn} 0.5s;
-
 `
 
 const BossName = styled.div`
@@ -159,6 +158,7 @@ const BossName = styled.div`
   color: ${props => props.progressing ? "yellow" : "#FFFFFF"};
   text-align: center;
   cursor: default;
+  background: rgb(0,0,0,0.9);
 `
 
 const mapStore = store => ({
@@ -281,7 +281,7 @@ const MainHeader = observer(() => {
       </BossKillDropdown>
     </BossKills>
   )
-        console.log(isSmall)
+  
   return (
     <Header className="font-oswald">
       <LeftSide dropdownShowingPhase={dropdownShowingPhase} onMouseLeave={closeDropdown} onTouchEnd={closeDropdown}>
