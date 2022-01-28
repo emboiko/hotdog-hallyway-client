@@ -25,6 +25,7 @@ const Header = styled.div`
 const Username = styled.div`
   cursor: pointer;
   margin-left: 20px;
+  margin-bottom: 1px;
   @media (max-width: ${UI_SIZES.small}px) {
     margin-right: 10px;
     font-size: 18px;
@@ -86,7 +87,6 @@ const Discord = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
-  ${'' /* margin-top: 2px; */}
 `
 
 const UnderGlow = styled.div`
@@ -108,7 +108,7 @@ const BossKills = styled.div`
   @media (max-width: ${UI_SIZES.medium}px) {
     width: initial;
   }
-  @media (max-width: ${UI_SIZES.small}px) {
+  @media (max-width: ${UI_SIZES.tiny}px) {
     display: none;
   }
 `
@@ -158,7 +158,6 @@ const BossName = styled.div`
   color: ${props => props.progressing ? "yellow" : "#FFFFFF"};
   text-align: center;
   cursor: default;
-  background: rgb(0,0,0,0.9);
 `
 
 const mapStore = store => ({
