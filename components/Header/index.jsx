@@ -200,11 +200,11 @@ const MainHeader = observer(() => {
     isMedium,
     user,
     isLoggedIn,
-    logout,
-    loginModalShowing, setLoginModalShowing,
-    signupModalShowing, setSignupModalShowing,
     discordLink,
-    setNavigationAttempt
+    setNavigationAttempt,
+    loginModalShowing, 
+    setLoginModalShowing,
+    setSignupModalShowing,
   } = useInject(mapStore)
 
   const [discordUrl, setDiscordUrl] = useState("")
@@ -214,48 +214,19 @@ const MainHeader = observer(() => {
     setDiscordUrl(discordLink)
   })
 
-  const LogoutButton = (
-    <SimpleButton 
-      onClick={() => {logout()}}
-      width="85px"
-      margin="0px 10px"
-    >
-    Logout
-    </SimpleButton>
-  )
-
   const LoginButton = (
     <SimpleButton 
       onClick={() => {setLoginModalShowing(!loginModalShowing)}} 
       width="85px"
-      margin="0px 10px"
+      margin="0px 10px 0px 0px"
     >
     Login
     </SimpleButton>
   )
 
-  const SignupButton = (
-    <SimpleButton 
-      onClick={() => {setSignupModalShowing(!signupModalShowing)}} 
-      width="85px"
-      margin="0px 10px"
-    >
-    Sign Up
-    </SimpleButton>
-  )
-
   const Buttons = isSmall ? null : (
     <ButtonContainer>
-      {isLoggedIn ? (
-        <>
-          {/* {LogoutButton} */}
-        </>
-      ) : (
-        <>
-          {LoginButton}
-          {/* {SignupButton} */}
-        </>
-      )}
+      {isLoggedIn ? null : LoginButton}
     </ButtonContainer>
   )
 
