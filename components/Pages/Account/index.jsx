@@ -349,14 +349,12 @@ const Account = observer(() => {
               <MessageContainer isErrorMessage={!message.length}>{validationError || accountUpdateError || message}</MessageContainer>
               <FormButtonContainer>
                 <ButtonInput value="Update" disabled={validationError || !submitButtonEnabled} />
-                {isSmall ? (
-                  <SimpleButton 
-                    onClick={() => {logout()}}
-                    margin="10px 0px 0px 0px"
-                  >
-                  Logout
-                  </SimpleButton>
-                ) : null}
+                <SimpleButton 
+                  onClick={logout}
+                  margin="10px 0px 0px 0px"
+                >
+                Logout
+                </SimpleButton>
               </FormButtonContainer>
             </AccountForm>
           </FormContainer>

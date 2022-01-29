@@ -8,6 +8,7 @@ import useInject from "~/hooks/useInject"
 import SimpleButton from "~/components/Inputs/SimpleButton"
 import HomeIcon from "~/public/static/img/png/home.png"
 import DiscordIcon from "~/public/static/img/png/discord.png"
+import UserIcon from "~/public/static/img/png/user.png"
 import { COLORS, UI_SIZES, BOSSES } from "~/utilities/constants.js"
 
 const Header = styled.div`
@@ -24,11 +25,25 @@ const Header = styled.div`
 
 const Username = styled.div`
   cursor: pointer;
-  margin-left: 20px;
+  margin-right: 10px;
   margin-bottom: 1px;
+  &:hover {
+    color: ${COLORS.lightGreen};
+  }
+  @media (max-width: ${UI_SIZES.medium}px) {
+    margin-left: 0px;
+  }
   @media (max-width: ${UI_SIZES.small}px) {
-    margin-right: 10px;
     font-size: 18px;
+  }
+`
+
+const UserIconContainer = styled.div`
+  cursor: pointer;
+  margin-left: 15px;
+  margin-right: 10px;
+  @media (max-width: ${UI_SIZES.small}px) {
+    display: none;
   }
 `
 
@@ -105,8 +120,13 @@ const BossKills = styled.div`
   display: flex;
   justify-content: center;
   margin-right: 10px;
+  margin-bottom: 1px;
   @media (max-width: ${UI_SIZES.medium}px) {
     width: initial;
+    margin-right: 0px;
+  }
+  @media (max-width: ${UI_SIZES.small}px) {
+    margin-bottom: 0px;
   }
   @media (max-width: ${UI_SIZES.tiny}px) {
     display: none;
@@ -228,18 +248,18 @@ const MainHeader = observer(() => {
     <ButtonContainer>
       {isLoggedIn ? (
         <>
-          {LogoutButton}
+          {/* {LogoutButton} */}
         </>
       ) : (
         <>
           {LoginButton}
-          {SignupButton}
+          {/* {SignupButton} */}
         </>
       )}
     </ButtonContainer>
   )
 
-  const isUserLoggedIn = () => {
+  const navigateToAccount = () => {
     if (isLoggedIn) {
       Router.push("/account")
     } else {
@@ -297,7 +317,10 @@ const MainHeader = observer(() => {
         {BossKillDropdowns}
       </LeftSide>
       <RightSide>
-        <Username onClick={isUserLoggedIn}>
+        <UserIconContainer onClick={navigateToAccount}>
+          <Image src={UserIcon} width={16} height={16} />
+        </UserIconContainer>
+        <Username onClick={navigateToAccount}>
           {isLoggedIn ? user.username : "Guest"}
         </Username>
         {Buttons}
