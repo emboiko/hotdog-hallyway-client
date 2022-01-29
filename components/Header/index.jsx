@@ -25,7 +25,7 @@ const Header = styled.div`
 
 const Username = styled.div`
   cursor: pointer;
-  margin-right: 10px;
+  margin-right: ${props => props.isLoggedIn ? "10px" : "0px"};
   margin-bottom: 1px;
   &:hover {
     color: ${COLORS.lightGreen};
@@ -320,7 +320,7 @@ const MainHeader = observer(() => {
         <UserIconContainer onClick={navigateToAccount}>
           <Image src={UserIcon} width={16} height={16} />
         </UserIconContainer>
-        <Username onClick={navigateToAccount}>
+        <Username onClick={navigateToAccount} isLoggedIn={isLoggedIn}>
           {isLoggedIn ? user.username : "Guest"}
         </Username>
         {Buttons}
