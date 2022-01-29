@@ -11,6 +11,8 @@ const User = types
     accountUpdateError: types.optional(types.string, ""),
     applicationSubmissionError: types.optional(types.string, ""),
     hasSubmittedApplication: types.optional(types.boolean, false),
+    isGuildMember: types.optional(types.boolean, false),
+    isCouncilMember: types.optional(types.boolean, false),
     applicationID: types.optional(types.string, ""),
   })
   .actions(self => {
@@ -200,10 +202,10 @@ const AuthStore = types
           username: user.username, 
           discordUsername: user.discordUsername, 
           id:user._id,
+          isGuildMember:user.isGuildMember,
+          isCouncilMember:user.isCouncilMember,
           ...(user.applicationID && {applicationID: user.applicationID}),
-
         }
-        if (user.applicationID) self.user.applicationID = user.applicationID
 
         setCookie(null, 'token', token, {maxAge: 30 * 24 * 60 * 60, path: '/'})
       },

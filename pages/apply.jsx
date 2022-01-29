@@ -1,20 +1,20 @@
 import React from "react"
 import Head from "next/head"
 import StandardPage from "~/components/StandardPage"
-import Application from "~/components/Pages/Application"
+import Apply from "~/components/Pages/Apply"
 import withRequiredLoggedInUser from "~/components/HOCs/withRequiredLoggedInUser"
 
-const ApplicationPage = () => {
+const ApplyPage = () => {
   return (
     <>
       <Head>
         <title>Hotdog Hallway | Apply</title>
       </Head>
       <StandardPage>
-        <Application />
+        <Apply />
       </StandardPage>
     </>
   )
 }
 
-export default withRequiredLoggedInUser(ApplicationPage)
+export default withRequiredLoggedInUser(ApplyPage)

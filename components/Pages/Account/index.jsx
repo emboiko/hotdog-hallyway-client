@@ -59,7 +59,7 @@ const AccountBox = styled.div`
   background: ${COLORS.darkGrey};
   opacity: 0.975;
   min-width: 500px;
-  max-width: 1800px;
+  max-width: 1000px;
   overflow: auto;
   &::-webkit-scrollbar {
     width: 20px;
@@ -184,7 +184,6 @@ const Account = observer(() => {
     updateUser,
     accountUpdateError,
     logout,
-    isSmall
   } = useInject(mapStore)
 
 
