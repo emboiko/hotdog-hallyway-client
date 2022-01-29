@@ -100,10 +100,6 @@ const Discord = styled.div`
   margin-top: 2px;
 `
 
-const ButtonContainer = styled.div`
-  display: flex;
-`
-
 const UnderGlow = styled.div`
   box-shadow: 3px 2px 10px 0px ${COLORS.accentBlue};
   position: absolute;
@@ -224,12 +220,6 @@ const MainHeader = observer(() => {
     </SimpleButton>
   )
 
-  const Buttons = isSmall ? null : (
-    <ButtonContainer>
-      {isLoggedIn ? null : LoginButton}
-    </ButtonContainer>
-  )
-
   const navigateToAccount = () => {
     if (isLoggedIn) {
       Router.push("/account")
@@ -294,7 +284,7 @@ const MainHeader = observer(() => {
         <Username onClick={navigateToAccount}>
           {isLoggedIn ? user.username : "Guest"}
         </Username>
-        {Buttons}
+        {isSmall ? null : LoginButton}
       </RightSide>
       <UnderGlow isMedium={isMedium}/>
     </Header>
