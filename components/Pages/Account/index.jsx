@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 import Image from "next/image"
+import Router from "next/router"
 import { observer } from "mobx-react"
 import useInject from "~/hooks/useInject"
 import SimpleButton from "~/components/Inputs/SimpleButton"
@@ -262,6 +263,11 @@ const Account = observer(() => {
     setLocalPasswordConfirmation(event.target.value)
   }
 
+  const handleLogout = () => {
+    logout()
+    Router.push("/")
+  }
+
   return (
     <SectionWrapper className="font-squadaone">
       <Image src={HotDogStand} alt="Hotdog Stand" layout="fill" objectFit="cover" quality={90} priority />
@@ -349,7 +355,7 @@ const Account = observer(() => {
               <FormButtonContainer>
                 <ButtonInput value="Update" disabled={validationError || !submitButtonEnabled} />
                 <SimpleButton 
-                  onClick={logout}
+                  onClick={handleLogout}
                   margin="10px 0px 0px 0px"
                 >
                 Logout
