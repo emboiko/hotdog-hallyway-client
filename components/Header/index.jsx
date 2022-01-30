@@ -299,7 +299,7 @@ const MainHeader = observer(() => {
     if (killedBossesCount === totalBossesCount) cleared = true
 
     return (
-      <>
+      <div key={raid}>
         <RaidHeader>
           <RaidName>{raid}</RaidName>
           <KillCount cleared={cleared}>
@@ -309,7 +309,7 @@ const MainHeader = observer(() => {
           </KillCount>
         </RaidHeader>
         {bossNames}
-      </>
+      </div>
     )
   })
 
