@@ -158,7 +158,7 @@ const BOSSES = {
       defeated: true,
     },
     "Supremus": {
-      defeated: false,
+      defeated: true,
     },
     "Shade of Akama": {
       defeated: false,
