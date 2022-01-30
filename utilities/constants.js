@@ -159,10 +159,10 @@ const BOSSES = {
     },
     "Supremus": {
       defeated: false,
-      progressing: true
     },
     "Shade of Akama": {
-      defeated: false
+      defeated: false,
+      progressing: true
     },
     "Teron Gorefiend": {
       defeated: false
