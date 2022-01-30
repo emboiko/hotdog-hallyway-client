@@ -477,9 +477,6 @@ const GuildApplication = observer(() => {
     </ApplicationForm>
   )
 
-  console.log(playerClass)
-  console.log(playerSpecialization)
-  console.log(playerRace)
   return (
     <SectionWrapper className="font-squadaone">
       <Image src={HotDogStand} alt="Hotdog Stand" layout="fill" objectFit="cover" quality={90} priority />
