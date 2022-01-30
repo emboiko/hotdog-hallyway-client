@@ -292,7 +292,7 @@ const MainHeader = observer(() => {
     const bossNames = bosses.map((bossName) => {
       const boss = raidPhase[raid][bossName]
       if (boss.defeated) killedBossesCount += 1
-      return <BossName defeated={boss.defeated} progressing={boss.progressing}>{bossName}</BossName>
+      return <BossName key={bossName} defeated={boss.defeated} progressing={boss.progressing}>{bossName}</BossName>
     })
 
     let cleared = false
