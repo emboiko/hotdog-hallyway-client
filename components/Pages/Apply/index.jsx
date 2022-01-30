@@ -203,16 +203,15 @@ const ApplicationStatusText = styled.div`
 
 const mapStore = store => ({
   username: store.auth.user.username,
-  submitApplication: store.auth.user.submitApplication,
-  applicationSubmissionError: store.auth.user.applicationSubmissionError,
+  submitApplication: store.applications.submitApplication,
+  applicationSubmissionError: store.applications.applicationSubmissionError,
   applicationID: store.auth.user.applicationID,
   setApplicationID: store.auth.user.setApplicationID,
-  getApplicationStatus: store.auth.user.getApplicationStatus,
+  getApplicationStatus: store.applications.getApplicationStatus,
   isSmall: store.ui.isSmall
 })
 
 const GuildApplication = observer(() => {
-
   const { 
     username, 
     submitApplication, 
@@ -224,9 +223,9 @@ const GuildApplication = observer(() => {
   } = useInject(mapStore)
 
   const [playerCharacterName, setPlayerCharacterName] = useState(username)
+  const [playerRace, setPlayerRace] = useState("")
   const [playerClass, setPlayerClass] = useState("Druid")
-  const [playerSpecialization, setPlayerSpecialization] = useState("Balance")
-  const [playerRace, setPlayerRace] = useState("Tauren")
+  const [playerSpecialization, setPlayerSpecialization] = useState("")
   
   const [playerInterestedInRaiding, setPlayerInterestedInRaiding] = useState(false)
   const [playerAgreedToRaidTimes, setPlayerAgreedToRaidTimes] = useState(false)
@@ -247,6 +246,7 @@ const GuildApplication = observer(() => {
     if (event.target.value.length > 15) return
     setPlayerCharacterName(event.target.value)
   }
+
   const onChangePlayerClass = (event) => {
     setPlayerClass(event.target.value)
   }
@@ -326,7 +326,12 @@ const GuildApplication = observer(() => {
       const status = await getApplicationStatus()
       setApplicationStatus(status)
     }
-  })
+  }, [])
+
+  useEffect(() => {
+    setPlayerSpecialization(PLAYER_SPECIALIZATIONS[playerClass].specializations[0])
+    setPlayerRace(PLAYER_SPECIALIZATIONS[playerClass].races[0])
+  }, [playerClass])
 
   const RenderAlreadySubmitted = (
     <AlreadySubmittedWrapper>
@@ -472,6 +477,9 @@ const GuildApplication = observer(() => {
     </ApplicationForm>
   )
 
+  console.log(playerClass)
+  console.log(playerSpecialization)
+  console.log(playerRace)
   return (
     <SectionWrapper className="font-squadaone">
       <Image src={HotDogStand} alt="Hotdog Stand" layout="fill" objectFit="cover" quality={90} priority />

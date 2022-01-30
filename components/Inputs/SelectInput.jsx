@@ -11,9 +11,12 @@ const Input = styled.select`
 `
 
 const SelectInput = ({value, disabled, placeHolder, onChange, width, fontSize, margin, color, background, options, fontFamily}) => {
-  const optionsList = options.map((option) => {
-    return <option key={option} value={option}>{option}</option>
-  })
+  let optionsList
+  if (options && options.length) {
+    optionsList = options.map((option) => {
+      return <option key={option} value={option}>{option}</option>
+    })
+  }
 
   return (
     <Input 

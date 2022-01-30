@@ -9,8 +9,6 @@ const User = types
     discordUsername: types.optional(types.string, ""),
     id: types.optional(types.string, ""),
     accountUpdateError: types.optional(types.string, ""),
-    applicationSubmissionError: types.optional(types.string, ""),
-    hasSubmittedApplication: types.optional(types.boolean, false),
     isGuildMember: types.optional(types.boolean, false),
     isCouncilMember: types.optional(types.boolean, false),
     applicationID: types.optional(types.string, ""),
@@ -51,46 +49,6 @@ const User = types
         }
 
         if (result.status === 202) return true
-      },
-      async submitApplication(payload) {
-        const token = parseCookies(null).token
-        let result
-
-        try {
-          result = await axios.post(`${process.env.BACKEND_URL}/applications`, payload, {headers: {Authorization: `Bearer ${token}`}})
-        } catch (error) {
-          let errorMessage = ""
-          if (error.response.status === 400 || error.response.status === 500) {
-            errorMessage = error.response.data.error
-          } else {
-            errorMessage = "Unable to submit application."
-          }
-
-          self.setApplicationSubmissionError(errorMessage)
-          return false
-        }
-
-        if (result.status == 201) {
-          return result.data.applicationID
-        }
-      },
-      async getApplicationStatus() {
-        const token = parseCookies(null).token
-        let result
-
-        try {
-          result = await axios.get(`${process.env.BACKEND_URL}/applications/mine/status`, {headers: {Authorization: `Bearer ${token}`}})
-        } catch (error) {
-          let errorMessage = ""
-          if (error.response.status === 404 || error.response.status === 500) {
-            errorMessage = error.response.data.error
-          } else {
-            errorMessage = "Unable to get application status."
-          }
-          return false
-        }
-
-        if (result.status === 200) return result.data.status
       }
     }
   })
