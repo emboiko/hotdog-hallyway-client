@@ -169,7 +169,7 @@ const BossKillDropdown = styled.div`
 `
 
 const BossName = styled.div`
-  text-decoration: ${props => props.defeated ? "line-through" : "none"};
+  text-decoration: ${props => props.defeated ? "line-through solid red" : "none"};
   background: ${COLORS.darkGrey};
   color: ${props => props.progressing ? "yellow" : "#FFFFFF"};
   text-align: center;
