@@ -136,14 +136,14 @@ const BOSSES = {
   },
   "P3": {
     "Rage Winterchill": {
-      defeated: false,
-      progressing: true
+      defeated: true
     },
     "Anetheron": {
-      defeated: false
+      defeated: true,
     },
     "Kaz'rogal": {
-      defeated: false
+      defeated: false,
+      progressing: true
     },
     "Azgalor": {
       defeated: false
@@ -155,10 +155,11 @@ const BOSSES = {
       defeated: false
     },
     "High Warlord Naj'entus": {
-      defeated: false
+      defeated: true,
     },
     "Supremus": {
-      defeated: false
+      defeated: false,
+      progressing: true
     },
     "Shade of Akama": {
       defeated: false
