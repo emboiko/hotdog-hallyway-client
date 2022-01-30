@@ -166,6 +166,36 @@ const BossKillDropdown = styled.div`
   display: ${props => props.showing ? "block" : "none"};
   box-shadow: 1px 1px 10px 0px ${COLORS.accentBlue};
   animation: ${fadeIn} 0.5s;
+  max-height: calc(100vh - 41px);
+  overflow: auto;
+  &::-webkit-scrollbar {
+    background: ${COLORS.darkGrey};
+  }
+  &::-webkit-scrollbar-thumb {
+    background: ${COLORS.accentBlue};
+  }
+  &::-webkit-scrollbar-track {
+    display: none;
+  }
+`
+
+const RaidName = styled.div`
+  background: ${COLORS.darkGrey};
+  color: ${COLORS.accentBlue};
+  cursor: default;
+`
+
+const RaidHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  background: ${COLORS.darkGrey};
+  padding: 0px 5px;
+  cursor: default;
+`
+
+const KillCount = styled.div`
+  display: flex;
+  color: ${props => props.cleared ? COLORS.lightGreen : "yellow"};
 `
 
 const BossName = styled.div`
@@ -244,20 +274,50 @@ const MainHeader = observer(() => {
     )
   })
 
-  let bosses
+  let raidPhase
   if (dropdownShowingPhase > 0) {
-    bosses = BOSSES[`P${dropdownShowingPhase}`]
+    raidPhase = BOSSES[`P${dropdownShowingPhase}`]
   } else {
-    bosses = []
+    raidPhase = []
   }
+
+  const raids = Object.keys(raidPhase)
+  
+  const BossKillList = raids.map((raid) => {
+    const bosses = Object.keys(raidPhase[raid])
+    
+    let totalBossesCount = bosses.length
+    let killedBossesCount = 0
+
+    const bossNames = bosses.map((bossName) => {
+      const boss = raidPhase[raid][bossName]
+      if (boss.defeated) killedBossesCount += 1
+      return <BossName defeated={boss.defeated} progressing={boss.progressing}>{bossName}</BossName>
+    })
+
+    let cleared = false
+    if (killedBossesCount === totalBossesCount) cleared = true
+
+    return (
+      <>
+        <RaidHeader>
+          <RaidName>{raid}</RaidName>
+          <KillCount cleared={cleared}>
+            {killedBossesCount}
+            /
+            {totalBossesCount}
+          </KillCount>
+        </RaidHeader>
+        {bossNames}
+      </>
+    )
+  })
 
   const BossKillDropdowns = (
     <BossKills>
       {BossKillDropdownOpeners}
       <BossKillDropdown showing={dropdownShowingPhase}>
-        {Object.keys(bosses).map((boss) => {
-          return <BossName key={boss} defeated={bosses[boss].defeated} progressing={bosses[boss].progressing}>{boss}</BossName>
-        })}
+        {BossKillList}
       </BossKillDropdown>
     </BossKills>
   )

@@ -59,129 +59,143 @@ const APPLICATION_STATUSES = {
 
 const BOSSES = {
   "P1": {
-    "Attumen the Huntsman": {
-      defeated: true
+    "Karazhan": {
+      "Attumen the Huntsman": {
+        defeated: true
+      },
+      "Moroes": {
+        defeated: true
+      },
+      "Maiden of Virtue": {
+        defeated: true
+      },
+      "Opera House": {
+        defeated: true
+      },
+      "Curator": {
+        defeated: true
+      },
+      "Shade of Aran": {
+        defeated: true
+      },
+      "Terestian Illhoof": {
+        defeated: true
+      },
+      "Netherspite": {
+        defeated: true
+      },
+      "Chess Event": {
+        defeated: true
+      },
+      "Prince Malchezaar": {
+        defeated: true
+      },
+      "Nightbane": {
+        defeated: true
+      }
     },
-    "Moroes": {
-      defeated: true
+    "Gruul's Lair": {
+      "High King Maulgar": {
+        defeated: true
+      },
+      "Gruul": {
+        defeated: true
+      }
     },
-    "Maiden of Virtue": {
-      defeated: true
-    },
-    "Opera House": {
-      defeated: true
-    },
-    "Curator": {
-      defeated: true
-    },
-    "Shade of Aran": {
-      defeated: true
-    },
-    "Terestian Illhoof": {
-      defeated: true
-    },
-    "Netherspite": {
-      defeated: true
-    },
-    "Chess Event": {
-      defeated: true
-    },
-    "Prince Malchezaar": {
-      defeated: true
-    },
-    "Nightbane": {
-      defeated: true
-    },
-    "High King Maulgar": {
-      defeated: true
-    },
-    "Gruul": {
-      defeated: true
-    },
-    "Magtheridon": {
-      defeated: true
-    },
+    "Magtheridon's Lair": {
+      "Magtheridon": {
+        defeated: true
+      }
+    }
   },
   "P2": {
-    "Hydross the Unstable": {
-      defeated: true
+    "Serpentshrine Cavern": {
+      "Hydross the Unstable": {
+        defeated: true
+      },
+      "The Lurker Below": {
+        defeated: true
+      },
+      "Leotheras the Blind": {
+        defeated: true
+      },
+      "Fathom Lord Karathress": {
+        defeated: true
+      },
+      "Morogrim Tidewalker": {
+        defeated: true
+      },
+      "Lady Vashj": {
+        defeated: true
+      }
     },
-    "The Lurker Below": {
-      defeated: true
-    },
-    "Leotheras the Blind": {
-      defeated: true
-    },
-    "Fathom Lord Karathress": {
-      defeated: true
-    },
-    "Morogrim Tidewalker": {
-      defeated: true
-    },
-    "Lady Vashj": {
-      defeated: true
-    },
-    "A'lar": {
-      defeated: true
-    },
-    "Void Reaver": {
-      defeated: true
-    },
-    "High Astromancer Solarian": {
-      defeated: true
-    },
-    "Kael'thas Sunstrider": {
-      defeated: true
-    },
+    "Tempest Keep": {
+      "A'lar": {
+        defeated: true
+      },
+      "Void Reaver": {
+        defeated: true
+      },
+      "High Astromancer Solarian": {
+        defeated: true
+      },
+      "Kael'thas Sunstrider": {
+        defeated: true
+      }
+    }
   },
   "P3": {
-    "Rage Winterchill": {
-      defeated: true
+    "Mount Hyjal": {
+      "Rage Winterchill": {
+        defeated: true
+      },
+      "Anetheron": {
+        defeated: true,
+      },
+      "Kaz'rogal": {
+        defeated: false,
+        progressing: true
+      },
+      "Azgalor": {
+        defeated: false
+      },
+      "Archimonde": {
+        defeated: false
+      },
+      "Archimonde": {
+        defeated: false
+      }
     },
-    "Anetheron": {
-      defeated: true,
-    },
-    "Kaz'rogal": {
-      defeated: false,
-      progressing: true
-    },
-    "Azgalor": {
-      defeated: false
-    },
-    "Archimonde": {
-      defeated: false
-    },
-    "Archimonde": {
-      defeated: false
-    },
-    "High Warlord Naj'entus": {
-      defeated: true,
-    },
-    "Supremus": {
-      defeated: true,
-    },
-    "Shade of Akama": {
-      defeated: false,
-      progressing: true
-    },
-    "Teron Gorefiend": {
-      defeated: false
-    },
-    "Gurtogg Blodboil": {
-      defeated: false
-    },
-    "Reliquary of Souls": {
-      defeated: false
-    },
-    "Mother Shahraz": {
-      defeated: false
-    },
-    "Illidari Council": {
-      defeated: false
-    },
-    "Illidan Stormrage": {
-      defeated: false
-    },
+    "Black Temple": {
+      "High Warlord Naj'entus": {
+        defeated: true,
+      },
+      "Supremus": {
+        defeated: true,
+      },
+      "Shade of Akama": {
+        defeated: false,
+        progressing: true
+      },
+      "Teron Gorefiend": {
+        defeated: false
+      },
+      "Gurtogg Blodboil": {
+        defeated: false
+      },
+      "Reliquary of Souls": {
+        defeated: false
+      },
+      "Mother Shahraz": {
+        defeated: false
+      },
+      "Illidari Council": {
+        defeated: false
+      },
+      "Illidan Stormrage": {
+        defeated: false
+      }
+    }
   }
 }
 

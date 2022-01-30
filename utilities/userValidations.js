@@ -1,7 +1,7 @@
 const validateUsername = (string) => {
   if (!string) return false
   if (string.length < 2 || string.length > 12) return "Username must be between 2-12 characters."
-  if (!/^[\P{M}]{2,12}$/.test(string.toLowerCase())) return "Invalid Username."
+  if (!/^.{2,12}$/.test(string.toLowerCase())) return "Invalid Username."
 }
 
 const validatePassword = (string) => {
