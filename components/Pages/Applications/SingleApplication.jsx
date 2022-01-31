@@ -202,7 +202,7 @@ const SingleApplication = () => {
             <ApplicationValue>{String(application.playerAgreedToLootCouncil)}</ApplicationValue>
           </ApplicationField>
           <ApplicationField>
-            <ApplicationKey>Agreed to loot attendancy policy</ApplicationKey>
+            <ApplicationKey>Agreed to attendancy policy</ApplicationKey>
             <ApplicationValue>{String(application.playerAgreedToAttendancePolicy)}</ApplicationValue>
           </ApplicationField>
           <ApplicationField>
