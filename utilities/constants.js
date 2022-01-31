@@ -177,11 +177,11 @@ const BOSSES = {
         defeated: true,
       },
       "Teron Gorefiend": {
-        defeated: false,
-        progressing: true
+        defeated: true,
       },
       "Gurtogg Blodboil": {
-        defeated: false
+        defeated: false,
+        progressing: true
       },
       "Reliquary of Souls": {
         defeated: false
