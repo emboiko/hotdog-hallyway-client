@@ -15,7 +15,7 @@ const Button = styled.input`
   background-image: none !important;
 `
 
-const ButtonInput = ({value, children, width, height, fontSize, margin, disabled, background, color}) => (
+const ButtonInput = ({value, children, width, height, fontSize, margin, disabled, background, color, onClick}) => (
   <Button 
     type="submit"
     value={value || children}
@@ -26,6 +26,7 @@ const ButtonInput = ({value, children, width, height, fontSize, margin, disabled
     disabled={disabled}
     background={background}
     color={color}
+    onClick={onClick}
   />
 )
 

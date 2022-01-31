@@ -115,7 +115,7 @@ const mapStore = store => ({
 })
 
 const SingleApplication = () => {
-  const { getApplication } = useInject(mapStore)
+  const { getApplication, acceptApplication, declineApplication } = useInject(mapStore)
 
   const [application, setApplication] = useState({})
   const [errorMessage, setErrorMessage] = useState("")
@@ -137,6 +137,24 @@ const SingleApplication = () => {
   if (application.status === APPLICATION_STATUSES.pending) color = "yellow"
   if (application.status === APPLICATION_STATUSES.accepted) color = COLORS.lightGreen
   if (application.status === APPLICATION_STATUSES.declined) color = COLORS.red
+
+  const onAcceptApplication = async () => {
+    const success = await acceptApplication(router.query.slug)
+    if (success) {
+      router.push("/applications/all")
+    } else {
+      setErrorMessage("Error accepting application")
+    }
+  }
+  
+  const onDeclineApplication = async () => {
+    const success = await declineApplication(router.query.slug)
+    if (success) {
+      router.push("/applications/all")
+    } else {
+      setErrorMessage("Error declining application")
+    }
+  }
 
   return (
     <SectionWrapper className="font-squadaone">
@@ -206,8 +224,8 @@ const SingleApplication = () => {
           <div>
               <StatusContainer>Status:<Status color={color}>&nbsp;{application.status}</Status></StatusContainer>
               <Buttons>
-                <ButtonInput value="Accept" color={COLORS.lightGreen} margin="0px 5px" onClick={() => {acceptApplication(router.query.slug)}}/>
-                <ButtonInput value="Decline" color={COLORS.red} margin="0px 5px" onClick={() => {declineApplication(router.query.slug)}}/>
+                <ButtonInput value="Accept" color={COLORS.lightGreen} margin="0px 5px" onClick={onAcceptApplication}/>
+                <ButtonInput value="Decline" color={COLORS.red} margin="0px 5px" onClick={onDeclineApplication}/>
               </Buttons>
           </div>
         </ApplicationBox>

@@ -54,6 +54,7 @@ const ApplicationsBox = styled.div`
   min-width: 500px;
   max-width: 1000px;
   overflow: auto;
+  padding-bottom: 10px;
   &::-webkit-scrollbar {
     width: 20px;
     background: rgba(24, 26, 27, 0.975);

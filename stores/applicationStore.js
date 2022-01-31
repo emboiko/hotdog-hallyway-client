@@ -1,6 +1,7 @@
 import axios from "axios"
 import { parseCookies } from 'nookies'
 import { types } from "mobx-state-tree"
+import { APPLICATION_STATUSES } from "~/utilities/constants.js"
 
 const ApplicationStore = types
   .model("ApplicationStore", {
@@ -94,7 +95,7 @@ const ApplicationStore = types
         let result
 
         try {
-          result = await axios.post(`${process.env.BACKEND_URL}/applications/${applicationID}/accept`, {headers: {Authorization: `Bearer ${token}`}})
+          result = await axios.post(`${process.env.BACKEND_URL}/applications/${applicationID}/${APPLICATION_STATUSES.accepted}`, {}, {headers: {Authorization: `Bearer ${token}`}})
         } catch (error) {
           let errorMessage = ""
           if (error.response.status === 500 || error.response.status === 400) {
@@ -113,7 +114,7 @@ const ApplicationStore = types
         let result
 
         try {
-          result = await axios.post(`${process.env.BACKEND_URL}/applications/${applicationID}/decline`, {headers: {Authorization: `Bearer ${token}`}})
+          result = await axios.post(`${process.env.BACKEND_URL}/applications/${applicationID}/${APPLICATION_STATUSES.declined}`, {}, {headers: {Authorization: `Bearer ${token}`}})
         } catch (error) {
           let errorMessage = ""
           if (error.response.status === 500 || error.response.status === 400) {
