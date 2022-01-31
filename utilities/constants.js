@@ -174,11 +174,11 @@ const BOSSES = {
         defeated: true,
       },
       "Shade of Akama": {
-        defeated: false,
-        progressing: true
+        defeated: true,
       },
       "Teron Gorefiend": {
-        defeated: false
+        defeated: false,
+        progressing: true
       },
       "Gurtogg Blodboil": {
         defeated: false
