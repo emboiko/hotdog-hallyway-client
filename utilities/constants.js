@@ -179,7 +179,7 @@ const BOSSES = {
       "Teron Gorefiend": {
         defeated: true,
       },
-      "Gurtogg Blodboil": {
+      "Gurtogg Bloodboil": {
         defeated: false,
         progressing: true
       },
