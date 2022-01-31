@@ -1,8 +1,11 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import Image from "next/image"
+import { useRouter } from "next/router"
 import styled from "styled-components"
+import useInject from "~/hooks/useInject"
+import ButtonInput from "~/components/Inputs/ButtonInput"
 import HotDogStand from "/public/static/img/jpg/hotdogstand7.jpg"
-import { COLORS, UI_SIZES } from "~/utilities/constants.js"
+import { COLORS, UI_SIZES, APPLICATION_STATUSES } from "~/utilities/constants.js"
 
 const SectionWrapper = styled.div`
   display: flex;
@@ -41,6 +44,8 @@ const MainHeader = styled.div`
 `
 
 const ApplicationBox = styled.div`
+  padding: 10px 0px;
+  font-size: 20px;
   border-radius: 5px;
   border: 2px solid ${COLORS.accentBlue};
   box-shadow: 3px 2px 10px 0px ${COLORS.accentBlue};
@@ -65,7 +70,74 @@ const ApplicationBox = styled.div`
   }
 `
 
-const AllApplications = () => {
+const ErrorMessage = styled.div`
+  color: red;
+`
+
+const ApplicationField = styled.div`
+  display: flex;
+  width: 90%;
+  flex-direction: ${props => props.direction || "row"};
+  border-bottom: 1px solid #FFFFFF;
+  margin-bottom: 5px;
+`
+
+const ApplicationKey = styled.div`
+  width: 50%;
+  color: ${COLORS.accentBlue}
+`
+
+const ApplicationValue = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: ${props => props.alignItems || "center"};
+  width: ${props => props.width || "50%"};
+`
+
+const StatusContainer = styled.div`
+  text-align: center;
+`
+
+const Status = styled.span`
+  color: ${props => props.color || "#FFFFFF"};
+`
+
+const Buttons = styled.div`
+  display: flex;
+  width: 200px;
+  margin-top: 10px;
+`
+
+const mapStore = store => ({
+  getApplication: store.applications.getApplication,
+  acceptApplication: store.applications.acceptApplication,
+  declineApplication: store.applications.declineApplication,
+})
+
+const SingleApplication = () => {
+  const { getApplication } = useInject(mapStore)
+
+  const [application, setApplication] = useState({})
+  const [errorMessage, setErrorMessage] = useState("")
+
+  const router = useRouter()
+
+  useEffect(async () => {
+    if (router.isReady) {
+      const applicationData = await getApplication(router.query.slug)
+      if (applicationData) {
+        setApplication(applicationData)
+      } else {
+        setErrorMessage("Unable to get application data.")
+      }
+    }
+  }, [router.isReady])
+
+  let color;
+  if (application.status === APPLICATION_STATUSES.pending) color = "yellow"
+  if (application.status === APPLICATION_STATUSES.accepted) color = COLORS.lightGreen
+  if (application.status === APPLICATION_STATUSES.declined) color = COLORS.red
+
   return (
     <SectionWrapper className="font-squadaone">
       <Image src={HotDogStand} alt="Hotdog Stand" layout="fill" objectFit="cover" objectPosition="top right" quality={90} priority/>
@@ -74,11 +146,74 @@ const AllApplications = () => {
           Application
         </MainHeader>
         <ApplicationBox>
-          Application goes here.
+          <ErrorMessage>
+            {errorMessage}
+          </ErrorMessage>
+          <ApplicationField>
+            <ApplicationKey>Character name</ApplicationKey>
+            <ApplicationValue>
+              {application.playerCharacterName}
+            </ApplicationValue>
+          </ApplicationField>
+          <ApplicationField>
+            <ApplicationKey>Race</ApplicationKey>
+            <ApplicationValue>{application.playerRace}</ApplicationValue>
+          </ApplicationField>
+          <ApplicationField>
+            <ApplicationKey>Class</ApplicationKey>
+            <ApplicationValue>{application.playerClass}</ApplicationValue>
+          </ApplicationField>
+          <ApplicationField>
+            <ApplicationKey>Spec</ApplicationKey>
+            <ApplicationValue>{application.playerSpecialization}</ApplicationValue>
+          </ApplicationField>
+          <ApplicationField>
+            <ApplicationKey>Interested in PvP</ApplicationKey>
+            <ApplicationValue>{String(application.playerInterestedInPvP)}</ApplicationValue>
+          </ApplicationField>
+          <ApplicationField>
+            <ApplicationKey>Interested in Raiding</ApplicationKey>
+            <ApplicationValue>{String(application.playerInterestedInRaiding)}</ApplicationValue>
+          </ApplicationField>
+          <ApplicationField>
+            <ApplicationKey>Agreed to raid times</ApplicationKey>
+            <ApplicationValue>{String(application.playerAgreedToRaidTimes)}</ApplicationValue>
+          </ApplicationField>
+          <ApplicationField>
+            <ApplicationKey>Agreed to loot council</ApplicationKey>
+            <ApplicationValue>{String(application.playerAgreedToLootCouncil)}</ApplicationValue>
+          </ApplicationField>
+          <ApplicationField>
+            <ApplicationKey>Agreed to loot attendancy policy</ApplicationKey>
+            <ApplicationValue>{String(application.playerAgreedToAttendancePolicy)}</ApplicationValue>
+          </ApplicationField>
+          <ApplicationField>
+            <ApplicationKey>Agreed to gems and enchants</ApplicationKey>
+            <ApplicationValue>{String(application.playerAgreedToGemsAndEnchants)}</ApplicationValue>
+          </ApplicationField>
+          <ApplicationField>
+            <ApplicationKey>Agreed to working headset/microphone</ApplicationKey>
+            <ApplicationValue>{String(application.playerAgreedToWorkingMicrophone)}</ApplicationValue>
+          </ApplicationField>
+          <ApplicationField direction="column">
+            <ApplicationKey>Player raid utility</ApplicationKey>
+            <ApplicationValue width="100%" alignItems="flex-start" className="font-oswald">{application.playerRaidUtility || "None"}</ApplicationValue>
+          </ApplicationField>
+          <ApplicationField direction="column" noBorder>
+            <ApplicationKey>Player additional info</ApplicationKey>
+            <ApplicationValue width="100%" alignItems="flex-start" className="font-oswald">{application.playerAddtionalInfo || "None"}</ApplicationValue>
+          </ApplicationField>
+          <div>
+              <StatusContainer>Status:<Status color={color}>&nbsp;{application.status}</Status></StatusContainer>
+              <Buttons>
+                <ButtonInput value="Accept" color={COLORS.lightGreen} margin="0px 5px" onClick={() => {acceptApplication(router.query.slug)}}/>
+                <ButtonInput value="Decline" color={COLORS.red} margin="0px 5px" onClick={() => {declineApplication(router.query.slug)}}/>
+              </Buttons>
+          </div>
         </ApplicationBox>
       </ApplicationWrapper>
     </SectionWrapper>
   )
 }
 
-export default AllApplications
+export default SingleApplication

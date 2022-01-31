@@ -7,7 +7,7 @@ const Button = styled.input`
   height: ${props => props.height || "initial"};
   font-size: ${props => props.fontSize || "16px"};
   margin: ${props => props.margin || "none"};
-  background: transparent;
+  background: ${props => props.background || "transparent"};
   color: ${props => props.disabled ? "#333333" : (props.color || "#FFFFFF")};
   cursor: ${props => props.disabled ? "not-allowed" : "pointer"};
   border: ${props => props.disabled ? "1px solid #333333" : `1px solid ${COLORS.accentBlue}`};
@@ -15,7 +15,7 @@ const Button = styled.input`
   background-image: none !important;
 `
 
-const ButtonInput = ({value, children, width, height, fontSize, margin, disabled}) => (
+const ButtonInput = ({value, children, width, height, fontSize, margin, disabled, background, color}) => (
   <Button 
     type="submit"
     value={value || children}
@@ -24,6 +24,8 @@ const ButtonInput = ({value, children, width, height, fontSize, margin, disabled
     fontSize={fontSize}
     margin={margin}
     disabled={disabled}
+    background={background}
+    color={color}
   />
 )
 

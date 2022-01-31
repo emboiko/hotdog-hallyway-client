@@ -344,7 +344,7 @@ const MainHeader = observer(() => {
         <Username onClick={navigateToAccount}>
           {isLoggedIn ? user.username : "Guest"}
         </Username>
-        {isSmall ? null : LoginButton}
+        {isLoggedIn || isSmall ? null : LoginButton}
       </RightSide>
       <UnderGlow isMedium={isMedium}/>
     </Header>
