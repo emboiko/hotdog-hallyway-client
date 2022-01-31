@@ -219,7 +219,7 @@ const SingleApplication = () => {
           </ApplicationField>
           <ApplicationField direction="column" noBorder>
             <ApplicationKey>Player additional info</ApplicationKey>
-            <ApplicationValue width="100%" alignItems="flex-start" className="font-oswald">{application.playerAddtionalInfo || "None"}</ApplicationValue>
+            <ApplicationValue width="100%" alignItems="flex-start" className="font-oswald">{application.playerAdditionalInfo || "None"}</ApplicationValue>
           </ApplicationField>
           <div>
               <StatusContainer>Status:<Status color={color}>&nbsp;{application.status}</Status></StatusContainer>
