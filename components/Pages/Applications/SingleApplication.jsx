@@ -106,19 +106,21 @@ const Status = styled.span`
 `
 
 const Buttons = styled.div`
-  display: ${props => props.showing ? "flex" : "none"};
+  display: flex;
   width: 200px;
   margin-top: 10px;
+  justify-content: center;
 `
 
 const mapStore = store => ({
   getApplication: store.applications.getApplication,
   acceptApplication: store.applications.acceptApplication,
   declineApplication: store.applications.declineApplication,
+  deleteApplication: store.applications.deleteApplication,
 })
 
 const SingleApplication = () => {
-  const { getApplication, acceptApplication, declineApplication } = useInject(mapStore)
+  const { getApplication, acceptApplication, declineApplication, deleteApplication } = useInject(mapStore)
 
   const [application, setApplication] = useState({})
   const [errorMessage, setErrorMessage] = useState("")
@@ -156,6 +158,15 @@ const SingleApplication = () => {
       router.push("/applications/all")
     } else {
       setErrorMessage("Error declining application")
+    }
+  }
+  
+  const onDeleteApplication = async () => {
+    const success = await deleteApplication(router.query.slug)
+    if (success) {
+      router.push("/applications/all")
+    } else {
+      setErrorMessage("Error deleting application")
     }
   }
 
@@ -226,9 +237,15 @@ const SingleApplication = () => {
           </ApplicationField>
           <div>
               <StatusContainer>Status:<Status color={color}>&nbsp;{application.status}</Status></StatusContainer>
-              <Buttons showing={application.status === APPLICATION_STATUSES.pending}>
-                <ButtonInput value="Accept" color={COLORS.lightGreen} margin="0px 5px" onClick={onAcceptApplication}/>
-                <ButtonInput value="Decline" color={COLORS.red} margin="0px 5px" onClick={onDeclineApplication}/>
+              <Buttons>
+                {application.status === APPLICATION_STATUSES.pending ? (
+                  <>
+                    <ButtonInput value="Accept" color={COLORS.lightGreen} margin="0px 5px" onClick={onAcceptApplication}/>
+                    <ButtonInput value="Decline" color={COLORS.red} margin="0px 5px" onClick={onDeclineApplication}/>
+                  </>
+                ) : (
+                  <ButtonInput value="Delete" color={COLORS.red} margin="0px 5px" width="100px" onClick={onDeleteApplication}/>
+                )}
               </Buttons>
           </div>
         </ApplicationBox>

@@ -45,9 +45,13 @@ const MainHeader = styled.div`
   margin-bottom: 25px;
   position: relative;
   background: rgba(0,0,0,0.8);
-  @media (max-width: ${UI_SIZES.small}px) {
+  @media (max-width: ${UI_SIZES.medium}px) {
     font-size: 48px;
-    margin-bottom: 12px;
+    width: 300px;
+    margin-bottom: 15px;
+
+  }
+  @media (max-width: ${UI_SIZES.small}px) {
     width: 100%;
   }
 `
@@ -56,7 +60,6 @@ const AccountBox = styled.div`
   border-radius: 5px;
   border: 2px solid ${COLORS.accentBlue};
   box-shadow: 3px 2px 10px 0px ${COLORS.accentBlue};
-  width: 70%;
   background: ${COLORS.darkGrey};
   opacity: 0.975;
   min-width: 500px;
@@ -72,7 +75,8 @@ const AccountBox = styled.div`
     display: none;
   }
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   @media (max-width: ${UI_SIZES.medium}px) {
     flex-direction: column;
     align-items: center;
@@ -81,33 +85,9 @@ const AccountBox = styled.div`
   }
 `
 
-const AvatarContainer = styled.div`
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  text-align: center;
-  @media (max-width: ${UI_SIZES.medium}px) {
-    border-right: none;
-    margin-bottom: 25px;
-  }
-`
-
-const UnderConstruction = styled.div`
-  @media (max-width: ${UI_SIZES.tiny}px) {
-    display: none;
-  }
-  margin: 5px 10px;
-`
-
 const FormContainer = styled.div`
-  width: 50%;
   height: 100%;
-  @media (max-width: ${UI_SIZES.medium}px) {
-    width: 100%;
-  }
+  width: 100%;
 `
 
 const AccountForm = styled.form`
@@ -153,7 +133,6 @@ const FormButtonContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   height: 100%;
-  width: 50%;
   margin-bottom: 15px;
   max-width: 300px;
 `
@@ -276,13 +255,6 @@ const Account = observer(() => {
           Account
         </MainHeader>
         <AccountBox>
-          <AvatarContainer>
-            <UnderConstruction>
-              User Avatars &amp; Image Uploads Coming Soon.
-              <br/><br/>
-              Under Construction
-            </UnderConstruction>
-          </AvatarContainer>
           <FormContainer>
             <AccountForm onSubmit={onSubmit}>
               <FormGroup>
@@ -353,10 +325,11 @@ const Account = observer(() => {
               </FormGroup>
               <MessageContainer isErrorMessage={!message.length}>{validationError || accountUpdateError || message}</MessageContainer>
               <FormButtonContainer>
-                <ButtonInput value="Update" disabled={validationError || !submitButtonEnabled} />
+                <ButtonInput width="100px" value="Update" disabled={validationError || !submitButtonEnabled} />
                 <SimpleButton 
                   onClick={handleLogout}
                   margin="10px 0px 0px 0px"
+                  width="100px"
                 >
                 Logout
                 </SimpleButton>

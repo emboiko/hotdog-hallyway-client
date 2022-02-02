@@ -128,6 +128,25 @@ const ApplicationStore = types
         
         if (result.status === 200) return true
       },
+      async deleteApplication(applicationID) {
+        const token = parseCookies(null).token
+        let result
+
+        try {
+          result = await axios.delete(`${process.env.BACKEND_URL}/applications/${applicationID}`, {headers: {Authorization: `Bearer ${token}`}})
+        } catch (error) {
+          let errorMessage = ""
+          if (error.response.status === 500 || error.response.status === 400) {
+            errorMessage = error.response.data.error
+          } else {
+            errorMessage = "Error deleting application"
+          }
+          console.error(errorMessage)
+          return false
+        }
+        
+        if (result.status === 200) return true
+      },
     }
   })
 

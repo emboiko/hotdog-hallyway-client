@@ -55,6 +55,7 @@ const MainHeader = styled.div`
     margin-bottom: 12px;
     width: 100%;
   }
+  cursor: ${props => props.showCursorPointer ? "pointer" : "default"};
 `
 
 const ApplicationBox = styled.div`
@@ -211,7 +212,8 @@ const mapStore = store => ({
   applicationID: store.auth.user.applicationID,
   setApplicationID: store.auth.user.setApplicationID,
   getApplicationStatus: store.applications.getApplicationStatus,
-  isSmall: store.ui.isSmall
+  isSmall: store.ui.isSmall,
+  isCouncilMember: store.auth.user.isCouncilMember
 })
 
 const GuildApplication = observer(() => {
@@ -222,7 +224,8 @@ const GuildApplication = observer(() => {
     applicationID,
     setApplicationID,
     getApplicationStatus,
-    isSmall
+    isSmall,
+    isCouncilMember
   } = useInject(mapStore)
 
   const [playerCharacterName, setPlayerCharacterName] = useState(username)
@@ -335,6 +338,10 @@ const GuildApplication = observer(() => {
     setPlayerSpecialization(PLAYER_SPECIALIZATIONS[playerClass].specializations[0])
     setPlayerRace(PLAYER_SPECIALIZATIONS[playerClass].races[0])
   }, [playerClass])
+
+  const navigateToApplications = () => {
+    if (isCouncilMember) Router.push("/applications/all")
+  }
 
   const RenderAlreadySubmitted = (
     <AlreadySubmittedWrapper>
@@ -484,7 +491,7 @@ const GuildApplication = observer(() => {
     <SectionWrapper className="font-squadaone">
       <Image src={HotDogStand} alt="Hotdog Stand" layout="fill" objectFit="cover" quality={90} priority />
       <ApplicationWrapper>
-        <MainHeader>
+        <MainHeader onClick={navigateToApplications} showCursorPointer={isCouncilMember}>
           Guild Application
         </MainHeader>
         <ApplicationBox>
