@@ -16,7 +16,7 @@ const Input = styled.input`
 
 `
 
-const TextInput = ({value, disabled, type, placeHolder, onChange, width, height, fontSize, margin, color, background, fontFamily}) => (
+const TextInput = ({value, disabled, type, placeHolder, onChange, width, height, fontSize, margin, color, background, fontFamily, maxLength}) => (
   <Input 
     type={type} 
     placeholder={placeHolder} 
@@ -30,6 +30,7 @@ const TextInput = ({value, disabled, type, placeHolder, onChange, width, height,
     color={color}
     background={background}
     fontFamily={fontFamily}
+    maxLength={maxLength || 100}
   />
 )
 

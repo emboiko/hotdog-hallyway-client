@@ -4,6 +4,9 @@ import Image from "next/image"
 import Link from "next/link"
 import HotDogStand from "/public/static/img/jpg/hotdogstand2.jpg"
 import GroupVashj from "/public/static/img/jpg/groupVashj.jpg"
+import GroupAkama from "/public/static/img/jpg/groupAkama.jpg"
+import GroupBlackTemple from "/public/static/img/jpg/groupBlackTemple.jpg"
+import HuxAndEd from "/public/static/img/jpg/huxAndEd.jpg"
 import Neko from "/public/static/img/png/neko.png"
 import Tina from "/public/static/img/png/tina.png"
 import { COLORS, UI_SIZES } from "~/utilities/constants.js"
@@ -18,7 +21,7 @@ const SectionWrapper = styled.div`
 
 const AboutWrapper = styled.div`
   position: relative;
-  margin-top: 75px;
+  margin-top: 65px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -42,13 +45,16 @@ const MainHeader = styled.div`
     font-size: 48px;
     width: 200px;
   }
+  @media (max-width: ${UI_SIZES.small}px) {
+    width: 100%;
+  }
 `
 
 const AboutBox = styled.div`
   border-radius: 5px;
   border: 2px solid ${COLORS.accentBlue};
   box-shadow: 3px 2px 10px 0px ${COLORS.accentBlue};
-  width: 70%;
+  width: 75%;
   min-width: 500px;
   max-width: 1800px;
   overflow: auto;
@@ -126,10 +132,19 @@ const About = () => {
             <Image src={GroupVashj} layout="responsive"/>
           </AboutImageBox>
           <AboutImageBox>
+            <Image src={GroupBlackTemple} layout="responsive"/>
+          </AboutImageBox>
+          <AboutImageBox>
+            <Image src={GroupAkama} layout="responsive"/>
+          </AboutImageBox>
+          <AboutImageBox>
             <Image src={Tina} layout="responsive"/>
           </AboutImageBox>
           <AboutImageBox>
             <Image src={Neko} layout="responsive"/>
+          </AboutImageBox>
+          <AboutImageBox>
+            <Image src={HuxAndEd} layout="responsive"/>
           </AboutImageBox>
         </AboutBox>
       </AboutWrapper>

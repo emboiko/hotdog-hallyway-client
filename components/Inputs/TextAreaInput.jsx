@@ -13,7 +13,7 @@ const Input = styled.textarea`
   font-family: ${props => props.fontFamily || "Arial"};
 `
 
-const TextAreaInput = ({value, disabled, onChange, width, height, fontSize, margin, color, background, fontFamily}) => {
+const TextAreaInput = ({value, disabled, onChange, width, height, fontSize, margin, color, background, fontFamily, maxLength}) => {
   return (
     <Input 
       resize={"vertical"}
@@ -27,6 +27,7 @@ const TextAreaInput = ({value, disabled, onChange, width, height, fontSize, marg
       color={color}
       background={background}
       fontFamily={fontFamily}
+      maxLength={maxLength || 3000}
       rows={3}
     />
   )

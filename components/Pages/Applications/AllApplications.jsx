@@ -16,7 +16,7 @@ const SectionWrapper = styled.div`
 
 const ApplicationsWrapper = styled.div`
   position: relative;
-  margin-top: 75px;
+  margin-top: 65px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,7 +35,7 @@ const MainHeader = styled.div`
   width: 400px;
   margin-bottom: 25px;
   position: relative;
-  background: rgba(0,0,0,0.8);
+  background: rgba(0,0,0,0.9);
   @media (max-width: ${UI_SIZES.medium}px) {
     font-size: 48px;
     width: 300px;

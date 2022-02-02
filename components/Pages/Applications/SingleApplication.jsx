@@ -17,7 +17,7 @@ const SectionWrapper = styled.div`
 
 const ApplicationWrapper = styled.div`
   position: relative;
-  margin-top: 75px;
+  margin-top: 65px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,7 +39,10 @@ const MainHeader = styled.div`
   background: rgba(0,0,0,0.8);
   @media (max-width: ${UI_SIZES.medium}px) {
     font-size: 48px;
-    width: 200px;
+    width: 250px;
+  }
+  @media (max-width: ${UI_SIZES.small}px) {
+    width: 100%;
   }
 `
 
@@ -103,7 +106,7 @@ const Status = styled.span`
 `
 
 const Buttons = styled.div`
-  display: flex;
+  display: ${props => props.showing ? "flex" : "none"};
   width: 200px;
   margin-top: 10px;
 `
@@ -223,7 +226,7 @@ const SingleApplication = () => {
           </ApplicationField>
           <div>
               <StatusContainer>Status:<Status color={color}>&nbsp;{application.status}</Status></StatusContainer>
-              <Buttons>
+              <Buttons showing={application.status === APPLICATION_STATUSES.pending}>
                 <ButtonInput value="Accept" color={COLORS.lightGreen} margin="0px 5px" onClick={onAcceptApplication}/>
                 <ButtonInput value="Decline" color={COLORS.red} margin="0px 5px" onClick={onDeclineApplication}/>
               </Buttons>

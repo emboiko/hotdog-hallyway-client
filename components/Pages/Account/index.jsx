@@ -22,7 +22,7 @@ const SectionWrapper = styled.div`
 
 const AccountWrapper = styled.div`
   position: relative;
-  margin-top: 75px;
+  margin-top: 65px;
   display: flex;
   flex-direction: column;
   align-items: center;

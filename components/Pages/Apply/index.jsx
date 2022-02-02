@@ -23,7 +23,7 @@ const SectionWrapper = styled.div`
 
 const ApplicationWrapper = styled.div`
   position: relative;
-  margin-top: 75px;
+  margin-top: 65px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -172,6 +172,9 @@ const AlreadySubmittedWrapper = styled.div`
 const AlreadySubmittedText = styled.div`
   font-size: 40px;
   margin-bottom: 10px;
+  @media (max-width: ${UI_SIZES.small}px) {
+    font-size: 32px;
+  }
 `
 
 const AlreadySubmittedSubText = styled.div`
