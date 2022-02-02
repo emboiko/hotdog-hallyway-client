@@ -120,8 +120,8 @@ const InputGroup = styled.div`
 const EditButton = styled.div`
   background: ${props => props.editing ? COLORS.yellow : COLORS.lightGreen};
   border: 2px solid ${props => props.editing ? COLORS.yellow : COLORS.lightGreen};
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   border-radius: 5px;
   position: relative;
   cursor: pointer;
