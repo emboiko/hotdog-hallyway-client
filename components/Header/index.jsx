@@ -132,6 +132,7 @@ const BossKills = styled.div`
 const BossKillDropdownOpener = styled.div`
   margin: 0px 5px;
   cursor: pointer;
+  user-select: none;
   &:hover {
     color: ${COLORS.lightGreen};
   }
