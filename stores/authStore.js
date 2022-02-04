@@ -40,6 +40,9 @@ const User = types
       async updateUser(payload) {
         const token = parseCookies(null).token
 
+        const avatar = payload.avatar
+        delete payload.avatar
+
         try {
           await axios.patch(`${process.env.BACKEND_URL}/users/me`, payload, {headers: {Authorization: `Bearer ${token}`}})
         } catch (error) {
@@ -53,9 +56,6 @@ const User = types
           self.setAccountUpdateError(errorMessage)
           return false
         }
-
-        const avatar = payload.avatar
-        delete payload.avatar
 
         if (avatar) {
           const formData = new FormData()
