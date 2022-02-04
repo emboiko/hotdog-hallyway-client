@@ -5,11 +5,14 @@ import Router from "next/router"
 import { observer } from "mobx-react"
 import useInject from "~/hooks/useInject"
 import SimpleButton from "~/components/Inputs/SimpleButton"
+import FileInput from "~/components/Inputs/FileInput"
 import TextInput from "~/components/Inputs/TextInput"
 import ButtonInput from "~/components/Inputs/ButtonInput"
 import HotDogStand from "/public/static/img/jpg/hotdogstand5.jpg"
-import { COLORS, UI_SIZES } from "~/utilities/constants.js"
 import EditIcon from "~/public/static/img/png/edit.png"
+import browseIcon from "~/public/static/img/png/browse.png"
+import defaultAvatarImage from "~/public/static/img/png/defaultAvatar.png"
+import { COLORS, UI_SIZES } from "~/utilities/constants.js"
 import { validateUsername, validatePassword, validatePasswordConfirmation, validateDiscordUsername } from "~/utilities/userValidations"
 
 const SectionWrapper = styled.div`
@@ -103,29 +106,26 @@ const TextInputLabel = styled.div`
   font-size: 20px;
 `
 
-const FormGroup = styled.div`
-  display: flex;
-  align-items: flex-end;
-  margin-top: 10px;
-  width: 90%;
-`
-
 const InputGroup = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 90%;
+  width: 100%;
+  position: relative;
+  margin-top: 10px;
 `
 
 const EditButton = styled.div`
-  background: ${props => props.editing ? COLORS.yellow : COLORS.lightGreen};
-  border: 2px solid ${props => props.editing ? COLORS.yellow : COLORS.lightGreen};
-  width: 20px;
-  height: 20px;
+  background: ${props => props.editing ? (props.error ? COLORS.red : "yellow") : COLORS.lightGreen};
+  border: 2px solid ${props => props.editing ? (props.error ? COLORS.red : "yellow") : COLORS.lightGreen};
+  width: 15px;
+  height: 15px;
   border-radius: 5px;
-  position: relative;
-  cursor: pointer;
+  position: absolute;
   margin-bottom: 1px;
+  top: 0px;
+  right: calc(0px + 10%);
+  cursor: ${props => props.error ? "not-allowed" : "pointer"};
 `
 
 const FormButtonContainer = styled.div`
@@ -145,7 +145,32 @@ const MessageContainer = styled.div`
   justify-content: center;
 `
 
+const AvatarContainer = styled.div`
+  margin-bottom: 15px;
+  border-radius: 150px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+const FileInputIconContainer = styled.div`
+  position: absolute;
+  left: calc(50% - 40px);
+  bottom: 2px;
+  z-index: -1;
+  background: ${COLORS.accentBlue};
+  border-radius: 5px;
+  width: 80px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
+
 const mapStore = store => ({
+  avatarBlob: store.auth.user.avatarBlob,
   username: store.auth.user.username,
   setUsername: store.auth.user.setUsername,
   discordUsername: store.auth.user.discordUsername,
@@ -156,19 +181,21 @@ const mapStore = store => ({
   isSmall: store.ui.isSmall
 })
 
-
 const Account = observer(() => {
   const { 
-    username, setUsername ,
+    avatarBlob,
+    username, setUsername,
     discordUsername, setDiscordUsername,
     updateUser,
     accountUpdateError,
-    logout,
+    logout
   } = useInject(mapStore)
-
 
   const [isEditingUsernames, setIsEditingUsernames] = useState(false)
   const [isEditingPasswords, setIsEditingPasswords] = useState(false)
+
+  const [localAvatarImage, setLocalAvatarImage] = useState(null)
+  const [localAvatarFile, setLocalAvatarFile] = useState(null)
 
   const [localUsername, setLocalUsername] = useState("")
   const [localDiscordUsername, setLocalDiscordUsername] = useState("")
@@ -206,6 +233,10 @@ const Account = observer(() => {
       payload.password = localPassword
     }
 
+    if (localAvatarFile) {
+      payload.avatar = localAvatarFile
+    }
+
     let success
     if (Object.keys(payload).length) {
       success = await updateUser(payload)
@@ -215,12 +246,13 @@ const Account = observer(() => {
       setIsEditingUsernames(false)
       setIsEditingPasswords(false)
       setSubmitButtonEnabled(false)
+      setLocalAvatarFile(null)
+      setLocalAvatarImage(null)
       setMessage("Success.")
       setTimeout(() => {
         setMessage("")
       }, 3000)
     } // Otherwise the authStore sets "accountUpdateError" which is rendered in the DOM below in this component.
-
   }
 
   const onChangeLocalUsername = (event) => {
@@ -242,6 +274,13 @@ const Account = observer(() => {
     setLocalPasswordConfirmation(event.target.value)
   }
 
+  const onChangeLocalAvatar = (event) => {
+    if (event.target.name !== "avatar" || !event.target.files.length) return;
+    setSubmitButtonEnabled(true)
+    setLocalAvatarFile(event.target.files[0])
+    setLocalAvatarImage(URL.createObjectURL(event.target.files[0]))
+  }
+
   const handleLogout = () => {
     logout()
     Router.push("/")
@@ -256,8 +295,17 @@ const Account = observer(() => {
         </MainHeader>
         <AccountBox>
           <FormContainer>
-            <AccountForm onSubmit={onSubmit}>
-              <FormGroup>
+            <AccountForm encType="multipart/form-data" onSubmit={onSubmit} onChange={onChangeLocalAvatar}>
+                <InputGroup>
+                  <TextInputLabel>Avatar</TextInputLabel>
+                  <AvatarContainer>
+                    <Image src={localAvatarImage || avatarBlob || defaultAvatarImage} alt="avatar" width={250} height={250}/>
+                  </AvatarContainer>
+                  <FileInput name="avatar" width="80px" height="50px"/>
+                  <FileInputIconContainer>
+                    <Image src={browseIcon} alt="browse files" width={40} height={40}/>
+                  </FileInputIconContainer>
+                </InputGroup>
                 <InputGroup>
                   <TextInputLabel>Username</TextInputLabel>
                   <TextInput 
@@ -270,12 +318,10 @@ const Account = observer(() => {
                     disabled={!isEditingUsernames}
                     background={isEditingUsernames ? "#FFFFFF" : "#333333"}
                   />
-                </InputGroup>
-                <EditButton onClick={() => {setIsEditingUsernames(!isEditingUsernames)}} editing={isEditingUsernames}>
+                <EditButton onClick={validationError ? null : () => {setIsEditingUsernames(!isEditingUsernames)}} editing={isEditingUsernames} error={validationError}>
                   <Image src={EditIcon} layout="fill" />
                 </EditButton>
-              </FormGroup>
-              <FormGroup>
+                </InputGroup>
                 <InputGroup>
                   <TextInputLabel>Discord Username</TextInputLabel>
                   <TextInput 
@@ -289,8 +335,6 @@ const Account = observer(() => {
                     background={isEditingUsernames ? "#FFFFFF" : "#333333"}
                   />
                 </InputGroup>
-              </FormGroup>
-              <FormGroup>
                 <InputGroup>
                   <TextInputLabel>Password</TextInputLabel>
                   <TextInput 
@@ -303,12 +347,10 @@ const Account = observer(() => {
                     disabled={!isEditingPasswords}
                     background={isEditingPasswords ? "#FFFFFF" : "#333333"}
                     />
-                </InputGroup>
-                <EditButton onClick={() => {setIsEditingPasswords(!isEditingPasswords)}} editing={isEditingPasswords}>
+                <EditButton onClick={() => {setIsEditingPasswords(!isEditingPasswords)}} editing={isEditingPasswords} error={validationError}>
                   <Image src={EditIcon} layout="fill" />
                 </EditButton>
-              </FormGroup>
-              <FormGroup>
+                </InputGroup>
                 <InputGroup>
                   <TextInputLabel>Confirm Password</TextInputLabel>
                   <TextInput 
@@ -322,7 +364,6 @@ const Account = observer(() => {
                     background={isEditingPasswords ? "#FFFFFF" : "#333333"} 
                     />
                 </InputGroup>
-              </FormGroup>
               <MessageContainer isErrorMessage={!message.length}>{validationError || accountUpdateError || message}</MessageContainer>
               <FormButtonContainer>
                 <ButtonInput width="100px" value="Update" disabled={validationError || !submitButtonEnabled} />

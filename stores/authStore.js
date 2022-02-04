@@ -12,6 +12,7 @@ const User = types
     isGuildMember: types.optional(types.boolean, false),
     isCouncilMember: types.optional(types.boolean, false),
     applicationID: types.optional(types.string, ""),
+    avatar: types.optional(types.string, "")
   })
   .actions(self => {
     return {
@@ -30,28 +31,68 @@ const User = types
       setApplicationID(applicationID) {
         self.applicationID = applicationID
       },
+      setAvatar(base64ImageData) {
+        self.avatar = base64ImageData
+      },
       async updateUser(payload) {
         const token = parseCookies(null).token
-        let result
 
+        const avatar = payload.avatar
+        delete payload.avatar
+
+        let formResult
         try {
-          result = await axios.patch(`${process.env.BACKEND_URL}/users/me`, payload, {headers: {Authorization: `Bearer ${token}`}})
+          formResult = await axios.patch(`${process.env.BACKEND_URL}/users/me`, payload, {headers: {Authorization: `Bearer ${token}`}})
         } catch (error) {
           let errorMessage = ""
           if (error.response.status === 400 || error.response.status === 500) {
             errorMessage = error.response.data.error
           } else {
-            errorMessage = "Unable to update."
+            errorMessage = "Unable to update update account info."
           }
           
           self.setAccountUpdateError(errorMessage)
           return false
         }
 
-        if (result.status === 202) return true
+        if (avatar) {
+          const formData = new FormData()
+          formData.append("avatar", avatar)
+
+          let avatarResult
+          try {
+            const config = {
+              headers: {Authorization: `Bearer ${token}`}, 
+              "content-type": "multipart/form-data"
+            }
+
+            avatarResult = await axios.post(`${process.env.BACKEND_URL}/users/me/avatar`, formData, config)
+          } catch (error) {
+            let errorMessage = ""
+            if (error.response.status === 400) {
+              errorMessage = error.response.data.error
+            } else {
+              errorMessage = "Unable to update avatar data."
+            }
+
+            self.setAccountUpdateError(errorMessage)
+            return false
+          }
+          self.setAvatar(avatarResult.data.imageData)
+        }
+
+        return true
       }
     }
   })
+  .views(self => ({
+    get avatarBlob() {
+      if (self.avatar) {
+        return "data:image/png;base64," + self.avatar
+      }
+      return ""
+    }
+  }))
 
 const AuthStore = types
   .model('AuthStore', {
@@ -163,6 +204,7 @@ const AuthStore = types
           isGuildMember:user.isGuildMember,
           isCouncilMember:user.isCouncilMember,
           ...(user.applicationID && {applicationID: user.applicationID}),
+          avatar: user.avatar
         }
 
         setCookie(null, 'token', token, {maxAge: 30 * 24 * 60 * 60, path: '/'})
