@@ -133,7 +133,7 @@ const FormButtonContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   height: 100%;
-  margin-bottom: 15px;
+  padding-bottom: 15px;
   max-width: 300px;
 `
 
