@@ -37,12 +37,8 @@ const User = types
       async updateUser(payload) {
         const token = parseCookies(null).token
 
-        const avatar = payload.avatar
-        delete payload.avatar
-
-        let formResult
         try {
-          formResult = await axios.patch(`${process.env.BACKEND_URL}/users/me`, payload, {headers: {Authorization: `Bearer ${token}`}})
+          await axios.patch(`${process.env.BACKEND_URL}/users/me`, payload, {headers: {Authorization: `Bearer ${token}`}})
         } catch (error) {
           let errorMessage = ""
           if (error.response.status === 400 || error.response.status === 500) {
@@ -54,6 +50,9 @@ const User = types
           self.setAccountUpdateError(errorMessage)
           return false
         }
+
+        const avatar = payload.avatar
+        delete payload.avatar
 
         if (avatar) {
           const formData = new FormData()
@@ -204,6 +203,9 @@ const AuthStore = types
           isGuildMember:user.isGuildMember,
           isCouncilMember:user.isCouncilMember,
           ...(user.applicationID && {applicationID: user.applicationID}),
+          ...(user.race && {race: user.race}),
+          ...(user.class && {class: user.class}),
+          ...(user.specialization && {specialization: user.specialization}),
           avatar: user.avatar
         }
 
