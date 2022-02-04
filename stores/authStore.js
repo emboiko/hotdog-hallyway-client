@@ -12,7 +12,10 @@ const User = types
     isGuildMember: types.optional(types.boolean, false),
     isCouncilMember: types.optional(types.boolean, false),
     applicationID: types.optional(types.string, ""),
-    avatar: types.optional(types.string, "")
+    avatar: types.optional(types.string, ""),
+    race: types.optional(types.string, ""),
+    class: types.optional(types.string, ""),
+    specialization: types.optional(types.string, ""),
   })
   .actions(self => {
     return {
@@ -202,11 +205,11 @@ const AuthStore = types
           id:user._id,
           isGuildMember:user.isGuildMember,
           isCouncilMember:user.isCouncilMember,
+          avatar: user.avatar,
           ...(user.applicationID && {applicationID: user.applicationID}),
           ...(user.race && {race: user.race}),
           ...(user.class && {class: user.class}),
           ...(user.specialization && {specialization: user.specialization}),
-          avatar: user.avatar
         }
 
         setCookie(null, 'token', token, {maxAge: 30 * 24 * 60 * 60, path: '/'})
