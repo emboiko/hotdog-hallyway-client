@@ -188,7 +188,8 @@ const Account = observer(() => {
     discordUsername, setDiscordUsername,
     updateUser,
     accountUpdateError,
-    logout
+    logout,
+    isSmall
   } = useInject(mapStore)
 
   const [isEditingUsernames, setIsEditingUsernames] = useState(false)
@@ -299,7 +300,7 @@ const Account = observer(() => {
                 <InputGroup>
                   <TextInputLabel>Avatar</TextInputLabel>
                   <AvatarContainer>
-                    <Image src={localAvatarImage || avatarBlob || defaultAvatarImage} alt="avatar" width={250} height={250}/>
+                    <Image src={localAvatarImage || avatarBlob || defaultAvatarImage} alt="avatar" width={isSmall ? 150 : 250} height={isSmall ? 150 : 250}/>
                   </AvatarContainer>
                   <FileInput name="avatar" width="80px" height="50px"/>
                   <FileInputIconContainer>
