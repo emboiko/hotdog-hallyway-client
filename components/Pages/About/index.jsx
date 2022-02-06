@@ -4,6 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import HotDogStand from "/public/static/img/jpg/hotdogstand2.jpg"
 import GroupVashj from "/public/static/img/jpg/groupVashj.jpg"
+import GroupArchimonde from "/public/static/img/jpg/groupArchimonde.jpg"
 import GroupAkama from "/public/static/img/jpg/groupAkama.jpg"
 import GroupBlackTemple from "/public/static/img/jpg/groupBlackTemple.jpg"
 import HuxAndEd from "/public/static/img/jpg/huxAndEd.jpg"
@@ -128,6 +129,9 @@ const About = () => {
               {"<Hotdog Hallway> What's in your wallet?"}
             </AboutTextSection>
           </AboutTextBox>
+          <AboutImageBox>
+            <Image src={GroupArchimonde} layout="responsive"/>
+          </AboutImageBox>
           <AboutImageBox>
             <Image src={GroupVashj} layout="responsive"/>
           </AboutImageBox>
