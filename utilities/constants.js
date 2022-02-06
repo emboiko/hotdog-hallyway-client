@@ -150,14 +150,14 @@ const BOSSES = {
         defeated: true
       },
       "Anetheron": {
-        defeated: true,
+        defeated: true
       },
       "Kaz'rogal": {
-        defeated: false,
-        progressing: true
+        defeated: true
       },
       "Azgalor": {
-        defeated: false
+        defeated: false,
+        progressing: true
       },
       "Archimonde": {
         defeated: false
