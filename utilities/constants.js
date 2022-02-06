@@ -156,11 +156,11 @@ const BOSSES = {
         defeated: true
       },
       "Azgalor": {
-        defeated: false,
-        progressing: true
+        defeated: true,
       },
       "Archimonde": {
-        defeated: false
+        defeated: false,
+        progressing: true
       },
       "Archimonde": {
         defeated: false
