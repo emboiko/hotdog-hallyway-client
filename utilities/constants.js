@@ -161,9 +161,6 @@ const BOSSES = {
       "Archimonde": {
         defeated: false,
         progressing: true
-      },
-      "Archimonde": {
-        defeated: false
       }
     },
     "Black Temple": {
