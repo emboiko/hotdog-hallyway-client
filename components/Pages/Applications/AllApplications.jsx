@@ -81,7 +81,6 @@ const SectionHeader = styled.div`
 `
 
 const ApplicationCard = styled.div`
-  font-size: 20px;
   cursor: pointer;
   transition: color 0.25s linear;
   &:hover {
@@ -91,6 +90,7 @@ const ApplicationCard = styled.div`
 
 const ApplicationSection = styled.div`
   display: ${props => props.showing ? "block" : "none"};
+  font-size: 20px;
 `
 
 const mapStore = store => ({
@@ -148,8 +148,8 @@ const AllApplications = () => {
   })
 
   const [pendingShowing, setPendingShowing] = useState(true)
-  const [acceptedShowing, setAcceptedShowing] = useState(false)
-  const [declinedShowing, setDeclinedShowing] = useState(false)
+  const [acceptedShowing, setAcceptedShowing] = useState(true)
+  const [declinedShowing, setDeclinedShowing] = useState(true)
 
   return (
     <SectionWrapper className="font-squadaone">
@@ -161,15 +161,15 @@ const AllApplications = () => {
         <ApplicationsBox>
           <SectionHeader onClick={() => {setPendingShowing(!pendingShowing)}} showing={pendingShowing} color="yellow">Pending</SectionHeader>
           <ApplicationSection showing={pendingShowing}>
-            {PendingApplications}
+            {pendingApplications.length ? PendingApplications : "Empty"}
           </ApplicationSection>
           <SectionHeader onClick={() => {setAcceptedShowing(!acceptedShowing)}} showing={acceptedShowing} color={COLORS.lightGreen}>Accepted</SectionHeader>
           <ApplicationSection showing={acceptedShowing}>
-            {AcceptedApplications}
+            {acceptedApplications.length ? AcceptedApplications : "Empty"}
           </ApplicationSection>
           <SectionHeader onClick={() => {setDeclinedShowing(!declinedShowing)}} showing={declinedShowing} color="red">Declined</SectionHeader>
           <ApplicationSection showing={declinedShowing}>
-            {DeclinedApplications}
+            {declinedApplications.length ? DeclinedApplications : "Empty"}
           </ApplicationSection>
         </ApplicationsBox>
       </ApplicationsWrapper>
