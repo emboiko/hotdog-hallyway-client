@@ -213,7 +213,8 @@ const mapStore = store => ({
   setApplicationID: store.auth.user.setApplicationID,
   getApplicationStatus: store.applications.getApplicationStatus,
   isSmall: store.ui.isSmall,
-  isCouncilMember: store.auth.user.isCouncilMember
+  isCouncilMember: store.auth.user.isCouncilMember,
+  isGuildMember: store.auth.user.isGuildMember,
 })
 
 const GuildApplication = observer(() => {
@@ -225,7 +226,8 @@ const GuildApplication = observer(() => {
     setApplicationID,
     getApplicationStatus,
     isSmall,
-    isCouncilMember
+    isCouncilMember,
+    isGuildMember,
   } = useInject(mapStore)
 
   const [playerCharacterName, setPlayerCharacterName] = useState(username)
@@ -294,7 +296,8 @@ const GuildApplication = observer(() => {
   }
 
   const usernameError = validateUsername(playerCharacterName)
-  const error = usernameError || applicationSubmissionError
+  const alreadyGuildMemeberError = isGuildMember ? "Disabled for guild members." : null
+  const error = usernameError || applicationSubmissionError || alreadyGuildMemeberError
 
   const onFormSubmit = async (event) => {
     event.preventDefault()
@@ -481,7 +484,7 @@ const GuildApplication = observer(() => {
         </FormSection>
         <FormSection>
           <Error>{error}</Error>
-          <ButtonInput value="Submit" margin="10px 0px 20px 0px" width="150px" height="40px" />
+          <ButtonInput value="Submit" margin="10px 0px 20px 0px" width="150px" height="40px" disabled={isGuildMember}/>
         </FormSection>
       </VerticalFormBlock>
     </ApplicationForm>
