@@ -117,8 +117,8 @@ const InputGroup = styled.div`
 `
 
 const EditButton = styled.div`
-  background: ${props => props.editing ? (props.error ? COLORS.red : "yellow") : COLORS.lightGreen};
-  border: 2px solid ${props => props.editing ? (props.error ? COLORS.red : "yellow") : COLORS.lightGreen};
+  background: ${props => props.editing ? (props.error ? COLORS.red : "yellow") : (props.disabled ? COLORS.red : COLORS.lightGreen)};
+  border: 2px solid ${props => props.editing ? (props.error ? COLORS.red : "yellow") : (props.disabled ? COLORS.red : COLORS.lightGreen)};
   width: 15px;
   height: 15px;
   border-radius: 5px;
@@ -126,7 +126,7 @@ const EditButton = styled.div`
   margin-bottom: 1px;
   top: 0px;
   right: calc(0px + 10%);
-  cursor: ${props => props.error ? "not-allowed" : "pointer"};
+  cursor: ${props => props.error || props.disabled ? "not-allowed" : "pointer"};
 `
 
 const FormButtonContainer = styled.div`
@@ -181,6 +181,7 @@ const mapStore = store => ({
   race: store.auth.user.race,
   className: store.auth.user.className,
   specialization: store.auth.user.specialization,
+  isGuildMember: store.auth.user.isGuildMember,
 })
 
 const Account = observer(() => {
@@ -195,6 +196,7 @@ const Account = observer(() => {
     className,
     specialization,
     race,
+    isGuildMember,
   } = useInject(mapStore)
 
   const [isEditingUsernames, setIsEditingUsernames] = useState(false)
@@ -337,8 +339,10 @@ const Account = observer(() => {
       setLocalSpecialization(DEFAULT_SPECIALIZATION)
       setLocalRace(DEFAULT_RACE)
 
-      setIsEditingClassConfig(true)
-      setSubmitButtonEnabled(true)
+      if (isGuildMember) {
+        setIsEditingClassConfig(true)
+        setSubmitButtonEnabled(true)
+      }
     } 
   }, [])
 
@@ -371,10 +375,15 @@ const Account = observer(() => {
                   fontSize="20px"
                   value={localUsername || username} 
                   onChange={onChangeLocalUsername} 
-                  disabled={!isEditingUsernames}
+                  disabled={!isGuildMember || !isEditingUsernames}
                   background={isEditingUsernames ? "#FFFFFF" : "#333333"}
                 />
-              <EditButton onClick={validationError ? null : () => {setIsEditingUsernames(!isEditingUsernames)}} editing={isEditingUsernames} error={validationError}>
+              <EditButton 
+                onClick={validationError || !isGuildMember ? null : () => {setIsEditingUsernames(!isEditingUsernames)}} 
+                editing={isEditingUsernames}
+                error={validationError}
+                disabled={!isGuildMember}
+              >
                 <Image src={EditIcon} layout="fill" />
               </EditButton>
               </InputGroup>
@@ -387,7 +396,7 @@ const Account = observer(() => {
                   type="text" 
                   value={localDiscordUsername || discordUsername} 
                   onChange={onChangeLocalDiscordUsername} 
-                  disabled={!isEditingUsernames}
+                  disabled={!isGuildMember && !isEditingUsernames}
                   background={isEditingUsernames ? "#FFFFFF" : "#333333"}
                 />
               </InputGroup>
@@ -400,10 +409,15 @@ const Account = observer(() => {
                   type="password" 
                   value={localPassword} 
                   onChange={onChangeLocalPassword} 
-                  disabled={!isEditingPasswords}
+                  disabled={!isGuildMember || !isEditingPasswords}
                   background={isEditingPasswords ? "#FFFFFF" : "#333333"}
                   />
-                <EditButton onClick={() => {setIsEditingPasswords(!isEditingPasswords)}} editing={isEditingPasswords} error={validationError}>
+                <EditButton 
+                  onClick={!isGuildMember ? null : () => {setIsEditingPasswords(!isEditingPasswords)}} 
+                  editing={isEditingPasswords} 
+                  error={validationError}
+                  disabled={!isGuildMember}
+                >
                   <Image src={EditIcon} layout="fill" />
                 </EditButton>
               </InputGroup>
@@ -416,7 +430,7 @@ const Account = observer(() => {
                   type="password" 
                   value={localPasswordConfirmation} 
                   onChange={onChangeLocalPasswordConfirmation} 
-                  disabled={!isEditingPasswords}
+                  disabled={!isGuildMember || !isEditingPasswords}
                   background={isEditingPasswords ? "#FFFFFF" : "#333333"} 
                 />
               </InputGroup>
@@ -428,9 +442,13 @@ const Account = observer(() => {
                   value={localClassName || "Druid"} 
                   onChange={onChangeLocalClassName} 
                   width="80%" 
-                  disabled={!isEditingClassConfig}
+                  disabled={!isGuildMember || !isEditingClassConfig}
                 />
-                <EditButton onClick={() => {setIsEditingClassConfig(!isEditingClassConfig)}} editing={isEditingClassConfig}>
+                <EditButton 
+                  onClick={!isGuildMember ? null : () => {setIsEditingClassConfig(!isEditingClassConfig)}} 
+                  editing={isEditingClassConfig}
+                  disabled={!isGuildMember}
+                >
                   <Image src={EditIcon} layout="fill" />
                 </EditButton>
               </InputGroup>
@@ -442,7 +460,7 @@ const Account = observer(() => {
                   value={localSpecialization} 
                   onChange={onChangeLocalSpecialization} 
                   width="80%" 
-                  disabled={!isEditingClassConfig}
+                  disabled={!isGuildMember || !isEditingClassConfig}
                 />
               </InputGroup>
               <InputGroup>
@@ -453,12 +471,12 @@ const Account = observer(() => {
                   value={localRace} 
                   onChange={onChangeLocalRace} 
                   width="80%" 
-                  disabled={!isEditingClassConfig}
+                  disabled={!isGuildMember || !isEditingClassConfig}
                 />
               </InputGroup>
               <MessageContainer isErrorMessage={!message.length}>{validationError || accountUpdateError || message}</MessageContainer>
               <FormButtonContainer>
-                <ButtonInput width="100px" value="Update" disabled={validationError || !submitButtonEnabled} />
+                <ButtonInput width="100px" value="Update" disabled={!isGuildMember || validationError || !submitButtonEnabled} />
                 <SimpleButton 
                   onClick={handleLogout}
                   margin="10px 0px 0px 0px"
