@@ -14,7 +14,7 @@ const User = types
     applicationID: types.optional(types.string, ""),
     avatar: types.optional(types.string, ""),
     race: types.optional(types.string, ""),
-    class: types.optional(types.string, ""),
+    className: types.optional(types.string, ""),
     specialization: types.optional(types.string, ""),
   })
   .actions(self => {
@@ -36,6 +36,15 @@ const User = types
       },
       setAvatar(base64ImageData) {
         self.avatar = base64ImageData
+      },
+      setRace(race) {
+        self.race = race
+      },
+      setClassName(className) {
+        self.className = className
+      },
+      setSpecialization(specialization) {
+        self.specialization = specialization
       },
       async updateUser(payload) {
         const token = parseCookies(null).token
@@ -208,7 +217,7 @@ const AuthStore = types
           avatar: user.avatar,
           ...(user.applicationID && {applicationID: user.applicationID}),
           ...(user.race && {race: user.race}),
-          ...(user.class && {class: user.class}),
+          ...(user.className && {className: user.className}),
           ...(user.specialization && {specialization: user.specialization}),
         }
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import Image from "next/image"
 import Router from "next/router"
@@ -7,12 +7,13 @@ import useInject from "~/hooks/useInject"
 import SimpleButton from "~/components/Inputs/SimpleButton"
 import FileInput from "~/components/Inputs/FileInput"
 import TextInput from "~/components/Inputs/TextInput"
+import SelectInput from "~/components/Inputs/SelectInput"
 import ButtonInput from "~/components/Inputs/ButtonInput"
 import HotDogStand from "/public/static/img/jpg/hotdogstand5.jpg"
 import EditIcon from "~/public/static/img/png/edit.png"
 import browseIcon from "~/public/static/img/png/browse.png"
 import defaultAvatarImage from "~/public/static/img/png/defaultAvatar.png"
-import { COLORS, UI_SIZES } from "~/utilities/constants.js"
+import { COLORS, UI_SIZES, PLAYER_SPECIALIZATIONS } from "~/utilities/constants.js"
 import { validateUsername, validatePassword, validatePasswordConfirmation, validateDiscordUsername } from "~/utilities/userValidations"
 
 const SectionWrapper = styled.div`
@@ -172,28 +173,33 @@ const FileInputIconContainer = styled.div`
 const mapStore = store => ({
   avatarBlob: store.auth.user.avatarBlob,
   username: store.auth.user.username,
-  setUsername: store.auth.user.setUsername,
   discordUsername: store.auth.user.discordUsername,
-  setDiscordUsername: store.auth.user.setDiscordUsername,
   updateUser: store.auth.user.updateUser,
   accountUpdateError: store.auth.user.accountUpdateError,
   logout: store.auth.logout,
-  isSmall: store.ui.isSmall
+  isSmall: store.ui.isSmall,
+  race: store.auth.user.race,
+  className: store.auth.user.className,
+  specialization: store.auth.user.specialization,
 })
 
 const Account = observer(() => {
   const { 
     avatarBlob,
-    username, setUsername,
-    discordUsername, setDiscordUsername,
+    username,
+    discordUsername,
     updateUser,
     accountUpdateError,
     logout,
-    isSmall
+    isSmall,
+    className,
+    specialization,
+    race,
   } = useInject(mapStore)
 
   const [isEditingUsernames, setIsEditingUsernames] = useState(false)
   const [isEditingPasswords, setIsEditingPasswords] = useState(false)
+  const [isEditingClassConfig, setIsEditingClassConfig] = useState(false)
 
   const [localAvatarImage, setLocalAvatarImage] = useState(null)
   const [localAvatarFile, setLocalAvatarFile] = useState(null)
@@ -203,6 +209,10 @@ const Account = observer(() => {
 
   const [localPassword, setLocalPassword] = useState("")
   const [localPasswordConfirmation, setLocalPasswordConfirmation] = useState("")
+
+  const [localClassName, setLocalClassName] = useState(className)
+  const [localSpecialization, setLocalSpecialization] = useState(specialization)
+  const [localRace, setLocalRace] = useState(race)
 
   const [message, setMessage] = useState("")
 
@@ -221,12 +231,10 @@ const Account = observer(() => {
     const payload = {}
 
     if (localUsername && localUsername !== username) {
-      setUsername(localUsername)
       payload.username = localUsername
     }
 
     if (localDiscordUsername && localDiscordUsername !== discordUsername) {
-      setDiscordUsername(localDiscordUsername)
       payload.discordUsername = localDiscordUsername
     }
 
@@ -238,6 +246,18 @@ const Account = observer(() => {
       payload.avatar = localAvatarFile
     }
 
+    if (localClassName && localClassName !== className) {
+      payload.className = localClassName
+    }
+
+    if (localSpecialization && localSpecialization !== specialization) {
+      payload.specialization = localSpecialization
+    }
+
+    if (localRace && localRace !== race) {
+      payload.race = localRace
+    }
+
     let success
     if (Object.keys(payload).length) {
       success = await updateUser(payload)
@@ -246,6 +266,9 @@ const Account = observer(() => {
     if (success) {
       setIsEditingUsernames(false)
       setIsEditingPasswords(false)
+      setLocalPassword("")
+      setLocalPasswordConfirmation("")
+      setIsEditingClassConfig(false)
       setSubmitButtonEnabled(false)
       setLocalAvatarFile(null)
       setLocalAvatarImage(null)
@@ -282,10 +305,42 @@ const Account = observer(() => {
     setLocalAvatarImage(URL.createObjectURL(event.target.files[0]))
   }
 
+  const onChangeLocalClassName = (event) => {
+    setSubmitButtonEnabled(true)
+    setLocalClassName(event.target.value)
+    setLocalSpecialization(PLAYER_SPECIALIZATIONS[event.target.value].specializations[0])
+    setLocalRace(PLAYER_SPECIALIZATIONS[event.target.value].races[0])
+  }
+  
+  const onChangeLocalSpecialization = (event) => {
+    setSubmitButtonEnabled(true)
+    setLocalSpecialization(event.target.value)
+  }
+  
+  const onChangeLocalRace = (event) => {
+    setSubmitButtonEnabled(true)
+    setLocalRace(event.target.value)
+  }
+
   const handleLogout = () => {
     logout()
     Router.push("/")
   }
+
+  const DEFAULT_CLASSNAME = Object.keys(PLAYER_SPECIALIZATIONS)[0]
+  const DEFAULT_SPECIALIZATION = PLAYER_SPECIALIZATIONS[DEFAULT_CLASSNAME].specializations[0]
+  const DEFAULT_RACE = PLAYER_SPECIALIZATIONS[DEFAULT_CLASSNAME].races[0]
+
+  useEffect(() => {
+    if (!className || !specialization || !race) {
+      setLocalClassName(DEFAULT_CLASSNAME)
+      setLocalSpecialization(DEFAULT_SPECIALIZATION)
+      setLocalRace(DEFAULT_RACE)
+
+      setIsEditingClassConfig(true)
+      setSubmitButtonEnabled(true)
+    } 
+  }, [])
 
   return (
     <SectionWrapper className="font-squadaone">
@@ -297,74 +352,110 @@ const Account = observer(() => {
         <AccountBox>
           <FormContainer>
             <AccountForm encType="multipart/form-data" onSubmit={onSubmit} onChange={onChangeLocalAvatar}>
-                <InputGroup>
-                  <TextInputLabel>Avatar</TextInputLabel>
-                  <AvatarContainer>
-                    <Image src={localAvatarImage || avatarBlob || defaultAvatarImage} alt="avatar" width={isSmall ? 150 : 250} height={isSmall ? 150 : 250}/>
-                  </AvatarContainer>
-                  <FileInput name="avatar" width="80px" height="50px"/>
-                  <FileInputIconContainer>
-                    <Image src={browseIcon} alt="browse files" width={40} height={40}/>
-                  </FileInputIconContainer>
-                </InputGroup>
-                <InputGroup>
-                  <TextInputLabel>Username</TextInputLabel>
-                  <TextInput 
-                    width="80%" 
-                    name="Username" 
-                    type="text" 
-                    fontSize="20px"
-                    value={localUsername || username} 
-                    onChange={onChangeLocalUsername} 
-                    disabled={!isEditingUsernames}
-                    background={isEditingUsernames ? "#FFFFFF" : "#333333"}
+              <InputGroup>
+                <TextInputLabel>Avatar</TextInputLabel>
+                <AvatarContainer>
+                  <Image src={localAvatarImage || avatarBlob || defaultAvatarImage} alt="avatar" width={isSmall ? 150 : 250} height={isSmall ? 150 : 250}/>
+                </AvatarContainer>
+                <FileInput name="avatar" width="80px" height="50px"/>
+                <FileInputIconContainer>
+                  <Image src={browseIcon} alt="browse files" width={40} height={40}/>
+                </FileInputIconContainer>
+              </InputGroup>
+              <InputGroup>
+                <TextInputLabel>Username</TextInputLabel>
+                <TextInput 
+                  width="80%" 
+                  name="Username" 
+                  type="text" 
+                  fontSize="20px"
+                  value={localUsername || username} 
+                  onChange={onChangeLocalUsername} 
+                  disabled={!isEditingUsernames}
+                  background={isEditingUsernames ? "#FFFFFF" : "#333333"}
+                />
+              <EditButton onClick={validationError ? null : () => {setIsEditingUsernames(!isEditingUsernames)}} editing={isEditingUsernames} error={validationError}>
+                <Image src={EditIcon} layout="fill" />
+              </EditButton>
+              </InputGroup>
+              <InputGroup>
+                <TextInputLabel>Discord Username</TextInputLabel>
+                <TextInput 
+                  width="80%" 
+                  fontSize="20px"
+                  name="Discord-Username" 
+                  type="text" 
+                  value={localDiscordUsername || discordUsername} 
+                  onChange={onChangeLocalDiscordUsername} 
+                  disabled={!isEditingUsernames}
+                  background={isEditingUsernames ? "#FFFFFF" : "#333333"}
+                />
+              </InputGroup>
+              <InputGroup>
+                <TextInputLabel>Password</TextInputLabel>
+                <TextInput 
+                  width="80%" 
+                  fontSize="20px"
+                  name="Password" 
+                  type="password" 
+                  value={localPassword} 
+                  onChange={onChangeLocalPassword} 
+                  disabled={!isEditingPasswords}
+                  background={isEditingPasswords ? "#FFFFFF" : "#333333"}
                   />
-                <EditButton onClick={validationError ? null : () => {setIsEditingUsernames(!isEditingUsernames)}} editing={isEditingUsernames} error={validationError}>
-                  <Image src={EditIcon} layout="fill" />
-                </EditButton>
-                </InputGroup>
-                <InputGroup>
-                  <TextInputLabel>Discord Username</TextInputLabel>
-                  <TextInput 
-                    width="80%" 
-                    fontSize="20px"
-                    name="Discord-Username" 
-                    type="text" 
-                    value={localDiscordUsername || discordUsername} 
-                    onChange={onChangeLocalDiscordUsername} 
-                    disabled={!isEditingUsernames}
-                    background={isEditingUsernames ? "#FFFFFF" : "#333333"}
-                  />
-                </InputGroup>
-                <InputGroup>
-                  <TextInputLabel>Password</TextInputLabel>
-                  <TextInput 
-                    width="80%" 
-                    fontSize="20px"
-                    name="Password" 
-                    type="password" 
-                    value={localPassword} 
-                    onChange={onChangeLocalPassword} 
-                    disabled={!isEditingPasswords}
-                    background={isEditingPasswords ? "#FFFFFF" : "#333333"}
-                    />
                 <EditButton onClick={() => {setIsEditingPasswords(!isEditingPasswords)}} editing={isEditingPasswords} error={validationError}>
                   <Image src={EditIcon} layout="fill" />
                 </EditButton>
-                </InputGroup>
-                <InputGroup>
-                  <TextInputLabel>Confirm Password</TextInputLabel>
-                  <TextInput 
-                    width="80%" 
-                    fontSize="20px"
-                    name="Password-Confirm" 
-                    type="password" 
-                    value={localPasswordConfirmation} 
-                    onChange={onChangeLocalPasswordConfirmation} 
-                    disabled={!isEditingPasswords}
-                    background={isEditingPasswords ? "#FFFFFF" : "#333333"} 
-                    />
-                </InputGroup>
+              </InputGroup>
+              <InputGroup>
+                <TextInputLabel>Confirm Password</TextInputLabel>
+                <TextInput 
+                  width="80%" 
+                  fontSize="20px"
+                  name="Password-Confirm" 
+                  type="password" 
+                  value={localPasswordConfirmation} 
+                  onChange={onChangeLocalPasswordConfirmation} 
+                  disabled={!isEditingPasswords}
+                  background={isEditingPasswords ? "#FFFFFF" : "#333333"} 
+                />
+              </InputGroup>
+              <InputGroup>
+                <TextInputLabel>Class:</TextInputLabel>
+                <SelectInput 
+                  fontFamily="monospace" 
+                  options={Object.keys(PLAYER_SPECIALIZATIONS)} 
+                  value={localClassName || "Druid"} 
+                  onChange={onChangeLocalClassName} 
+                  width="80%" 
+                  disabled={!isEditingClassConfig}
+                />
+                <EditButton onClick={() => {setIsEditingClassConfig(!isEditingClassConfig)}} editing={isEditingClassConfig}>
+                  <Image src={EditIcon} layout="fill" />
+                </EditButton>
+              </InputGroup>
+              <InputGroup>
+                <TextInputLabel>Specialization:</TextInputLabel>
+                <SelectInput 
+                  fontFamily="monospace" 
+                  options={PLAYER_SPECIALIZATIONS[localClassName || "Druid"].specializations} 
+                  value={localSpecialization} 
+                  onChange={onChangeLocalSpecialization} 
+                  width="80%" 
+                  disabled={!isEditingClassConfig}
+                />
+              </InputGroup>
+              <InputGroup>
+                <TextInputLabel>Race:</TextInputLabel>
+                <SelectInput 
+                  fontFamily="monospace" 
+                  options={PLAYER_SPECIALIZATIONS[localClassName || "Druid"].races} 
+                  value={localRace} 
+                  onChange={onChangeLocalRace} 
+                  width="80%" 
+                  disabled={!isEditingClassConfig}
+                />
+              </InputGroup>
               <MessageContainer isErrorMessage={!message.length}>{validationError || accountUpdateError || message}</MessageContainer>
               <FormButtonContainer>
                 <ButtonInput width="100px" value="Update" disabled={validationError || !submitButtonEnabled} />

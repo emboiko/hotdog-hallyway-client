@@ -156,7 +156,7 @@ const BOSSES = {
         defeated: true
       },
       "Azgalor": {
-        defeated: true,
+        defeated: true
       },
       "Archimonde": {
         defeated: true
@@ -164,16 +164,16 @@ const BOSSES = {
     },
     "Black Temple": {
       "High Warlord Naj'entus": {
-        defeated: true,
+        defeated: true
       },
       "Supremus": {
-        defeated: true,
+        defeated: true
       },
       "Shade of Akama": {
-        defeated: true,
+        defeated: true
       },
       "Teron Gorefiend": {
-        defeated: true,
+        defeated: true
       },
       "Gurtogg Bloodboil": {
         defeated: false,

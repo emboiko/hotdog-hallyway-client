@@ -56,7 +56,7 @@ const App = observer(({ Component, pageProps }) => {
     <>
       <Head>
         <link rel="icon" href={"/static/favicon.ico"} type="image/x-icon" />
-        <meta charset="UTF-8" />
+        <meta charSet="UTF-8" />
         <meta name="description" content="Hotdog Hallway Mankrik TBC Raiding Guild" />
         <meta name="keywords" content="Hotdog, Hallway, Hotdog-Hallway, Mankrik TBC, Hotdog Hallway Guild" />
         <meta name="author" content="Emboiko" />

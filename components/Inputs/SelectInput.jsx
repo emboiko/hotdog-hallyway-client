@@ -6,7 +6,7 @@ const Input = styled.select`
   font-size: ${props => props.fontSize || "16px"};
   margin: ${props => props.margin || "none"};
   color: ${props => props.color || "initial"};
-  background: ${props => props.background || "#FFFFFF"};
+  background: ${props => props.disabled ? "#333333" : props.background || "#FFFFFF"};
   font-family: ${props => props.fontFamily || "Arial"};
 `
 
