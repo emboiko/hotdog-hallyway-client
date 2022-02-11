@@ -49,6 +49,7 @@ const User = types
       async updateUser(payload) {
         const token = parseCookies(null).token
 
+        // Peel the avatar off the payload if we have one
         const avatar = payload.avatar
         delete payload.avatar
 
@@ -65,6 +66,13 @@ const User = types
           self.setAccountUpdateError(errorMessage)
           return false
         }
+
+        // Fields from account page:
+        if (payload.username) self.setUsername(payload.username)
+        if (payload.discordUsername) self.setDiscordUsername(payload.DiscordUsername)
+        if (payload.race) self.setRace(payload.race)
+        if (payload.className) self.setClassName(payload.className)
+        if (payload.specialization) self.setSpecialization(payload.specialization)
 
         if (avatar) {
           const formData = new FormData()
