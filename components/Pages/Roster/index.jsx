@@ -3,7 +3,8 @@ import Image from "next/image"
 import styled from "styled-components"
 import useInject from "~/hooks/useInject"
 import HotDogStand from "/public/static/img/jpg/hotdogstand4.jpg"
-import { UI_SIZES, COLORS, PLAYER_SPECIALIZATIONS } from "~/utilities/constants.js"
+import defaultAvatarIcon from "/public/static/img/png/defaultAvatar.png"
+import { UI_SIZES, COLORS, PLAYER_SPECIALIZATIONS, SPECIALIZATION_ICONS } from "~/utilities/constants.js"
 
 const SectionWrapper = styled.div`
   display: flex;
@@ -67,10 +68,6 @@ const RosterBox = styled.div`
   &::-webkit-scrollbar-track {
     display: none;
   }
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   @media (max-width: ${UI_SIZES.small}px) {
     min-width: 90%;
   }
@@ -82,7 +79,7 @@ const CouncilMemberBox = styled.div`
 `
 
 const GuildMemberBox = styled.div`
-  margin: 15px 0px;
+  margin: 15px 0px 30px 0px;
   width: 100%;
 `
 
@@ -111,11 +108,10 @@ const Member = styled.div`
 
 const MemberName = styled.div`
   width: 50%;
-  margin-left: 10px;
 `
 
 const MemberRaceClass = styled.div`
-  width: 100%;
+  min-width: 150px;
   text-align: center;
   position: relative;
   display: flex;
@@ -126,15 +122,14 @@ const MemberRaceClass = styled.div`
 const MemberSpecialization = styled.div`
   width: 50%;
   text-align: end;
-  margin-right: 10px;
 `
 
 const MemberIcons = styled.div`
-  width: 100%;
+  width: 90%;
   display: flex;
-  flex-direction: column;
   align-items: center;
   margin-top: 10px;
+  justify-content: space-between;
 `
 
 const MemberWrapper = styled.div`
@@ -147,12 +142,13 @@ const MemberWrapper = styled.div`
 `
 
 const IconWrapper = styled.div`
-  border-radius: 5px;
+  border-radius: ${props => props.default ? "25px" : "5px"};
   overflow: hidden;
   box-shadow: 0px 0px 2px 2px #000000;
   position: relative;
-  width: 25px;
-  height: 25px;
+  width: 50px;
+  height: 50px;
+  margin: ${props => props.margin || "none"};
 `
 
 const mapStore = store => ({
@@ -172,10 +168,18 @@ const Roster = () => {
     setGuildMembers(guildRegularMembers)
   }, [])
 
+  // todo: DRY this up
+
   const councilMemberList = councilMembers.map((member) => {
+    let avatar
+    if (member.avatar) {
+      avatar = `data:image/png;base64,${Buffer.from(member.avatar).toString("base64")}`
+    } else {
+      avatar = defaultAvatarIcon
+    }
     return (
-      <MemberWrapper>
-        <Member key={member.username} isCouncil>
+      <MemberWrapper key={member.username}>
+        <Member isCouncil>
           <MemberName>
             {member.username} 
           </MemberName>
@@ -194,8 +198,14 @@ const Roster = () => {
         </Member>
         {member.className ? (
           <MemberIcons>
+            <IconWrapper default={avatar === defaultAvatarIcon}>
+              <Image src={avatar} layout="fill" />
+            </IconWrapper>
             <IconWrapper>
               <Image src={PLAYER_SPECIALIZATIONS[member.className].icon} layout="fill" />
+            </IconWrapper>
+            <IconWrapper>
+              <Image src={SPECIALIZATION_ICONS[member.className][member.specialization]} layout="fill" />
             </IconWrapper>
           </MemberIcons>
         ) : null}
@@ -204,9 +214,15 @@ const Roster = () => {
   })
   
   const guildMemberList = guildMembers.map((member) => {
+    let avatar
+    if (member.avatar) {
+      avatar = `data:image/png;base64,${Buffer.from(member.avatar).toString("base64")}`
+    } else {
+      avatar = defaultAvatarIcon
+    }
     return (
-      <MemberWrapper>
-        <Member key={member.username}>
+      <MemberWrapper key={member.username}>
+        <Member>
           <MemberName>
             {member.username} 
           </MemberName>
@@ -225,8 +241,14 @@ const Roster = () => {
         </Member>
         {member.className ? (
           <MemberIcons>
+            <IconWrapper default={avatar === defaultAvatarIcon}>
+              <Image src={avatar} layout="fill" />
+            </IconWrapper>
             <IconWrapper>
               <Image src={PLAYER_SPECIALIZATIONS[member.className].icon} layout="fill" />
+            </IconWrapper>
+            <IconWrapper>
+              <Image src={SPECIALIZATION_ICONS[member.className][member.specialization]} layout="fill" />
             </IconWrapper>
           </MemberIcons>
         ) : null}

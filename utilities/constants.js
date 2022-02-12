@@ -8,6 +8,34 @@ import shamanIcon from "~/public/static/img/png/shamanIcon.png"
 import warlockIcon from "~/public/static/img/png/warlockIcon.png"
 import warriorIcon from "~/public/static/img/png/warriorIcon.png"
 
+import druidBalanceIcon from "~/public/static/img/jpg/druidBalanceIcon.jpg"
+import druidFeralIcon from "~/public/static/img/jpg/druidFeralIcon.jpg"
+import druidRestorationIcon from "~/public/static/img/jpg/druidRestorationIcon.jpg"
+import hunterMarksmanshipIcon from "~/public/static/img/jpg/hunterMarksmanshipIcon.jpg"
+import hunterBeastMasteryIcon from "~/public/static/img/jpg/hunterBeastMasteryIcon.jpg"
+import hunterSurvivalIcon from "~/public/static/img/jpg/hunterSurvivalIcon.jpg"
+import mageArcaneIcon from "~/public/static/img/jpg/mageArcaneIcon.jpg"
+import mageFireIcon from "~/public/static/img/jpg/mageFireIcon.jpg"
+import mageFrostIcon from "~/public/static/img/jpg/mageFrostIcon.jpg"
+import paladinHolyIcon from "~/public/static/img/jpg/paladinHolyIcon.jpg"
+import paladinRetributionIcon from "~/public/static/img/jpg/paladinRetributionIcon.jpg"
+import paladinProtectionIcon from "~/public/static/img/jpg/paladinProtectionIcon.jpg"
+import priestDisciplineIcon from "~/public/static/img/jpg/priestDisciplineIcon.jpg"
+import priestHolyIcon from "~/public/static/img/jpg/priestHolyIcon.jpg"
+import priestShadowIcon from "~/public/static/img/jpg/priestShadowIcon.jpg"
+import rogueAssassinationIcon from "~/public/static/img/jpg/rogueAssassinationIcon.jpg"
+import rogueCombatIcon from "~/public/static/img/jpg/rogueCombatIcon.jpg"
+import rogueSubletyIcon from "~/public/static/img/jpg/rogueSubletyIcon.jpg"
+import shamanElementalIcon from "~/public/static/img/jpg/shamanElementalIcon.jpg"
+import shamanEnhancementIcon from "~/public/static/img/jpg/shamanEnhancementIcon.jpg"
+import shamanRestorationIcon from "~/public/static/img/jpg/shamanRestorationIcon.jpg"
+import warlockAfflicationIcon from "~/public/static/img/jpg/warlockAfflicationIcon.jpg"
+import warlockDemonologyIcon from "~/public/static/img/jpg/warlockDemonologyIcon.jpg"
+import warlockDestructionIcon from "~/public/static/img/jpg/warlockDestructionIcon.jpg"
+import warriorArmsIcon from "~/public/static/img/jpg/warriorArmsIcon.jpg"
+import warriorFuryIcon from "~/public/static/img/jpg/warriorFuryIcon.jpg"
+import warriorProtectionIcon from "~/public/static/img/jpg/warriorProtectionIcon.jpg"
+
 const COLORS = {
   darkGrey: "#181A1B",
   red: "#FF0000",
@@ -39,7 +67,7 @@ const PLAYER_SPECIALIZATIONS = {
     icon: mageIcon
   },
   "Paladin": {
-    specializations: ["Holy", "Protection", "Retribution"],
+    specializations: ["Holy", "Retribution", "Protection"],
     races: ["Blood Elf"],
     icon: paladinIcon
   },
@@ -68,6 +96,54 @@ const PLAYER_SPECIALIZATIONS = {
     races: ["Orc", "Tauren", "Troll", "Undead"],
     icon: warriorIcon
   }
+}
+
+const SPECIALIZATION_ICONS = {
+  "Druid": {
+    "Balance": druidBalanceIcon,
+    "Feral": druidFeralIcon,
+    "Restoration": druidRestorationIcon,
+  },
+  "Hunter": {
+    "Beast Mastery": hunterBeastMasteryIcon,
+    "Marksmanship": hunterMarksmanshipIcon,
+    "Survival": hunterSurvivalIcon,
+  },
+  "Mage": {
+    "Arcane": mageArcaneIcon,
+    "Fire": mageFireIcon,
+    "Frost": mageFrostIcon,
+  },
+  "Paladin": {
+    "Holy": paladinHolyIcon,
+    "Retribution": paladinRetributionIcon,
+    "Protection": paladinProtectionIcon,
+  },
+  "Priest": {
+    "Discipline": priestDisciplineIcon,
+    "Holy": priestHolyIcon,
+    "Shadow": priestShadowIcon,
+  },
+  "Rogue": {
+    "Assassination": rogueAssassinationIcon,
+    "Combat": rogueCombatIcon,
+    "Sublety": rogueSubletyIcon,
+  },
+  "Shaman": {
+    "Elemental": shamanElementalIcon,
+    "Enhancement": shamanEnhancementIcon,
+    "Restoration": shamanRestorationIcon,
+  },
+  "Warlock": {
+    "Afflication": warlockAfflicationIcon,
+    "Demonology": warlockDemonologyIcon,
+    "Destruction": warlockDestructionIcon,
+  },
+  "Warrior": {
+    "Arms": warriorArmsIcon,
+    "Fury": warriorFuryIcon,
+    "Protection": warriorProtectionIcon,
+  },
 }
 
 const APPLICATION_STATUSES = {
@@ -218,6 +294,7 @@ module.exports = {
   COLORS,
   UI_SIZES,
   PLAYER_SPECIALIZATIONS,
+  SPECIALIZATION_ICONS,
   APPLICATION_STATUSES,
   BOSSES
 }
