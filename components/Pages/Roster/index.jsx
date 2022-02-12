@@ -104,6 +104,8 @@ const Member = styled.div`
   display: flex;
   width: 90%;
   align-items: center;
+  color: ${props => COLORS[props.className] || "#FFFFFF"};
+
 `
 
 const MemberName = styled.div`
@@ -179,7 +181,7 @@ const Roster = () => {
     }
     return (
       <MemberWrapper key={member.username}>
-        <Member isCouncil>
+        <Member isCouncil className={member.className}>
           <MemberName>
             {member.username} 
           </MemberName>
@@ -222,7 +224,7 @@ const Roster = () => {
     }
     return (
       <MemberWrapper key={member.username}>
-        <Member>
+        <Member className={member.className}>
           <MemberName>
             {member.username} 
           </MemberName>

@@ -41,7 +41,16 @@ const COLORS = {
   red: "#FF0000",
   yellow: "#ebac00",
   lightGreen: "#1EDF58",
-  accentBlue: "#22aad0"
+  accentBlue: "#22aad0",
+  Druid: "#FF7D0A",
+  Hunter: "#ABD473",
+  Mage: "#69CCF0",
+  Paladin: "#F58CBA",
+  Priest: "#FFFFFF",
+  Rogue: "#FFF569",
+  Shaman: "#0070DE",
+  Warlock: "#9f92C9",
+  Warrior: "#C79C6E"
 }
 
 const UI_SIZES = {
