@@ -110,6 +110,10 @@ const User = types
         return "data:image/png;base64," + self.avatar
       }
       return ""
+    },
+    get accountMissingInfo() {
+      if (self.isGuildMember && (!self.className || !self.race || !self.specialization)) return true
+      return false
     }
   }))
 

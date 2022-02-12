@@ -18,7 +18,7 @@ const App = observer(({ Component, pageProps }) => {
       await store.auth.autoLogin(token)
     }
     store.auth.setLoaded(true)
-  })
+  }, [])
 
   useEffect(() => {
     store.ui.setInnerWidth(window.innerWidth)
@@ -50,7 +50,14 @@ const App = observer(({ Component, pageProps }) => {
         store.ui.setIsMedium(false)
       }
     })
-  })
+  }, [])
+
+  useEffect(() => {
+    console.log(store.auth.user.accountMissingInfo)
+    if (store.auth.loaded && store.auth.isLoggedIn && store.auth.user.accountMissingInfo) {
+      store.ui.setAccountMissingInfoModalShowing(true)
+    }
+  }, [store.auth.loaded, store.auth.isLoggedIn])
 
   return (
     <>

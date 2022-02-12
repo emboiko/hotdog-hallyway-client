@@ -4,6 +4,7 @@ const UIStore = types
   .model("UIStore", {
     loginModalShowing: false,
     signupModalShowing: false,
+    accountMissingInfoModalShowing: false,
     isTiny: false,
     isSmall: false,
     isMedium: false,
@@ -19,6 +20,9 @@ const UIStore = types
       setSignupModalShowing(signupModalShowing) {
         if (self.loginModalShowing) self.setLoginModalShowing(false)
         self.signupModalShowing = signupModalShowing
+      },
+      setAccountMissingInfoModalShowing(accountMissingInfoModalShowing) {
+        self.accountMissingInfoModalShowing = accountMissingInfoModalShowing
       },
       setIsTiny(bool) {
         self.isTiny = bool

@@ -20,11 +20,11 @@ const ModalWrapper = styled.div`
   box-shadow: 5px 5px 10px 2px #000000;
   background: ${COLORS.darkGrey};
   position: absolute;
-  right: calc(50% - 200px);
-  top: calc(50% - 100px);
+  right: calc(50% - ${props => props.width/2 || 200}px);
+  top: calc(50% - ${props => props.height/2 || 100}px);
   z-index: 2;
-  width: ${props => props.width || "400px"};
-  height: ${props => props.height || "200px"};
+  width: ${props => props.width || 400}px;
+  height: ${props => props.height || 200}px;
   animation: ${fadeIn} 0.25s;
   @media (max-width: ${UI_SIZES.small}px) {
     width: 90%;
