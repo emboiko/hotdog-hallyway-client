@@ -142,7 +142,7 @@ const MemberWrapper = styled.div`
 `
 
 const IconWrapper = styled.div`
-  border-radius: ${props => props.default ? "25px" : "5px"};
+  border-radius: ${props => props.round ? "25px" : "5px"};
   overflow: hidden;
   box-shadow: 0px 0px 2px 2px #000000;
   position: relative;
@@ -198,7 +198,7 @@ const Roster = () => {
         </Member>
         {member.className ? (
           <MemberIcons>
-            <IconWrapper default={avatar === defaultAvatarIcon}>
+            <IconWrapper round>
               <Image src={avatar} layout="fill" />
             </IconWrapper>
             <IconWrapper>
@@ -241,7 +241,7 @@ const Roster = () => {
         </Member>
         {member.className ? (
           <MemberIcons>
-            <IconWrapper default={avatar === defaultAvatarIcon}>
+            <IconWrapper round>
               <Image src={avatar} layout="fill" />
             </IconWrapper>
             <IconWrapper>
