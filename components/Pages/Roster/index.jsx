@@ -110,7 +110,7 @@ const Member = styled.div`
 `
 
 const MemberName = styled.div`
-  width: 100%;
+  width: 50%;
   margin-left: 10px;
 `
 
@@ -124,7 +124,7 @@ const MemberRaceClass = styled.div`
 `
 
 const MemberSpecialization = styled.div`
-  width: 100%;
+  width: 50%;
   text-align: end;
   margin-right: 10px;
 `
