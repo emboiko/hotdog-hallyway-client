@@ -1,3 +1,13 @@
+import druidIcon from "~/public/static/img/png/druidIcon.png"
+import hunterIcon from "~/public/static/img/png/hunterIcon.png"
+import mageIcon from "~/public/static/img/png/mageIcon.png"
+import paladinIcon from "~/public/static/img/png/paladinIcon.png"
+import priestIcon from "~/public/static/img/png/priestIcon.png"
+import rogueIcon from "~/public/static/img/png/rogueIcon.png"
+import shamanIcon from "~/public/static/img/png/shamanIcon.png"
+import warlockIcon from "~/public/static/img/png/warlockIcon.png"
+import warriorIcon from "~/public/static/img/png/warriorIcon.png"
+
 const COLORS = {
   darkGrey: "#181A1B",
   red: "#FF0000",
@@ -15,39 +25,48 @@ const UI_SIZES = {
 const PLAYER_SPECIALIZATIONS = {
   "Druid": {
     specializations: ["Balance", "Feral", "Restoration"],
-    races: ["Tauren"]
+    races: ["Tauren"],
+    icon: druidIcon
   },
   "Hunter": {
     specializations: ["Beast Mastery", "Marksmanship", "Survival"],
-    races: ["Blood Elf", "Orc", "Tauren", "Troll"]
+    races: ["Blood Elf", "Orc", "Tauren", "Troll"],
+    icon: hunterIcon
   },
   "Mage": {
     specializations: ["Arcane", "Fire", "Frost"],
-    races: ["Blood Elf", "Troll", "Undead"]
+    races: ["Blood Elf", "Troll", "Undead"],
+    icon: mageIcon
   },
   "Paladin": {
     specializations: ["Holy", "Protection", "Retribution"],
-    races: ["Blood Elf"]
+    races: ["Blood Elf"],
+    icon: paladinIcon
   },
   "Priest": {
     specializations: ["Discipline", "Holy", "Shadow"],
-    races: ["Blood Elf", "Troll", "Undead"]
+    races: ["Blood Elf", "Troll", "Undead"],
+    icon: priestIcon
   },
   "Rogue": {
     specializations: ["Assassination", "Combat", "Subtlety"],
-    races: ["Blood Elf", "Orc", "Troll", "Undead"]
+    races: ["Blood Elf", "Orc", "Troll", "Undead"],
+    icon: rogueIcon
   },
   "Shaman": {
     specializations: ["Restoration", "Enhancement", "Elemental"],
-    races: ["Orc", "Tauren", "Troll"]
+    races: ["Orc", "Tauren", "Troll"],
+    icon: shamanIcon
   },
   "Warlock": {
     specializations: ["Affliction", "Demonology", "Destruction"],
-    races: ["Blood Elf", "Orc", "Undead"]
+    races: ["Blood Elf", "Orc", "Undead"],
+    icon: warlockIcon
   },
   "Warrior": {
     specializations: ["Arms", "Fury", "Protection"],
-    races: ["Orc", "Tauren", "Troll", "Undead"]
+    races: ["Orc", "Tauren", "Troll", "Undead"],
+    icon: warriorIcon
   }
 }
 

@@ -3,7 +3,7 @@ import Image from "next/image"
 import styled from "styled-components"
 import useInject from "~/hooks/useInject"
 import HotDogStand from "/public/static/img/jpg/hotdogstand4.jpg"
-import { UI_SIZES, COLORS } from "~/utilities/constants.js"
+import { UI_SIZES, COLORS, PLAYER_SPECIALIZATIONS } from "~/utilities/constants.js"
 
 const SectionWrapper = styled.div`
   display: flex;
@@ -78,10 +78,12 @@ const RosterBox = styled.div`
 
 const CouncilMemberBox = styled.div`
   margin: 15px 0px;
+  width: 100%;
 `
 
 const GuildMemberBox = styled.div`
   margin: 15px 0px;
+  width: 100%;
 `
 
 const MemberHeader = styled.div`
@@ -91,16 +93,66 @@ const MemberHeader = styled.div`
   @media (max-width: ${UI_SIZES.small}px) {
     font-size: 28px;
   }
+  text-align: center;
 `
 
 const Members = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-size: 20px;
 `
 
 const Member = styled.div`
-  font-size: 24px;
+  display: flex;
+  width: 90%;
+  align-items: center;
+`
+
+const MemberName = styled.div`
+  width: 100%;
+  margin-left: 10px;
+`
+
+const MemberRaceClass = styled.div`
+  width: 100%;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+const MemberSpecialization = styled.div`
+  width: 100%;
+  text-align: end;
+  margin-right: 10px;
+`
+
+const MemberIcons = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+`
+
+const MemberWrapper = styled.div`
+  display: flex;
+  width: 90%;
+  align-items: center;
+  padding: 10px 0px;
+  flex-direction: column;
+  border: 1px solid #333333;
+`
+
+const IconWrapper = styled.div`
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0px 0px 2px 2px #000000;
+  position: relative;
+  width: 25px;
+  height: 25px;
 `
 
 const mapStore = store => ({
@@ -122,17 +174,63 @@ const Roster = () => {
 
   const councilMemberList = councilMembers.map((member) => {
     return (
-      <Member key={member.username} isCouncil>
-        {member.username}
-      </Member>
+      <MemberWrapper>
+        <Member key={member.username} isCouncil>
+          <MemberName>
+            {member.username} 
+          </MemberName>
+          {
+            member.race && member.className && member.specialization ? (
+              <>
+                <MemberRaceClass>
+                  {`${member.race} ${member.className}`}
+                </MemberRaceClass>
+                <MemberSpecialization>
+                  {`${member.specialization}`}
+                </MemberSpecialization>
+              </>
+            ) : null
+          }
+        </Member>
+        {member.className ? (
+          <MemberIcons>
+            <IconWrapper>
+              <Image src={PLAYER_SPECIALIZATIONS[member.className].icon} layout="fill" />
+            </IconWrapper>
+          </MemberIcons>
+        ) : null}
+      </MemberWrapper>
     )
   })
   
   const guildMemberList = guildMembers.map((member) => {
     return (
-      <Member key={member.username}>
-        {member.username}
-      </Member>
+      <MemberWrapper>
+        <Member key={member.username}>
+          <MemberName>
+            {member.username} 
+          </MemberName>
+          {
+            member.race && member.className && member.specialization ? (
+              <>
+                <MemberRaceClass>
+                  {`${member.race} ${member.className}`}
+                </MemberRaceClass>
+                <MemberSpecialization>
+                  {`${member.specialization}`}
+                </MemberSpecialization>
+              </>
+            ) : null
+          }
+        </Member>
+        {member.className ? (
+          <MemberIcons>
+            <IconWrapper>
+              <Image src={PLAYER_SPECIALIZATIONS[member.className].icon} layout="fill" />
+            </IconWrapper>
+          </MemberIcons>
+        ) : null}
+      </MemberWrapper>
     )
   })
 
