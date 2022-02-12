@@ -105,11 +105,17 @@ const Member = styled.div`
   width: 90%;
   align-items: center;
   color: ${props => COLORS[props.className] || "#FFFFFF"};
-
+  @media (max-width: ${UI_SIZES.medium}px) {
+    flex-direction: column;
+  }
 `
 
 const MemberName = styled.div`
   width: 50%;
+  @media (max-width: ${UI_SIZES.medium}px) {
+    width: 100%;
+    text-align: center;
+  }
 `
 
 const MemberRaceClass = styled.div`
@@ -124,6 +130,10 @@ const MemberRaceClass = styled.div`
 const MemberSpecialization = styled.div`
   width: 50%;
   text-align: end;
+  @media (max-width: ${UI_SIZES.medium}px) {
+    width: 100%;
+    text-align: center;
+  }
 `
 
 const MemberIcons = styled.div`
@@ -132,6 +142,11 @@ const MemberIcons = styled.div`
   align-items: center;
   margin-top: 10px;
   justify-content: space-between;
+  @media (max-width: ${UI_SIZES.tiny}px) {
+    &:nth-last-child(-n+2) {
+      display: none;
+    }
+  }
 `
 
 const MemberWrapper = styled.div`
