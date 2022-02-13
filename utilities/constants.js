@@ -280,10 +280,10 @@ const BOSSES = {
         defeated: true
       },
       "Gurtogg Bloodboil": {
-        defeated: false,
-        progressing: true
+        defeated: true,
       },
       "Reliquary of Souls": {
+        progressing: true,
         defeated: false
       },
       "Mother Shahraz": {
