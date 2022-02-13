@@ -130,6 +130,16 @@ const AuthStore = types
   })
   .actions(self => {
     return {
+      async deleteUser(userID) {
+        const token = parseCookies(null).token
+        try {
+          await axios.delete(`${process.env.BACKEND_URL}/users/${userID}`, {headers: {Authorization: `Bearer ${token}`}})
+        } catch (error) {
+          console.error(error)
+          return false
+        }
+        return true
+      },
       async getAllUsers() {
         const token = parseCookies(null).token
         let result
@@ -143,13 +153,15 @@ const AuthStore = types
           const allGuildMembers = result.data.users
           const guildCouncilMembers = []
           const guildRegularMembers = []
+          const guildNonMembers = []
   
           allGuildMembers.forEach((member) => {
             if (member.isCouncilMember) guildCouncilMembers.push(member)
-            else guildRegularMembers.push(member)
+            else if (member.isGuildMember) guildRegularMembers.push(member)
+            else guildNonMembers.push(member)
           })
   
-          return {guildCouncilMembers, guildRegularMembers}
+          return {guildCouncilMembers, guildRegularMembers, guildNonMembers}
         }
 
       },

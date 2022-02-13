@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react"
+import Router from "next/router"
 import Image from "next/image"
 import styled from "styled-components"
 import useInject from "~/hooks/useInject"
@@ -47,6 +48,7 @@ const MainHeader = styled.div`
   @media (max-width: ${UI_SIZES.tiny}px) {
     font-size: 32px;
   }
+  cursor: ${props => props.showCursorPointer ? "pointer" : "default"};
 `
 
 const RosterBox = styled.div`
@@ -169,11 +171,12 @@ const IconWrapper = styled.div`
 `
 
 const mapStore = store => ({
-  getAllUsers: store.auth.getAllUsers
+  getAllUsers: store.auth.getAllUsers,
+  isCouncilMember: store.auth.user.isCouncilMember,
 })
 
 const Roster = () => {
-  const { getAllUsers } = useInject(mapStore)
+  const { getAllUsers, isCouncilMember } = useInject(mapStore)
 
   const [councilMembers, setCouncilMembers] = useState([])
   const [guildMembers, setGuildMembers] = useState([])
@@ -184,6 +187,10 @@ const Roster = () => {
     setCouncilMembers(guildCouncilMembers)
     setGuildMembers(guildRegularMembers)
   }, [])
+
+  const navigateToAllUsers = () => {
+    if (isCouncilMember) Router.push("/roster/all")
+  }
 
   // todo: DRY this up
 
@@ -277,7 +284,7 @@ const Roster = () => {
     <SectionWrapper className="font-squadaone">
       <Image src={HotDogStand} alt="Hotdog Stand" layout="fill" objectFit="cover" quality={90} priority/>
       <RosterWrapper>
-        <MainHeader>
+        <MainHeader onClick={navigateToAllUsers} showCursorPointer={isCouncilMember}>
           Raid Roster
         </MainHeader>
         <RosterBox>
