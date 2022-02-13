@@ -123,15 +123,17 @@ const SingleApplication = () => {
   const { getApplication, acceptApplication, declineApplication, deleteApplication } = useInject(mapStore)
 
   const [application, setApplication] = useState({})
+  const [discordUsername, setDiscordUsername] = useState("")
   const [errorMessage, setErrorMessage] = useState("")
 
   const router = useRouter()
 
   useEffect(async () => {
     if (router.isReady) {
-      const applicationData = await getApplication(router.query.slug)
-      if (applicationData) {
+      const {applicationData, discordUsername} = await getApplication(router.query.slug)
+      if (applicationData && discordUsername) {
         setApplication(applicationData)
+        setDiscordUsername(discordUsername)
       } else {
         setErrorMessage("Unable to get application data.")
       }
@@ -181,6 +183,12 @@ const SingleApplication = () => {
           <ErrorMessage>
             {errorMessage}
           </ErrorMessage>
+          <ApplicationField>
+            <ApplicationKey>Discord Username</ApplicationKey>
+            <ApplicationValue>
+              {discordUsername}
+            </ApplicationValue>
+          </ApplicationField>
           <ApplicationField>
             <ApplicationKey>Character name</ApplicationKey>
             <ApplicationValue>

@@ -57,6 +57,7 @@ const CallToAction = styled.div`
   width: 33%;
   cursor: pointer;
   transition: background 0.5s linear;
+  user-select: none;
   &:hover {
     box-shadow: 3px 2px 15px 0px ${props => props.color};
     color: #000000;

@@ -38,6 +38,7 @@ const ApplicationStore = types
         try {
           result = await axios.get(`${process.env.BACKEND_URL}/applications/mine/status`, {headers: {Authorization: `Bearer ${token}`}})
         } catch (error) {
+          console.error(error)
           let errorMessage = ""
           if (error.response.status === 404 || error.response.status === 500) {
             errorMessage = error.response.data.error
@@ -45,7 +46,6 @@ const ApplicationStore = types
             errorMessage = "Unable to get application status."
           }
           console.error(errorMessage)
-          console.error(error)
           return false
         }
 
@@ -58,18 +58,18 @@ const ApplicationStore = types
         try {
           result = await axios.get(`${process.env.BACKEND_URL}/applications/${applicationID}`, {headers: {Authorization: `Bearer ${token}`}})
         } catch (error) {
+          console.error(errorMessage)
           let errorMessage = ""
           if (error.response.status === 404 || error.response.status === 500) {
             errorMessage = error.response.data.error
           } else {
             errorMessage = "Unable to get application status."
           }
-          console.error(errorMessage)
           console.error(error)
           return false
         }
 
-        if (result.status === 200) return result.data.application
+        if (result.status === 200) return {applicationData: result.data.application, discordUsername: result.data.discordUsername}
       },
       async getAllApplications() {
         const token = parseCookies(null).token
