@@ -165,16 +165,23 @@ const AuthStore = types
         }
 
       },
-      async autoLogin(token) {
-        let result
-        try {
-          result = await axios.get(`${process.env.BACKEND_URL}/users/me`, {headers: {Authorization: `Bearer ${token}`}})
-        } catch (error) {
-          self.unsetUser()
+      async autoLogin() {
+        self.setLoaded(false)
+
+        const token = parseCookies(null).token
+        if (token) {
+          let result
+          try {
+            result = await axios.get(`${process.env.BACKEND_URL}/users/me`, {headers: {Authorization: `Bearer ${token}`}})
+          } catch (error) {
+            self.unsetUser()
+          }
+          if (result?.status === 200) {
+            self.setUser(result.data.user, token)
+          }
         }
-        if (result?.status === 200) {
-          self.setUser(result.data.user, token)
-        }
+
+        self.setLoaded(true)
       },
       async login(payload) {
         self.setLoginError("")
@@ -273,6 +280,7 @@ const AuthStore = types
         self.navigationAttempt = path
       },
       setLoaded(bool) {
+        console.log(`setLoaded(${bool})`)
         self.loaded = bool
       }
     }

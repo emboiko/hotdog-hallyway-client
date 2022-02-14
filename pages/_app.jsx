@@ -3,21 +3,15 @@ import store from "~/stores/AppStore"
 import { Provider } from "mobx-react"
 import { observer } from "mobx-react"
 import { useEffect } from "react"
-import { parseCookies } from "nookies"
 import { UI_SIZES } from "~/utilities/constants.js"
 
 require("~/style/globalStyle.css")
 
 const App = observer(({ Component, pageProps }) => {
-  store.auth.setLoaded(false)
   store.utility.getDiscordLink()
 
   useEffect(async () => {
-    const token = parseCookies(null).token
-    if (token) {
-      await store.auth.autoLogin(token)
-    }
-    store.auth.setLoaded(true)
+    await store.auth.autoLogin()
   }, [])
 
   useEffect(() => {
