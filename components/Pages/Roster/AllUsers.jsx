@@ -103,11 +103,12 @@ const Controls = styled.div`
 
 const mapStore = store => ({
   getAllUsers: store.auth.getAllUsers,
-  deleteUser: store.auth.deleteUser
+  deleteUser: store.auth.deleteUser,
+  changeUserRank: store.auth.changeUserRank
 })
 
 const Roster = () => {
-  const { getAllUsers, deleteUser } = useInject(mapStore)
+  const { getAllUsers, deleteUser, changeUserRank } = useInject(mapStore)
 
   const [councilMembers, setCouncilMembers] = useState([])
   const [guildMembers, setGuildMembers] = useState([])
@@ -138,6 +139,7 @@ const Roster = () => {
         </Username>
         <Controls>
           <SimpleButton width="75px" margin="5px 10px" padding="5px" onClick={() => {onDeleteUser(member)}}>Delete</SimpleButton>
+          <SimpleButton width="75px" margin="5px 10px" padding="5px" onClick={() => {onChangeUserRank(member, "Demote")}}>Demote</SimpleButton>
         </Controls>
       </MemberCard>
     )
@@ -155,6 +157,7 @@ const Roster = () => {
         }
         <Controls>
           <SimpleButton width="75px" margin="5px 10px" padding="5px" onClick={() => {onDeleteUser(member)}}>Delete</SimpleButton>
+          <SimpleButton width="75px" margin="5px 10px" padding="5px" onClick={() => {onChangeUserRank(member, "Promote")}}>Promote</SimpleButton>
         </Controls>
       </MemberCard>
     )
@@ -162,6 +165,13 @@ const Roster = () => {
 
   const onDeleteUser = async (member) => {
     const success = await deleteUser(member.id)
+    if (success) {
+      document.getElementById(member.username).remove()
+    }
+  }
+
+  const onChangeUserRank = async (member, action) => {
+    const success = await changeUserRank(member.id, action)
     if (success) {
       document.getElementById(member.username).remove()
     }

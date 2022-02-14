@@ -130,6 +130,16 @@ const AuthStore = types
   })
   .actions(self => {
     return {
+      async changeUserRank(userID, action) {
+        const token = parseCookies(null).token
+        try {
+          await axios.post(`${process.env.BACKEND_URL}/users/${userID}/rank`, {action}, {headers: {Authorization: `Bearer ${token}`}})
+        } catch (error) {
+          console.error(error)
+          return false
+        }
+        return true
+      },
       async deleteUser(userID) {
         const token = parseCookies(null).token
         try {
