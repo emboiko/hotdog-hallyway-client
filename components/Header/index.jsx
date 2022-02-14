@@ -200,11 +200,25 @@ const KillCount = styled.div`
 `
 
 const BossName = styled.div`
-  text-decoration: ${props => props.defeated ? "line-through solid red 2px" : "none"};
   background: ${COLORS.darkGrey};
   color: ${props => props.progressing ? "yellow" : "#FFFFFF"};
   text-align: center;
   cursor: default;
+  position: relative;
+  width: fit-content;
+  margin: 0 auto;
+`
+
+const Strikethrough = styled.div`
+  width: 100%;
+  height: 2px;
+  background: red;
+  position: absolute;
+  top: 50%;
+`
+
+const RaidSection = styled.div`
+  background: ${COLORS.darkGrey};
 `
 
 const mapStore = store => ({
@@ -293,14 +307,19 @@ const MainHeader = observer(() => {
     const bossNames = bosses.map((bossName) => {
       const boss = raidPhase[raid][bossName]
       if (boss.defeated) killedBossesCount += 1
-      return <BossName key={bossName} defeated={boss.defeated} progressing={boss.progressing}>{bossName}</BossName>
+      return (
+        <BossName key={bossName} progressing={boss.progressing}>
+          {bossName}
+          {boss.defeated ? <Strikethrough/> : null}
+        </BossName>
+      )
     })
 
     let cleared = false
     if (killedBossesCount === totalBossesCount) cleared = true
 
     return (
-      <div key={raid}>
+      <RaidSection key={raid}>
         <RaidHeader>
           <RaidName>{raid}</RaidName>
           <KillCount cleared={cleared}>
@@ -310,7 +329,7 @@ const MainHeader = observer(() => {
           </KillCount>
         </RaidHeader>
         {bossNames}
-      </div>
+      </RaidSection>
     )
   })
 
