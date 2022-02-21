@@ -283,11 +283,11 @@ const BOSSES = {
         defeated: true,
       },
       "Reliquary of Souls": {
-        progressing: true,
-        defeated: false
+        defeated: true,
       },
       "Mother Shahraz": {
-        defeated: false
+        defeated: false,
+        progressing: true,
       },
       "Illidari Council": {
         defeated: false
