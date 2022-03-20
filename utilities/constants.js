@@ -286,11 +286,11 @@ const BOSSES = {
         defeated: true,
       },
       "Mother Shahraz": {
-        defeated: false,
-        progressing: true,
+        defeated: true,
       },
       "Illidari Council": {
-        defeated: false
+        defeated: false,
+        progressing: true,
       },
       "Illidan Stormrage": {
         defeated: false
