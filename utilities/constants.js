@@ -289,11 +289,11 @@ const BOSSES = {
         defeated: true,
       },
       "Illidari Council": {
-        defeated: false,
-        progressing: true,
+        defeated: true,
       },
       "Illidan Stormrage": {
-        defeated: false
+        defeated: false,
+        progressing: true
       }
     }
   }
