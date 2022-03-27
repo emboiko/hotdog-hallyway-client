@@ -8,8 +8,9 @@ import useInject from "~/hooks/useInject"
 import SimpleButton from "~/components/Inputs/SimpleButton"
 import HomeIcon from "~/public/static/img/png/home.png"
 import DiscordIcon from "~/public/static/img/png/discord.png"
+import YoutubeIcon from "~/public/static/img/png/youtube.png"
 import UserIcon from "~/public/static/img/png/user.png"
-import { COLORS, UI_SIZES, BOSSES } from "~/utilities/constants.js"
+import { COLORS, UI_SIZES, BOSSES, WEB_URLS } from "~/utilities/constants.js"
 
 const Header = styled.div`
   background: transparent;
@@ -98,6 +99,15 @@ const Discord = styled.div`
   cursor: pointer;
   padding: 5px;
   margin-top: 2px;
+`
+
+const Youtube = styled.div`
+  cursor: pointer;
+  padding: 5px;
+  margin-top: 2px;
+  @media (max-width: ${UI_SIZES.medium}px) {
+    margin-right: 2px;
+  }
 `
 
 const UnderGlow = styled.div`
@@ -354,6 +364,11 @@ const MainHeader = observer(() => {
           <Discord>
             <Image src={DiscordIcon} alt="Discord" width={25} height={25} />
           </Discord>
+        </a>
+        <a target="_blank" href={WEB_URLS.youtube}>
+          <Youtube>
+            <Image src={YoutubeIcon} alt="YouTube" width={25} height={25} />
+          </Youtube>
         </a>
         {BossKillDropdowns}
       </LeftSide>

@@ -321,11 +321,16 @@ const BOSSES = {
   }
 }
 
+const WEB_URLS = {
+  "youtube": "https://www.youtube.com/channel/UC0bvfC6gHuaKzBZLToGgfhA"
+}
+
 module.exports = {
   COLORS,
   UI_SIZES,
   PLAYER_SPECIALIZATIONS,
   SPECIALIZATION_ICONS,
   APPLICATION_STATUSES,
-  BOSSES
+  BOSSES,
+  WEB_URLS
 }
