@@ -296,6 +296,28 @@ const BOSSES = {
         progressing: true
       }
     }
+  },
+  "P4": {
+    "Zul'Aman": {
+      "Akil'zon": {
+        defeated: true
+      },
+      "Nalorakk": {
+        defeated: true
+      },
+      "Jan'alai": {
+        defeated: true
+      },
+      "Halazzi": {
+        defeated: true
+      },
+      "Hex Lord Malacrass": {
+        defeated: true
+      },
+      "Zul'jin": {
+        defeated: true
+      }
+    }
   }
 }
 

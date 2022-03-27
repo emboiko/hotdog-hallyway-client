@@ -112,7 +112,7 @@ const UnderGlow = styled.div`
 `
 
 const BossKills = styled.div`
-  width: 170px;
+  width: 230px;
   display: flex;
   justify-content: center;
   margin-right: 10px;
@@ -278,7 +278,7 @@ const MainHeader = observer(() => {
     setDropdownShowingPhase(0)
   }
 
-  const phases = [1,2,3]
+  const phases = [1,2,3,4]
 
   const BossKillDropdownOpeners = phases.map((phase) => {
     const phaseName = `Phase ${phase}`
