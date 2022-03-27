@@ -10,7 +10,7 @@ import GroupBlackTemple from "/public/static/img/jpg/groupBlackTemple.jpg"
 import HuxAndEd from "/public/static/img/jpg/huxAndEd.jpg"
 import Neko from "/public/static/img/png/neko.png"
 import Tina from "/public/static/img/png/tina.png"
-import { COLORS, UI_SIZES } from "~/utilities/constants.js"
+import { COLORS, UI_SIZES, WEB_URLS } from "~/utilities/constants.js"
 
 const SectionWrapper = styled.div`
   display: flex;
@@ -113,7 +113,9 @@ const About = () => {
               {"<Hotdog Hallway> is a progression raiding guild with goals of clearing all content before subsequent phases are released. We raid Saturdays from 8:00 PM - 12:00 AM server time and Sundays from 8:00 PM - 11:00 PM server time. We tend to keep a very light and fun raiding environment. We can guarantee you that there is no raid like a <Hotdog Hallway> raid."}
             </AboutTextSection>
             <AboutTextSection>
-              {"We strive to help each of our raiders with anything they need. Core Raiders get all enchants/gems at no cost (while supplies last) whereas raiders and other guild members receive 50% off the AH price. With a collective game knowledge of over 50 years, our five Guild Council members have the experience and knowledge to lead a successful guild."}
+              {"We strive to help each of our raiders with anything they need. Core Raiders get all enchants/gems at no cost (while supplies last) whereas raiders and other guild members receive 50% off the AH price. With a collective game knowledge of over 50 years, our five Guild Council members have the experience and knowledge to lead a successful guild. Check out our "}
+              <a href={WEB_URLS.youtube} target="_blank"><LinkText>YouTube</LinkText></a>
+              {" channel to see what raiding with us is like!"}
             </AboutTextSection>
             <AboutTextSection>
               {"<Hotdog Hallway> Utilizes a rotating loot council that consists of 2 Guild Council members and 3 Core Raiders. The rotation changes weekly. We reference "}
