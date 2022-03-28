@@ -7,6 +7,7 @@ import GroupVashj from "/public/static/img/jpg/groupVashj.jpg"
 import GroupArchimonde from "/public/static/img/jpg/groupArchimonde.jpg"
 import GroupAkama from "/public/static/img/jpg/groupAkama.jpg"
 import GroupBlackTemple from "/public/static/img/jpg/groupBlackTemple.jpg"
+import GroupIllidan from "/public/static/img/jpg/groupIllidan.jpg"
 import HuxAndEd from "/public/static/img/jpg/huxAndEd.jpg"
 import Neko from "/public/static/img/png/neko.png"
 import Tina from "/public/static/img/png/tina.png"
@@ -131,6 +132,9 @@ const About = () => {
               {"<Hotdog Hallway> What's in your wallet?"}
             </AboutTextSection>
           </AboutTextBox>
+          <AboutImageBox>
+            <Image src={GroupIllidan} layout="responsive"/>
+          </AboutImageBox>
           <AboutImageBox>
             <Image src={GroupArchimonde} layout="responsive"/>
           </AboutImageBox>

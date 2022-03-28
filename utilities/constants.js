@@ -280,20 +280,19 @@ const BOSSES = {
         defeated: true
       },
       "Gurtogg Bloodboil": {
-        defeated: true,
+        defeated: true
       },
       "Reliquary of Souls": {
-        defeated: true,
+        defeated: true
       },
       "Mother Shahraz": {
-        defeated: true,
+        defeated: true
       },
       "Illidari Council": {
-        defeated: true,
+        defeated: true
       },
       "Illidan Stormrage": {
-        defeated: false,
-        progressing: true
+        defeated: true
       }
     }
   },
