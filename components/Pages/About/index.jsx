@@ -8,7 +8,8 @@ import GroupArchimonde from "/public/static/img/jpg/groupArchimonde.jpg"
 import GroupAkama from "/public/static/img/jpg/groupAkama.jpg"
 import GroupBlackTemple from "/public/static/img/jpg/groupBlackTemple.jpg"
 import GroupIllidan from "/public/static/img/jpg/groupIllidan.jpg"
-import HuxAndEd from "/public/static/img/jpg/huxAndEd.jpg"
+import HuxAndEd1 from "/public/static/img/jpg/huxAndEd1.jpg"
+import HuxAndEd2 from "/public/static/img/jpg/huxAndEd2.jpg"
 import Neko from "/public/static/img/png/neko.png"
 import Tina from "/public/static/img/png/tina.png"
 import { COLORS, UI_SIZES, WEB_URLS } from "~/utilities/constants.js"
@@ -136,6 +137,9 @@ const About = () => {
             <Image src={GroupIllidan} layout="responsive"/>
           </AboutImageBox>
           <AboutImageBox>
+            <Image src={HuxAndEd2} layout="responsive"/>
+          </AboutImageBox>
+          <AboutImageBox>
             <Image src={GroupArchimonde} layout="responsive"/>
           </AboutImageBox>
           <AboutImageBox>
@@ -154,7 +158,7 @@ const About = () => {
             <Image src={Neko} layout="responsive"/>
           </AboutImageBox>
           <AboutImageBox>
-            <Image src={HuxAndEd} layout="responsive"/>
+            <Image src={HuxAndEd1} layout="responsive"/>
           </AboutImageBox>
         </AboutBox>
       </AboutWrapper>
