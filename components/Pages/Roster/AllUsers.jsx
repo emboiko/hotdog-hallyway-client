@@ -4,6 +4,7 @@ import styled from "styled-components"
 import useInject from "~/hooks/useInject"
 import SimpleButton from "~/components/Inputs/SimpleButton"
 import HotDogStand from "/public/static/img/jpg/hotdogstand4.jpg"
+import scrollToElement from "~/utilities/scrollToElement"
 import { UI_SIZES, COLORS} from "~/utilities/constants.js"
 
 const SectionWrapper = styled.div`
@@ -79,6 +80,7 @@ const MemberCard = styled.div`
   flex-direction: column;
   align-items: center;
   margin: 5px 0px;
+  padding: 5px 0px;
   transition: background .5s;
   &:hover {
     background: #333;
@@ -101,6 +103,14 @@ const Controls = styled.div`
   align-items: center;
 `
 
+const ErrorContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: red;
+  margin: 10px 0px;
+`
+
 const mapStore = store => ({
   getAllUsers: store.auth.getAllUsers,
   deleteUser: store.auth.deleteUser,
@@ -111,16 +121,22 @@ const Roster = () => {
   const { getAllUsers, deleteUser, changeUserRank } = useInject(mapStore)
 
   const [councilMembers, setCouncilMembers] = useState([])
+  const [raidMembers, setRaidMembers] = useState([])
   const [guildMembers, setGuildMembers] = useState([])
   const [nonGuildMembers, setNonGuildMembers] = useState([])
 
+  const [updater, setUpdater] = useState(false) // Redo the request after we change a rank to update the UI. An arbitrary boolean that flips back and forth meaninglessly.
+
+  const [errorMessage, setErrorMessage] = useState("")
+
   useEffect(async () => {
-    const { guildCouncilMembers, guildRegularMembers, guildNonMembers, error } = await getAllUsers()
+    const { guildCouncilMembers, guildRaiderMembers, guildRegularMembers, guildNonMembers, error } = await getAllUsers()
     if (error) return console.error(error)
     setCouncilMembers(guildCouncilMembers)
+    setRaidMembers(guildRaiderMembers)
     setGuildMembers(guildRegularMembers)
     setNonGuildMembers(guildNonMembers)
-  }, [])
+  }, [updater])
 
   const councilMemberCards = councilMembers.map((member) => {
     return (
@@ -128,6 +144,20 @@ const Roster = () => {
         <Username>
           {member.username}
         </Username>
+      </MemberCard>
+    )
+  })
+  const guildRaiderCards = raidMembers.map((member) => {
+    return (
+      <MemberCard key={member.id} id={member.username}>
+        <Username>
+          {member.username}
+        </Username>
+        <Controls>
+          <SimpleButton width="75px" margin="5px 10px" padding="5px" onClick={() => {onDeleteUser(member)}}>Delete</SimpleButton>
+          <SimpleButton width="75px" margin="5px 10px" padding="5px" onClick={() => {onChangeUserRank(member, "Demote")}}>Demote</SimpleButton>
+          <SimpleButton width="75px" margin="5px 10px" padding="5px" onClick={() => {onChangeUserRank(member, "Promote")}}>Promote</SimpleButton>
+        </Controls>
       </MemberCard>
     )
   })
@@ -140,6 +170,7 @@ const Roster = () => {
         <Controls>
           <SimpleButton width="75px" margin="5px 10px" padding="5px" onClick={() => {onDeleteUser(member)}}>Delete</SimpleButton>
           <SimpleButton width="75px" margin="5px 10px" padding="5px" onClick={() => {onChangeUserRank(member, "Demote")}}>Demote</SimpleButton>
+          <SimpleButton width="75px" margin="5px 10px" padding="5px" onClick={() => {onChangeUserRank(member, "Promote")}}>Promote</SimpleButton>
         </Controls>
       </MemberCard>
     )
@@ -164,16 +195,26 @@ const Roster = () => {
   })
 
   const onDeleteUser = async (member) => {
-    const success = await deleteUser(member.id)
-    if (success) {
-      document.getElementById(member.username).remove()
+    setErrorMessage("")
+    if (confirm(`Are you sure you want to delete ${member.username}'s account? This action is permanent and irreversible.`)) {
+      const success = await deleteUser(member.id)
+      if (success) {
+        document.getElementById(member.username).remove()
+      } else {
+        scrollToElement(".error-scroll-landmark")
+        setErrorMessage(`Error deleting user ${member.username}.`)
+      }
     }
   }
 
   const onChangeUserRank = async (member, action) => {
+    setErrorMessage("")
     const success = await changeUserRank(member.id, action)
     if (success) {
-      document.getElementById(member.username).remove()
+      setUpdater(!updater)
+    } else {
+      scrollToElement(".error-scroll-landmark")
+      setErrorMessage(`Error - action ${action.toLowerCase()} failed for user ${member.username}.`)
     }
   }
 
@@ -185,9 +226,19 @@ const Roster = () => {
           All Users
         </MainHeader>
         <AllUsersBox>
+          {errorMessage ? (
+            <>
+              <div className="error-scroll-landmark"/>
+              <ErrorContainer>{errorMessage}</ErrorContainer>
+            </>
+          ) : null}
           <>
             <UserGroupHeader color={COLORS.lightGreen}>Council</UserGroupHeader>
             {councilMemberCards}
+          </>
+          <>
+            <UserGroupHeader color={"Orange"}>Raiders</UserGroupHeader>
+            {guildRaiderCards}
           </>
           <>
             <UserGroupHeader color={"yellow"}>Guild Members</UserGroupHeader>

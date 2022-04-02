@@ -130,12 +130,12 @@ const SingleApplication = () => {
 
   useEffect(async () => {
     if (router.isReady) {
-      const {applicationData, discordUsername} = await getApplication(router.query.slug)
-      if (applicationData && discordUsername) {
+      const {applicationData, discordUsername, error} = await getApplication(router.query.slug)
+      if (error) {
+        setErrorMessage(error)
+      } else {
         setApplication(applicationData)
         setDiscordUsername(discordUsername)
-      } else {
-        setErrorMessage("Unable to get application data.")
       }
     }
   }, [router.isReady])

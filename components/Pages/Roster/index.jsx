@@ -80,7 +80,7 @@ const CouncilMemberBox = styled.div`
   width: 100%;
 `
 
-const GuildMemberBox = styled.div`
+const RaiderMemberBox = styled.div`
   margin: 15px 0px 30px 0px;
   width: 100%;
 `
@@ -179,13 +179,13 @@ const Roster = () => {
   const { getAllUsers, isCouncilMember } = useInject(mapStore)
 
   const [councilMembers, setCouncilMembers] = useState([])
-  const [guildMembers, setGuildMembers] = useState([])
+  const [raiderMembers, setRaiderMembers] = useState([])
 
   useEffect(async () => {
-    const { guildCouncilMembers, guildRegularMembers, error } = await getAllUsers()
+    const { guildCouncilMembers, guildRaiderMembers, error } = await getAllUsers()
     if (error) return console.error(error)
     setCouncilMembers(guildCouncilMembers)
-    setGuildMembers(guildRegularMembers)
+    setRaiderMembers(guildRaiderMembers)
   }, [])
 
   const navigateToAllUsers = () => {
@@ -237,7 +237,7 @@ const Roster = () => {
     )
   })
   
-  const guildMemberList = guildMembers.map((member) => {
+  const raiderMemberList = raiderMembers.map((member) => {
     let avatar
     if (member.avatar) {
       avatar = `data:image/png;base64,${Buffer.from(member.avatar).toString("base64")}`
@@ -292,10 +292,10 @@ const Roster = () => {
             <MemberHeader>Guild Council</MemberHeader>
             <Members>{councilMemberList}</Members>
           </CouncilMemberBox>
-          <GuildMemberBox>
-            <MemberHeader>Guild Members</MemberHeader>
-            <Members>{guildMemberList}</Members>
-          </GuildMemberBox>
+          <RaiderMemberBox>
+            <MemberHeader>Raiders</MemberHeader>
+            <Members>{raiderMemberList}</Members>
+          </RaiderMemberBox>
         </RosterBox>
       </RosterWrapper>
     </SectionWrapper>

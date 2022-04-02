@@ -9,8 +9,7 @@ const User = types
     discordUsername: types.optional(types.string, ""),
     id: types.optional(types.string, ""),
     accountUpdateError: types.optional(types.string, ""),
-    isGuildMember: types.optional(types.boolean, false),
-    isCouncilMember: types.optional(types.boolean, false),
+    guildMemberLevel: types.optional(types.number, 0),
     applicationID: types.optional(types.string, ""),
     avatar: types.optional(types.string, ""),
     race: types.optional(types.string, ""),
@@ -112,8 +111,14 @@ const User = types
       return ""
     },
     get accountMissingInfo() {
-      if (self.isGuildMember && (!self.className || !self.race || !self.specialization)) return true
+      if ((self.guildMemberLevel > 0) && (!self.className || !self.race || !self.specialization)) return true
       return false
+    },
+    get isGuildMember() {
+      return self.guildMemberLevel > 0
+    },
+    get isCouncilMember() {
+      return self.guildMemberLevel === 3
     }
   }))
 
@@ -132,13 +137,14 @@ const AuthStore = types
     return {
       async changeUserRank(userID, action) {
         const token = parseCookies(null).token
+        let result
         try {
-          await axios.post(`${process.env.BACKEND_URL}/users/${userID}/rank`, {action}, {headers: {Authorization: `Bearer ${token}`}})
+          result = await axios.post(`${process.env.BACKEND_URL}/users/${userID}/rank`, {action}, {headers: {Authorization: `Bearer ${token}`}})
         } catch (error) {
           console.error(error)
           return false
         }
-        return true
+        if (result.status === 200) return true
       },
       async deleteUser(userID) {
         const token = parseCookies(null).token
@@ -156,22 +162,25 @@ const AuthStore = types
         try {
           result = await axios.get(`${process.env.BACKEND_URL}/users/all`, {headers: {Authorization: `Bearer ${token}`}})
         } catch (error) {
+          console.error(error)
           return {error: "Server error"}
         }
 
         if (result.status === 200) {
-          const allGuildMembers = result.data.users
+          const allGuildMembers = result.data.users.sort((a,b) => a.username.localeCompare(b.username))
           const guildCouncilMembers = []
+          const guildRaiderMembers = []
           const guildRegularMembers = []
           const guildNonMembers = []
   
           allGuildMembers.forEach((member) => {
-            if (member.isCouncilMember) guildCouncilMembers.push(member)
-            else if (member.isGuildMember) guildRegularMembers.push(member)
-            else guildNonMembers.push(member)
+            if (member.guildMemberLevel === 3) guildCouncilMembers.push(member)
+            if (member.guildMemberLevel === 2) guildRaiderMembers.push(member)
+            if (member.guildMemberLevel === 1) guildRegularMembers.push(member)
+            if (member.guildMemberLevel === 0) guildNonMembers.push(member)
           })
   
-          return {guildCouncilMembers, guildRegularMembers, guildNonMembers}
+          return {guildCouncilMembers, guildRaiderMembers, guildRegularMembers, guildNonMembers}
         }
 
       },
@@ -252,9 +261,8 @@ const AuthStore = types
         self.user = {
           username: user.username, 
           discordUsername: user.discordUsername, 
-          id:user._id,
-          isGuildMember:user.isGuildMember,
-          isCouncilMember:user.isCouncilMember,
+          id: user._id,
+          guildMemberLevel: user.guildMemberLevel,
           avatar: user.avatar,
           ...(user.applicationID && {applicationID: user.applicationID}),
           ...(user.race && {race: user.race}),
@@ -290,7 +298,6 @@ const AuthStore = types
         self.navigationAttempt = path
       },
       setLoaded(bool) {
-        console.log(`setLoaded(${bool})`)
         self.loaded = bool
       }
     }
