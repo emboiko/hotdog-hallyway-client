@@ -5,6 +5,7 @@ import Modal from "~/components/Modal"
 import SignupForm from "~/components/Forms/Signup"
 import LoginForm from "~/components/Forms/Login"
 import AccountMissingInfo from "~/components/Modal/AccountMissingInfo"
+import NonGuildMember from "~/components/Modal/NonGuildMember"
 import useInject from "~/hooks/useInject"
 import {observer} from "mobx-react"
 import { COLORS } from "~/utilities/constants.js"
@@ -23,6 +24,8 @@ const Wrapper = styled.div`
 const mapStore = store => ({
   accountMissingInfoModalShowing: store.ui.accountMissingInfoModalShowing,
   setAccountMissingInfoModalShowing: store.ui.setAccountMissingInfoModalShowing,
+  nonMemberModalShowing: store.ui.nonMemberModalShowing,
+  setNonMemberModalShowing: store.ui.setNonMemberModalShowing,
   loginModalShowing: store.ui.loginModalShowing,
   setLoginModalShowing: store.ui.setLoginModalShowing,
   setLoginError: store.auth.setLoginError,
@@ -36,6 +39,7 @@ const StandardPage = observer(({children}) => {
 
   const {
     accountMissingInfoModalShowing, setAccountMissingInfoModalShowing,
+    nonMemberModalShowing, setNonMemberModalShowing,
     loginModalShowing, setLoginModalShowing, setLoginError, 
     signupModalShowing, setSignupModalShowing, setSignupError,
     setNavigationAttempt
@@ -53,10 +57,6 @@ const StandardPage = observer(({children}) => {
     setNavigationAttempt("")
   }
 
-  const closeAccountMissingInfoModal = () => {
-    setAccountMissingInfoModalShowing(false)
-  }
-
   return (
     <Wrapper>
       <Header />
@@ -70,8 +70,11 @@ const StandardPage = observer(({children}) => {
         <Modal open={signupModalShowing} closer={closeSignupModal} height={240}>
           <SignupForm successCB={closeSignupModal} />
         </Modal>
-        <Modal open={accountMissingInfoModalShowing} closer={closeAccountMissingInfoModal} height={300} width={450}>
+        <Modal open={accountMissingInfoModalShowing} closer={() => {setAccountMissingInfoModalShowing(false)}} height={300} width={450}>
           <AccountMissingInfo />
+        </Modal>
+        <Modal open={nonMemberModalShowing} closer={() => {setNonMemberModalShowing(false)}} height={300} width={450}>
+          <NonGuildMember />
         </Modal>
       </>
     </Wrapper>

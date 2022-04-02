@@ -5,6 +5,7 @@ const UIStore = types
     loginModalShowing: false,
     signupModalShowing: false,
     accountMissingInfoModalShowing: false,
+    nonMemberModalShowing: false,
     isTiny: false,
     isSmall: false,
     isMedium: false,
@@ -23,6 +24,9 @@ const UIStore = types
       },
       setAccountMissingInfoModalShowing(accountMissingInfoModalShowing) {
         self.accountMissingInfoModalShowing = accountMissingInfoModalShowing
+      },
+      setNonMemberModalShowing(nonMemberModalShowing) {
+        self.nonMemberModalShowing = nonMemberModalShowing
       },
       setIsTiny(bool) {
         self.isTiny = bool

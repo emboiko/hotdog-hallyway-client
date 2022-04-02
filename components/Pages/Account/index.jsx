@@ -48,7 +48,7 @@ const MainHeader = styled.div`
   width: 350px;
   margin-bottom: 25px;
   position: relative;
-  background: rgba(0,0,0,0.8);
+  background: rgba(0,0,0,0.85);
   @media (max-width: ${UI_SIZES.medium}px) {
     font-size: 48px;
     width: 300px;
@@ -182,6 +182,7 @@ const mapStore = store => ({
   className: store.auth.user.className,
   specialization: store.auth.user.specialization,
   isGuildMember: store.auth.user.isGuildMember,
+  setNonMemberModalShowing: store.ui.setNonMemberModalShowing
 })
 
 const Account = observer(() => {
@@ -197,6 +198,7 @@ const Account = observer(() => {
     specialization,
     race,
     isGuildMember,
+    setNonMemberModalShowing,
   } = useInject(mapStore)
 
   const [isEditingUsernames, setIsEditingUsernames] = useState(false)
@@ -342,6 +344,8 @@ const Account = observer(() => {
       if (isGuildMember) {
         setIsEditingClassConfig(true)
         setSubmitButtonEnabled(true)
+      } else {
+        setNonMemberModalShowing(true)
       }
     } 
   }, [])

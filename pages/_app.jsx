@@ -47,7 +47,12 @@ const App = observer(({ Component, pageProps }) => {
   }, [])
 
   useEffect(() => {
-    if (store.auth.loaded && store.auth.isLoggedIn && store.auth.user.accountMissingInfo) {
+    if (
+      store.auth.loaded && 
+      store.auth.isLoggedIn && 
+      store.auth.user.isGuildMember &&
+      store.auth.user.accountMissingInfo
+    ) {
       store.ui.setAccountMissingInfoModalShowing(true)
     }
   }, [store.auth.loaded, store.auth.isLoggedIn])
