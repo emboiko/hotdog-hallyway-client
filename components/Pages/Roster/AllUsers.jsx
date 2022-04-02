@@ -1,11 +1,14 @@
 import React, {useEffect, useState} from "react"
 import Image from "next/image"
+import {useRouter} from "next/router"
 import styled from "styled-components"
 import useInject from "~/hooks/useInject"
 import SimpleButton from "~/components/Inputs/SimpleButton"
-import HotDogStand from "/public/static/img/jpg/hotdogstand4.jpg"
 import scrollToElement from "~/utilities/scrollToElement"
 import { UI_SIZES, COLORS} from "~/utilities/constants.js"
+import HotDogStand from "/public/static/img/jpg/hotdogstand4.jpg"
+import defaultAvatarIcon from "/public/static/img/png/defaultAvatar.png"
+
 
 const SectionWrapper = styled.div`
   display: flex;
@@ -40,6 +43,7 @@ const MainHeader = styled.div`
   margin-bottom: 25px;
   position: relative;
   background: rgba(0,0,0,0.85);
+  cursor: pointer;
   @media (max-width: ${UI_SIZES.small}px) {
     font-size: 48px;
     margin-bottom: 12px;
@@ -111,14 +115,31 @@ const ErrorContainer = styled.div`
   margin: 10px 0px;
 `
 
+const Ruler = styled.div`
+  height: 2px;
+  background: #cccccc;
+  margin: 0px auto 10px auto;
+`
+
+const AvatarWrapper = styled.div`
+  border-radius: ${props => props.round ? "25px" : "5px"};
+  overflow: hidden;
+  box-shadow: 0px 0px 2px 2px #000000;
+  position: relative;
+  width: 50px;
+  height: 50px;
+  margin: ${props => props.margin || "none"};
+`
+
 const mapStore = store => ({
   getAllUsers: store.auth.getAllUsers,
   deleteUser: store.auth.deleteUser,
+  deleteUserAvatar: store.auth.deleteUserAvatar,
   changeUserRank: store.auth.changeUserRank
 })
 
 const Roster = () => {
-  const { getAllUsers, deleteUser, changeUserRank } = useInject(mapStore)
+  const { getAllUsers, deleteUser, deleteUserAvatar, changeUserRank } = useInject(mapStore)
 
   const [councilMembers, setCouncilMembers] = useState([])
   const [raidMembers, setRaidMembers] = useState([])
@@ -148,13 +169,27 @@ const Roster = () => {
     )
   })
   const guildRaiderCards = raidMembers.map((member) => {
+    let userHasAvatar
+    let avatarSrc
+    if (member.avatar) {
+      userHasAvatar = true
+      avatarSrc = `data:image/png;base64,${Buffer.from(member.avatar).toString("base64")}`
+    } else {
+      userHasAvatar = false
+      avatarSrc = defaultAvatarIcon
+    }
+
     return (
       <MemberCard key={member.id} id={member.username}>
         <Username>
           {member.username}
         </Username>
+        <AvatarWrapper round margin="0px 0px 10px 0px">
+          <Image src={avatarSrc} layout="fill" />
+        </AvatarWrapper>
         <Controls>
-          <SimpleButton width="75px" margin="5px 10px" padding="5px" onClick={() => {onDeleteUser(member)}}>Delete</SimpleButton>
+          <SimpleButton width="75px" margin="5px 10px" padding="5px" onClick={() => {onDeleteUserAvatar(member)}} disabled={!userHasAvatar}>Delete Avatar</SimpleButton>
+          <SimpleButton width="75px" margin="5px 10px" padding="5px" onClick={() => {onDeleteUser(member)}}>Delete Account</SimpleButton>
           <SimpleButton width="75px" margin="5px 10px" padding="5px" onClick={() => {onChangeUserRank(member, "Demote")}}>Demote</SimpleButton>
           <SimpleButton width="75px" margin="5px 10px" padding="5px" onClick={() => {onChangeUserRank(member, "Promote")}}>Promote</SimpleButton>
         </Controls>
@@ -162,13 +197,24 @@ const Roster = () => {
     )
   })
   const guildMemberCards = guildMembers.map((member) => {
+    let userHasAvatar
+    let avatarSrc
+    if (member.avatar) {
+      userHasAvatar = true
+      avatarSrc = `data:image/png;base64,${Buffer.from(member.avatar).toString("base64")}`
+    } else {
+      userHasAvatar = false
+      avatarSrc = defaultAvatarIcon
+    }
+
     return (
       <MemberCard key={member.id} id={member.username}>
         <Username>
           {member.username}
         </Username>
         <Controls>
-          <SimpleButton width="75px" margin="5px 10px" padding="5px" onClick={() => {onDeleteUser(member)}}>Delete</SimpleButton>
+          <SimpleButton width="75px" margin="5px 10px" padding="5px" onClick={() => {onDeleteUserAvatar(member)}} disabled={!userHasAvatar}>Delete Avatar</SimpleButton>
+          <SimpleButton width="75px" margin="5px 10px" padding="5px" onClick={() => {onDeleteUser(member)}}>Delete Account</SimpleButton>
           <SimpleButton width="75px" margin="5px 10px" padding="5px" onClick={() => {onChangeUserRank(member, "Demote")}}>Demote</SimpleButton>
           <SimpleButton width="75px" margin="5px 10px" padding="5px" onClick={() => {onChangeUserRank(member, "Promote")}}>Promote</SimpleButton>
         </Controls>
@@ -187,12 +233,25 @@ const Roster = () => {
           ) : null
         }
         <Controls>
-          <SimpleButton width="75px" margin="5px 10px" padding="5px" onClick={() => {onDeleteUser(member)}}>Delete</SimpleButton>
+          <SimpleButton width="75px" margin="5px 10px" padding="5px" onClick={() => {onDeleteUser(member)}}>Delete Account</SimpleButton>
           <SimpleButton width="75px" margin="5px 10px" padding="5px" onClick={() => {onChangeUserRank(member, "Promote")}}>Promote</SimpleButton>
         </Controls>
       </MemberCard>
     )
   })
+
+  const onDeleteUserAvatar = async (member) => {
+    setErrorMessage("")
+    if (confirm(`Are you sure you want to delete ${member.username}'s avatar? This action is permanent and irreversible.`)) {
+      const success = await deleteUserAvatar(member.id)
+      if (success) {
+        setUpdater(!updater)
+      } else {
+        scrollToElement(".error-scroll-landmark")
+        setErrorMessage(`Error deleting user ${member.username}'s avatar.`)
+      }
+    }
+  }
 
   const onDeleteUser = async (member) => {
     setErrorMessage("")
@@ -218,11 +277,13 @@ const Roster = () => {
     }
   }
 
+  const router = useRouter()
+
   return (
     <SectionWrapper className="font-squadaone">
       <Image src={HotDogStand} alt="Hotdog Stand" layout="fill" objectFit="cover" quality={90} priority/> 
       <AllUsersWrapper>
-        <MainHeader>
+        <MainHeader onClick={() => {router.push("/roster")}}>
           All Users
         </MainHeader>
         <AllUsersBox>
@@ -236,14 +297,17 @@ const Roster = () => {
             <UserGroupHeader color={COLORS.lightGreen}>Council</UserGroupHeader>
             {councilMemberCards}
           </>
+          <Ruler />
           <>
             <UserGroupHeader color={"Orange"}>Raiders</UserGroupHeader>
             {guildRaiderCards}
           </>
+          <Ruler />
           <>
             <UserGroupHeader color={"yellow"}>Guild Members</UserGroupHeader>
             {guildMemberCards}
           </>
+          <Ruler />
           <>
             <UserGroupHeader color={COLORS.red}>Non Guild Members</UserGroupHeader>
             {nonGuildMemberCards}

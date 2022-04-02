@@ -8,18 +8,18 @@ const Button = styled.button`
   font-size: ${props => props.fontSize || "16px"};
   margin: ${props => props.margin || "none"};
   padding: ${props => props.padding || "none"};
-  background: transparent;
-  color: #FFFFFF;
-  cursor: pointer;
-  border: 1px solid ${COLORS.accentBlue};
+  background: ${props => props.disabled ? "#333333" : props.background || "transparent"};
+  color: ${props => props.color || "#FFFFFF"};
+  cursor: ${props => props.disabled ? "not-allowed" : "pointer"};
+  border: ${props => props.disabled ? "1px solid #000000" : `1px solid ${COLORS.accentBlue}`};
   border-radius: 5px;
   transition: box-shadow .25s;
   &:hover {
-    box-shadow: 0px 0px 1px 1px ${COLORS.accentBlue};
+    box-shadow: ${props => props.disabled ? "none" : `0px 0px 1px 1px ${COLORS.accentBlue}`};
   }
 `
 
-const SimpleButton = ({children, onClick, width, fontSize, margin, height, padding}) => (
+const SimpleButton = ({children, onClick, width, fontSize, margin, height, padding, disabled, background, color}) => (
   <Button 
     onClick={onClick}
     width={width}
@@ -27,6 +27,9 @@ const SimpleButton = ({children, onClick, width, fontSize, margin, height, paddi
     margin={margin}
     height={height}
     padding={padding}
+    disabled={disabled}
+    background={background}
+    color={color}
   >
     {children}
   </Button>

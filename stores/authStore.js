@@ -145,6 +145,7 @@ const AuthStore = types
           return false
         }
         if (result.status === 200) return true
+        return false
       },
       async deleteUser(userID) {
         const token = parseCookies(null).token
@@ -155,6 +156,18 @@ const AuthStore = types
           return false
         }
         return true
+      },
+      async deleteUserAvatar(userID) {
+        const token = parseCookies(null).token
+        let result
+        try {
+          result = await axios.delete(`${process.env.BACKEND_URL}/users/${userID}/avatar`, {headers: {Authorization: `Bearer ${token}`}})
+        } catch (error) {
+          console.error(error)
+          return false
+        }
+        if (result.status === 200) return true
+        return false
       },
       async getAllUsers() {
         const token = parseCookies(null).token
