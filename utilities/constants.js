@@ -317,6 +317,29 @@ const BOSSES = {
         defeated: true
       }
     }
+  },
+  "P5": {
+    "Sunwell Plateau": {
+      "Kalecgos": {
+        defeated: false,
+        progressing: true
+      },
+      "Brutallus": {
+        defeated: false
+      },
+      "Felmyst": {
+        defeated: false
+      },
+      "Eredar Twins": {
+        defeated: false
+      },
+      "M'uru": {
+        defeated: false
+      },
+      "Kil'jaeden": {
+        defeated: false
+      },
+    }
   }
 }
 

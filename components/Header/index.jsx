@@ -34,18 +34,12 @@ const Username = styled.div`
   @media (max-width: ${UI_SIZES.medium}px) {
     margin-left: 0px;
   }
-  @media (max-width: ${UI_SIZES.small}px) {
-    font-size: 18px;
-  }
 `
 
 const UserIconContainer = styled.div`
   cursor: pointer;
   margin-left: 15px;
   margin-right: 10px;
-  @media (max-width: ${UI_SIZES.small}px) {
-    display: none;
-  }
 `
 
 const RightSide = styled.div`
@@ -122,7 +116,7 @@ const UnderGlow = styled.div`
 `
 
 const BossKills = styled.div`
-  width: 230px;
+  width: 280px;
   display: flex;
   justify-content: center;
   margin-right: 10px;
@@ -146,9 +140,12 @@ const BossKillDropdownOpener = styled.div`
   &:hover {
     color: ${COLORS.lightGreen};
   }
-  @media (max-width: ${UI_SIZES.small}px) {
-    font-size: 22px;
+  @media (max-width: ${UI_SIZES.medium}px) {
+    font-size: 21px;
     margin: 0px 7px 4px 7px;
+  }
+  @media (max-width: ${UI_SIZES.small}px) {
+    font-size: 17px;
   }
 `
 
@@ -288,13 +285,13 @@ const MainHeader = observer(() => {
     setDropdownShowingPhase(0)
   }
 
-  const phases = [1,2,3,4]
+  const phases = [1, 2, 3, 4, 5]
 
   const BossKillDropdownOpeners = phases.map((phase) => {
     const phaseName = `Phase ${phase}`
     return (
       <BossKillDropdownOpener key={phaseName} onClick={() => {setDropdownShowingPhase(phase)}} >
-        {isSmall ? `P${phase}` : phaseName}
+        {isMedium ? `P${phase}` : phaseName}
       </BossKillDropdownOpener>
     )
   })
@@ -370,7 +367,7 @@ const MainHeader = observer(() => {
             <Image src={YoutubeIcon} alt="YouTube" width={25} height={25} />
           </Youtube>
         </a>
-        {BossKillDropdowns}
+        {isSmall ? null : BossKillDropdowns}
       </LeftSide>
       <RightSide>
         <UserIconContainer onClick={navigateToAccount}>
