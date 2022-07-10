@@ -321,11 +321,11 @@ const BOSSES = {
   "P5": {
     "Sunwell Plateau": {
       "Kalecgos": {
-        defeated: false,
-        progressing: true
+        defeated: true
       },
       "Brutallus": {
-        defeated: false
+        defeated: false,
+        progressing: true
       },
       "Felmyst": {
         defeated: false
